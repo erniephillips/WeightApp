@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightApp", "WeightApp\WeightApp.csproj", "{FE154103-35E7-49D3-BFD2-6186415432A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54A0A951-E239-452E-9AE2-A958F120D8A0}
+	EndGlobalSection
+EndGlobal
