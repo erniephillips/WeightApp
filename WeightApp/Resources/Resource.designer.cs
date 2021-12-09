@@ -14,7 +14,7 @@ namespace WeightApp
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "12.1.0.11")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
 	public partial class Resource
 	{
 		
@@ -3390,10 +3390,22 @@ namespace WeightApp
 			public const int side_nav_bar = 2131165316;
 			
 			// aapt resource value: 0x7F070085
-			public const int tooltip_frame_dark = 2131165317;
+			public const int splash_logo = 2131165317;
 			
 			// aapt resource value: 0x7F070086
-			public const int tooltip_frame_light = 2131165318;
+			public const int tooltip_frame_dark = 2131165318;
+			
+			// aapt resource value: 0x7F070087
+			public const int tooltip_frame_light = 2131165319;
+			
+			// aapt resource value: 0x7F070088
+			public const int weight_app_logo = 2131165320;
+			
+			// aapt resource value: 0x7F070089
+			public const int weight_app_logo_transparent = 2131165321;
+			
+			// aapt resource value: 0x7F07008A
+			public const int weight_scale = 2131165322;
 			
 			static Drawable()
 			{
@@ -4491,10 +4503,7 @@ namespace WeightApp
 			public const int ic_launcher = 2131558400;
 			
 			// aapt resource value: 0x7F0D0001
-			public const int ic_launcher_foreground = 2131558401;
-			
-			// aapt resource value: 0x7F0D0002
-			public const int ic_launcher_round = 2131558402;
+			public const int ic_launcher_round = 2131558401;
 			
 			static Mipmap()
 			{
