@@ -13,8 +13,10 @@ using Google.Android.Material.Snackbar;
 
 namespace WeightApp
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
+  //[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+  //Remove Main launcher since splash screen is activity to be launched
+  [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
+  public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
