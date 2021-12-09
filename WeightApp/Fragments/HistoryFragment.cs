@@ -3,11 +3,11 @@ using Android.Views;
 
 /*
 * Ernie Phillips III : 12/09/2021
-* Main fragment to display when user first opens app
+* History page, will pull from sqlite and allow user to modify/delete entries displayed in listview
 */
 
 namespace WeightApp.Fragments {
-  public class MainFragment : AndroidX.Fragment.App.Fragment {
+  public class HistoryFragment : AndroidX.Fragment.App.Fragment {
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
 
@@ -16,7 +16,7 @@ namespace WeightApp.Fragments {
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       // Use this to return your custom view for this Fragment
-      return inflater.Inflate(Resource.Layout.fragment_main, container, false);
+      return inflater.Inflate(Resource.Layout.fragment_history, container, false);
     }
   }
 }

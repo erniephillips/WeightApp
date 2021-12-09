@@ -2,12 +2,12 @@
 using Android.Views;
 
 /*
-* Ernie Phillips III : 12/09/2021
-* Main fragment to display when user first opens app
-*/
+ * Ernie Phillips III : 12/09/2021
+ * Contact me page that will have text entry fields and open in default mail app on phone
+ */
 
 namespace WeightApp.Fragments {
-  public class MainFragment : AndroidX.Fragment.App.Fragment {
+  public class ContactFragment : AndroidX.Fragment.App.Fragment {
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
 
@@ -16,7 +16,7 @@ namespace WeightApp.Fragments {
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       // Use this to return your custom view for this Fragment
-      return inflater.Inflate(Resource.Layout.fragment_main, container, false);
+      return inflater.Inflate(Resource.Layout.fragment_contact, container, false);
     }
   }
 }
