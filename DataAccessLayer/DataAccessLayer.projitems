@@ -9,5 +9,12 @@
     <Import_RootNamespace>DataAccessLayer</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Diagrams\DB brainstorm.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERD.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERM.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERD.drawio" />
+    <None Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERM.drawio" />
   </ItemGroup>
 </Project>

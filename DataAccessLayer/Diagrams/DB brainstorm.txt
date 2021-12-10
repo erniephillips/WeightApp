@@ -1,0 +1,22 @@
+	User table
+id		not null PK
+username 	not null
+password	not null
+email		not null
+name		not null
+
+	User Profile table
+id 		not null PK
+user_id		not null FK
+start_weight	not null
+height 		null
+gender		null
+target weight	not null 
+target date	not null
+
+	Weight Entry table
+id 		not null PK
+user_prof_id	not null FK
+weight_entry	not null
+date_entry	not null	
+image (blob)	null

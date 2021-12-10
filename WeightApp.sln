@@ -5,9 +5,12 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightApp", "WeightApp\WeightApp.csproj", "{FE154103-35E7-49D3-BFD2-6186415432A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{8BE25C7F-24CD-4E43-9091-DEDF8C0F59E5}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.shproj", "{0D1B9E1B-2BD2-41B6-AE7A-68907CF4E520}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DataAccessLayer\DataAccessLayer.projitems*{0d1b9e1b-2bd2-41b6-ae7a-68907cf4e520}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,10 +22,6 @@ Global
 		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE154103-35E7-49D3-BFD2-6186415432A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{8BE25C7F-24CD-4E43-9091-DEDF8C0F59E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BE25C7F-24CD-4E43-9091-DEDF8C0F59E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BE25C7F-24CD-4E43-9091-DEDF8C0F59E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BE25C7F-24CD-4E43-9091-DEDF8C0F59E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
