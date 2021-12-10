@@ -60,7 +60,8 @@ namespace WeightApp {
 
     public override bool OnOptionsItemSelected(IMenuItem item) {
       int id = item.ItemId;
-      if (id == Resource.Id.action_settings) {
+      if (id == Resource.Id.action_manage_accounts) {
+        Android.Widget.Toast.MakeText(this, "Manage accounts functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
         return true;
       }
 
@@ -85,7 +86,7 @@ namespace WeightApp {
       } else if (id == Resource.Id.nav_profile) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_share) {
-
+        Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
       } else if (id == Resource.Id.nav_contact) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
       }

@@ -101,12 +101,7 @@
     <AndroidResource Include="Resources\values\strings.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\drawable\side_nav_bar.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_camera.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_gallery.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_manage.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_send.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_share.xml" />
-    <AndroidResource Include="Resources\drawable-v21\ic_menu_slideshow.xml" />
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_share.xml" />
     <AndroidResource Include="Resources\menu\activity_main_drawer.xml" />
     <AndroidResource Include="Resources\menu\menu_main.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
@@ -159,6 +154,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_weight_entry.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_contact_mail.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_account.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_statistics.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_history.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_weight.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_profile.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
