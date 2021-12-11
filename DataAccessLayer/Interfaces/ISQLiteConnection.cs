@@ -7,6 +7,6 @@
 
 namespace DataAccessLayer.Interfaces {
   public interface ISQLiteConnection {
-    SQLiteConnection GetSQLConnection();
+    static SQLiteConnection GetSQLConnection() { return null; }
   }
 }

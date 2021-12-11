@@ -19,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Dao\GetSQLiteConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dao\UserDao.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISQLiteConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Profile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
