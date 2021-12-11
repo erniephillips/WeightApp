@@ -2,11 +2,16 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 
-namespace DataAccessLayer.Models
-{
+/*
+* Ernie Phillips III : 12/10/2021
+* Weight entry object class schema for storing and retrieving db results
+*/
+
+namespace DataAccessLayer.Models {
+
   [Table("Weight")]
-  public class Weight
-  {
+  public class Weight {
+
     [PrimaryKey, AutoIncrement, NotNull]
     public int WEIGHT_ID { get; set; }
 

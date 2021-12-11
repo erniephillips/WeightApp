@@ -1,11 +1,16 @@
 ﻿using SQLite;
 using System;
 
-namespace DataAccessLayer.Models
-{
+/*
+* Ernie Phillips III : 12/10/2021
+* User object class schema for storing and retrieving db results
+*/
+
+namespace DataAccessLayer.Models {
+
   [Table("User")]
-  public class User
-  {
+  public class User {
+
     [PrimaryKey, AutoIncrement, NotNull]
     public int USER_ID { get; set; }
 

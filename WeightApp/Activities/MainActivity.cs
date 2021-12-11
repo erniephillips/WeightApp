@@ -12,12 +12,12 @@ using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
 using WeightApp.Fragments;
 
-namespace WeightApp {
-  /*
-   * Ernie Phillips III : 12/09/2021
-   * Handle the main activity and navigation drawer features
-   */
+/*
+* Ernie Phillips III : 12/09/2021
+* Handle the main activity and navigation drawer features
+*/
 
+namespace WeightApp {
   //[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
   //Remove Main launcher since splash screen is activity to be launched
   [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
