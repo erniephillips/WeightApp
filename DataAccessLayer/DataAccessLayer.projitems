@@ -17,4 +17,9 @@
     <None Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERD.drawio" />
     <None Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERM.drawio" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Profile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Weight.cs" />
+  </ItemGroup>
 </Project>
