@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/fragment_user_access"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+
+  <android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+      android:id="@+id/aua_app_logo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="App Logo"
+      android:layout_centerHorizontal="true"
+      android:src="@drawable/weight_app_logo_transparent"
+      android:layout_gravity="top"
+      app:layout_widthPercent="40%"
+      app:layout_heightPercent="40%"/>
+    <Button
+      android:id="@+id/aua_login"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_below="@+id/aua_app_logo"
+      android:layout_centerHorizontal="true"
+      android:background="#004aad"
+      android:text="Login"
+      android:textColor="#fff"
+      android:textSize="20sp"
+      app:layout_marginTopPercent="3%"
+      app:layout_marginPercent="5%"
+      app:layout_widthPercent="80%" />
+    <TextView
+      android:id="@+id/tv_OR"
+      android:layout_below="@id/aua_login"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_marginTopPercent="5%"
+      android:layout_centerHorizontal="true"
+      android:textStyle="bold|italic"
+      android:textSize="24sp"
+      android:text="OR"/>
+    <Button
+      android:id="@+id/aua_register"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_below="@+id/tv_OR"
+      android:layout_centerHorizontal="true"
+      android:background="#00B33C"
+      android:text="Register"
+      android:textColor="#fff"
+      android:textSize="20sp"
+      app:layout_marginTopPercent="8%"
+      app:layout_marginPercent="5%"
+      app:layout_widthPercent="80%" />
+  </android.support.percent.PercentRelativeLayout>
+  <!--<androidx.percentlayout.widget.PercentFrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+      android:id="@+id/aua_logo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top|center"
+      app:layout_widthPercent="40%"
+      app:layout_heightPercent="30%"
+      app:layout_marginTopPercent="0%"
+      app:layout_marginLeftPercent="0%"
+      android:src="@drawable/weight_app_logo_transparent"/>
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_below="@id/aua_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_marginStartPercent="25%"
+        app:layout_marginEndPercent="25%"
+        android:text="PercentRelativeLayout example"
+        android:background="#bebebe"/>
+  </androidx.percentlayout.widget.PercentFrameLayout>-->
+
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="User access page" />
+</LinearLayout>
