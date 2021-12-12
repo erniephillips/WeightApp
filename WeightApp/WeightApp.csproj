@@ -74,7 +74,7 @@
     <Compile Include="Fragments\ProfileFragment.cs" />
     <Compile Include="Fragments\StatisticsFragment.cs" />
     <Compile Include="Fragments\WeightEntryFragment.cs" />
-    <Compile Include="Helpers\PersonListViewAdapter.cs" />
+    <Compile Include="Helpers\UserListViewAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activities\SplashActivity.cs" />
@@ -181,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-v24\ic_menu_profile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\list_view_user.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

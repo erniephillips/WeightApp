@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_marginTop="80dp"
+  android:id="@+id/fragment_main">
+  
+  <TextView
+    android:text="User ID"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_UserID" />
+  <TextView
+    android:text="Username"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_UserName" />
+  <TextView
+    android:text="Password"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_Password" />
+  <TextView
+    android:text="Name"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_Name" />
+  <TextView
+    android:text="Is Locked"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_IsLocked" />
+  <TextView
+    android:text="Failed Login Attempt Count"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_FailedLoginAttemptCount" />
+  <TextView
+    android:text="Created Date"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_CreatedDate" />
+  <TextView
+    android:text="Last Login Date"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtView_LastLoginDate" />
+</LinearLayout>

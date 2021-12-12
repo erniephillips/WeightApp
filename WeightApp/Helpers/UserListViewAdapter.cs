@@ -5,13 +5,13 @@ using DataAccessLayer.Models;
 using System.Collections.Generic;
 
 namespace WeightApp.Helpers {
-  public class PersonListViewAdapter : BaseAdapter {
+  public class UserListViewAdapter : BaseAdapter {
 
     private AndroidX.Fragment.App.Fragment fragment;
     private List<User> users;
     private int selectedId = -1;
 
-    public PersonListViewAdapter(AndroidX.Fragment.App.Fragment fragment, List<User> users) {
+    public UserListViewAdapter(AndroidX.Fragment.App.Fragment fragment, List<User> users) {
       this.fragment = fragment;
       this.users = users;
     }
@@ -30,8 +30,10 @@ namespace WeightApp.Helpers {
       selectedId = position;
     }
 
+    public static void TestMethod() { }
+
     public override View GetView(int position, View convertView, ViewGroup parent) {
-      var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.fragment_main, parent, false);
+      var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.list_view_user, parent, false);
       TextView txtUserID = view.FindViewById<TextView>(Resource.Id.txtView_UserID);
       TextView txtUserName = view.FindViewById<TextView>(Resource.Id.txtView_UserName);
       TextView txtPassword = view.FindViewById<TextView>(Resource.Id.txtView_Password);
