@@ -1,17 +1,21 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Preferences;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using DataAccessLayer.Dao;
+using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace WeightApp.Activities {
-  [Activity(Label = "UserAccessActivity")]
+  [Activity(Label = "UserAccessActivity", NoHistory = true)]
   public class UserAccessActivity : Activity {
+
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
       SetContentView(Resource.Layout.activity_user_access);

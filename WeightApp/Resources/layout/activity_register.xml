@@ -96,6 +96,14 @@
     android:textSize="20sp"
     app:layout_marginPercent="5%"
     app:layout_widthPercent="80%" />
+  <TextView
+    android:id="@+id/txt_reg_errors"
+    app:layout_marginLeftPercent="10%"
+    android:text=""
+    android:layout_below="@+id/btn_reg_register"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#ff0000"/>
 </android.support.percent.PercentRelativeLayout>
 <!--
   <android.support.percent.PercentRelativeLayout

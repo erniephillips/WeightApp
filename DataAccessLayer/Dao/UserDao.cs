@@ -29,6 +29,11 @@ namespace DataAccessLayer.Dao {
       return _SQLiteConnection.Get<User>(id);
     }
 
+    //GET BY USERNAME
+    public User GetUserByUsername(string username) {
+      return _SQLiteConnection.Table<User>().Where(x => x.USERNAME == username).FirstOrDefault();
+    }
+
     //INSERT
     public void AddUser(User user) {
       _SQLiteConnection.Insert(user);
@@ -43,5 +48,18 @@ namespace DataAccessLayer.Dao {
     public void DeleteUser(User user) {
       _SQLiteConnection.Delete(user);
     }
+
+    public void DeleteAll() {
+      _SQLiteConnection.DeleteAll<User>();
+    }
+
+    #region USER LOGIN LOGIC
+    public bool VerifyLogin(string username, string password) {
+      int recordCount = _SQLiteConnection.Table<User>().Where(x => x.USERNAME == username && x.PASSWORD == password).Count();
+      if (recordCount > 0)
+        return true;
+      return false;
+    }
+    #endregion
   }
 }

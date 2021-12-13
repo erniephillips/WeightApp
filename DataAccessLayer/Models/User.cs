@@ -14,12 +14,14 @@ namespace DataAccessLayer.Models {
     [PrimaryKey, AutoIncrement, NotNull]
     public int USER_ID { get; set; }
 
+    //[MaxLength(50), Unique, NotNull]
     [MaxLength(50), NotNull]
     public string USERNAME { get; set; }
 
     [MaxLength(64), NotNull]
     public string PASSWORD { get; set; }
 
+    //[MaxLength(64), Unique, NotNull]
     [MaxLength(64), NotNull]
     public string EMAIL { get; set; }
 
