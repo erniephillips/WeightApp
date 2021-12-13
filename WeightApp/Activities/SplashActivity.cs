@@ -47,16 +47,6 @@ namespace AndroidApp {
       //https://www.c-sharpcorner.com/article/shared-preferences-in-xamarin-android/
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
 
-      
-      
-      
-      //COMMENT THIS OUT FOR PRODUCTION. USING TO TEST LOG IN BY DELETING STORED INFO
-      //ISharedPreferencesEditor edit = pref.Edit();
-      //edit.Clear();
-      //edit.Commit();
-
-
-
       string userId = pref.GetString("UserId", String.Empty);
       string userName = pref.GetString("Username", String.Empty);
       string password = pref.GetString("Password", String.Empty);

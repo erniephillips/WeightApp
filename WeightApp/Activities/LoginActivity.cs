@@ -46,6 +46,9 @@ namespace WeightApp.Activities {
         }
         #endregion
 
+        //store user input
+        ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+        ISharedPreferencesEditor edit = pref.Edit();
 
         //verify the passed in username and password
         bool userCanLogin = userDao.VerifyLogin(txtUsername, txtPassword);
@@ -56,12 +59,14 @@ namespace WeightApp.Activities {
 
           //set a session for the user
           if (chkRememberMe.Checked) { //set a session (sort of)
-            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-            ISharedPreferencesEditor edit = pref.Edit();
             edit.PutString("UserId", user.USER_ID.ToString());
             edit.PutString("Username", user.USERNAME.Trim());
             edit.PutString("Password", user.PASSWORD.Trim());
             edit.PutString("LastLogin", user.LAST_LOGIN_DATE.ToString());
+            edit.Apply();
+          } else { //save the username and PK for app reference
+            edit.PutString("UserId", user.USER_ID.ToString());
+            edit.PutString("Username", user.USERNAME.Trim());
             edit.Apply();
           }
           StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
@@ -69,7 +74,7 @@ namespace WeightApp.Activities {
           AlertDialog.Builder dialog = new AlertDialog.Builder(this);
           AlertDialog alert = dialog.Create();
           alert.SetTitle("Weight App Alert");
-          alert.SetMessage("Invalid Login Attemp. Please try again.");
+          alert.SetMessage("Invalid Login Attempt. Please try again.");
           alert.SetButton("OK", (c, ev) => {
             // Ok button click task  
           });

@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -10,6 +11,7 @@ using AndroidX.DrawerLayout.Widget;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
+using WeightApp.Activities;
 using WeightApp.Fragments;
 
 /*
@@ -20,7 +22,7 @@ using WeightApp.Fragments;
 namespace WeightApp {
   //[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
   //Remove Main launcher since splash screen is activity to be launched
-  [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
+  [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", NoHistory = true)]
   public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
@@ -42,6 +44,13 @@ namespace WeightApp {
 
       //Load the main fragment after creating nav drawer and nav view
       SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new MainFragment(), "Fragment").Commit();
+
+      //set the user's name through nav view, then find txtView
+      ISharedPreferences prefs = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+      string userName = prefs.GetString("Username", String.Empty);
+      NavigationView nv = FindViewById<NavigationView>(Resource.Id.nav_view);
+      Android.Widget.TextView txtUsername = nv.GetHeaderView(0).FindViewById<Android.Widget.TextView>(Resource.Id.txt_username);
+      txtUsername.Text = String.IsNullOrEmpty(userName) ? "Welcome" : "Welcome, " + userName;
     }
 
     public override void OnBackPressed() {
@@ -53,20 +62,20 @@ namespace WeightApp {
       }
     }
 
-    public override bool OnCreateOptionsMenu(IMenu menu) {
-      MenuInflater.Inflate(Resource.Menu.menu_main, menu);
-      return true;
-    }
+    //public override bool OnCreateOptionsMenu(IMenu menu) {
+    //  MenuInflater.Inflate(Resource.Menu.menu_main, menu);
+    //  return true;
+    //}
 
-    public override bool OnOptionsItemSelected(IMenuItem item) {
-      int id = item.ItemId;
-      if (id == Resource.Id.action_manage_accounts) {
-        Android.Widget.Toast.MakeText(this, "Manage accounts functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
-        return true;
-      }
+    //public override bool OnOptionsItemSelected(IMenuItem item) {
+    //  int id = item.ItemId;
+    //  if (id == Resource.Id.action_manage_accounts) {
+    //    Android.Widget.Toast.MakeText(this, "Manage accounts functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
+    //    return true;
+    //  }
 
-      return base.OnOptionsItemSelected(item);
-    }
+    //  return base.OnOptionsItemSelected(item);
+    //}
 
     private void FabOnClick(object sender, EventArgs eventArgs) {
       View view = (View)sender;
@@ -75,6 +84,7 @@ namespace WeightApp {
     }
 
     public bool OnNavigationItemSelected(IMenuItem item) {
+      
       int id = item.ItemId;
 
       if (id == Resource.Id.nav_statistics) {
@@ -89,6 +99,17 @@ namespace WeightApp {
         Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
       } else if (id == Resource.Id.nav_contact) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
+      } else if (id == Resource.Id.nav_manage_account) {
+        //account fragment
+      } else if (id == Resource.Id.nav_logout) {
+        //clear any login stored creds
+        ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+        ISharedPreferencesEditor edit = pref.Edit();
+        edit.Clear();
+        edit.Commit();
+
+        //Set main activity to no history to prevent user from going back after logout
+        StartActivity(typeof(UserAccessActivity));
       }
 
       DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
