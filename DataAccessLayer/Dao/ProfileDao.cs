@@ -46,5 +46,10 @@ namespace DataAccessLayer.Dao {
     public void DeleteProfile(Profile profile) {
       _SQLiteConnection.Delete(profile);
     }
+
+    //DELETE ALL
+    public void DeleteAll() {
+      _SQLiteConnection.DeleteAll<Profile>();
+    }
   }
 }

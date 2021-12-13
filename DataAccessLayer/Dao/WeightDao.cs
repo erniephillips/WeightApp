@@ -43,5 +43,10 @@ namespace DataAccessLayer.Dao {
     public void DeleteWeight(Weight weight) {
       _SQLiteConnection.Delete(weight);
     }
+
+    //DELETE ALL
+    public void DeleteAll() {
+      _SQLiteConnection.DeleteAll<Weight>();
+    }
   }
 }
