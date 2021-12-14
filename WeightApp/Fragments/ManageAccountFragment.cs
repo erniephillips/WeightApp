@@ -31,7 +31,10 @@ namespace WeightApp.Fragments {
       string userId = pref.GetString("UserId", String.Empty);
       User user = userDao.GetUser(Convert.ToInt32(userId));
 
-      TextView txtUserInfo = view.FindViewById<TextView>(Resource.Id.tv_ma_user_info);
+      TextView txtUsername = view.FindViewById<TextView>(Resource.Id.tv_ma_user_username);
+      TextView txtName = view.FindViewById<TextView>(Resource.Id.tv_ma_user_name);
+      TextView txtEmail = view.FindViewById<TextView>(Resource.Id.tv_ma_user_email);
+      TextView txtLastLogin = view.FindViewById<TextView>(Resource.Id.tv_ma_user_last_login);
       ScrollView scrollView = view.FindViewById<ScrollView>(Resource.Id.ma_scroll);
       Button btnUpdateInfo = view.FindViewById<Button>(Resource.Id.btn_ma_update_info);
       Button btnUpdatePassword = view.FindViewById<Button>(Resource.Id.btn_ma_change_password);
@@ -42,15 +45,17 @@ namespace WeightApp.Fragments {
       EditText etNewPassword = view.FindViewById<EditText>(Resource.Id.et_ma_password);
       EditText etConfirmPassword = view.FindViewById<EditText>(Resource.Id.et_ma_confirm_password);
       EditText etSecurityAnswer = view.FindViewById<EditText>(Resource.Id.et_ma_sec_answer);
-      TextView txtErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_errors);
+      TextView txtInfoErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_info_errors);
+      TextView txtPasswordErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_password_errors);
+      TextView txtSecInfoErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_sec_info_errors);
 
       AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
-      
+
       //set the user's information for display
-      txtUserInfo.Text = "Username: \t\t" + user.USERNAME + "\n";
-      txtUserInfo.Append("Name: \t\t\t\t\t\t\t" + user.NAME + "\n");
-      txtUserInfo.Append("Email: \t\t\t\t\t\t\t\t" + user.EMAIL + "\n");
-      txtUserInfo.Append("Last Login: \t\t" + user.LAST_LOGIN_DATE.ToShortDateString() + "\n");
+      txtUsername.Text = user.USERNAME;
+      txtName.Text = user.NAME;
+      txtEmail.Text = user.EMAIL;
+      txtLastLogin.Text = user.LAST_LOGIN_DATE.ToString();
 
       //set the spinner, load all values first then loop each value and match with stored question, then set index of spinner when matched
       Spinner spinner = view.FindViewById<Spinner>(Resource.Id.spinner_ma_sec_question);
@@ -68,14 +73,14 @@ namespace WeightApp.Fragments {
       //Update Info btn click
       btnUpdateInfo.Click += (s, e) => {
         #region VALIDATION
-        txtErrors.Text = ""; //clear errors
+        txtInfoErrors.Text = ""; //clear errors
         //check for null
         if(String.IsNullOrEmpty(etName.Text) || String.IsNullOrEmpty(etEmail.Text)) {
           if (String.IsNullOrEmpty(etName.Text))
-            txtErrors.Append("Name is required\n");
+            txtInfoErrors.Append("Name is required\n");
           if (String.IsNullOrEmpty(etEmail.Text))
-            txtErrors.Append("Email is required");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+            txtInfoErrors.Append("Email is required\n");
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
@@ -83,8 +88,8 @@ namespace WeightApp.Fragments {
         string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(etEmail.Text)) {
-          txtErrors.Append("Please enter a valid email address");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+          txtInfoErrors.Append("Please enter a valid email address\n");
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
         #endregion
@@ -107,28 +112,28 @@ namespace WeightApp.Fragments {
       //Password btn click
       btnUpdatePassword.Click += (s, e) => {
         #region VALIDATION
-        txtErrors.Text = ""; //clear errors
+        txtPasswordErrors.Text = ""; //clear errors
         if (String.IsNullOrEmpty(etCurrentPassword.Text) || String.IsNullOrEmpty(etNewPassword.Text) || String.IsNullOrEmpty(etConfirmPassword.Text)) {
           if (String.IsNullOrEmpty(etCurrentPassword.Text))
-            txtErrors.Append("Current password is required\n");
+            txtPasswordErrors.Append("Current password is required\n");
           if (String.IsNullOrEmpty(etNewPassword.Text))
-            txtErrors.Append("New password is required\n");
+            txtPasswordErrors.Append("New password is required\n");
           if (String.IsNullOrEmpty(etConfirmPassword.Text))
-            txtErrors.Append("Password confirmation is required\n");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+            txtPasswordErrors.Append("Password confirmation is required\n");
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
         //check the current password against db store
         if (etCurrentPassword.Text != user.PASSWORD) {
-          txtErrors.Text = "Current password does not match your entry";
-          scrollView.FullScroll(FocusSearchDirection.Down);
+          txtPasswordErrors.Text = "Current password does not match your entry\n";
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
         if(etNewPassword.Text != etConfirmPassword.Text) {
-          txtErrors.Text = "New password and confirm password do not match";
-          scrollView.FullScroll(FocusSearchDirection.Down);
+          txtPasswordErrors.Text = "New password and confirm password do not match\n";
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
         #endregion
@@ -156,10 +161,10 @@ namespace WeightApp.Fragments {
       //Security info btn click
       btnUpdateSecurityInfo.Click += (s, e) => {
         #region VALIDATION
-        txtErrors.Text = ""; //clear errors
+        txtSecInfoErrors.Text = ""; //clear errors
         if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
-          txtErrors.Text = "Security answer is required";
-          scrollView.FullScroll(FocusSearchDirection.Down);
+          txtSecInfoErrors.Text = "Security answer is required\n";
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
         #endregion
