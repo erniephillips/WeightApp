@@ -23,6 +23,7 @@ namespace WeightApp.Activities {
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_register_back);
       Button btnRegister = FindViewById<Button>(Resource.Id.btn_reg_register);
       ImageView btnInfo = FindViewById<ImageView>(Resource.Id.btn_register_info);
+      ScrollView scrollView = FindViewById<ScrollView>(Resource.Id.reg_scrollview);
 
       //populate the drowdown
       Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner_reg_sec_question);
@@ -70,12 +71,14 @@ namespace WeightApp.Activities {
             txtRegistrationErrors.Append("Please enter an email\n");
           if (txtSecurityAnswer == "")
             txtRegistrationErrors.Append("Please enter a security answer\n");
+          scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
         //check passwords
         if (txtPassword != txtConfirmPassword) {
           txtRegistrationErrors.Append("Passwords do not match");
+          scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
@@ -84,13 +87,17 @@ namespace WeightApp.Activities {
         var regex = new Regex(pattern);
         if (!regex.IsMatch(txtEmail)) {
           txtRegistrationErrors.Append("Please enter a valid email address");
+          scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
         //check username does not exist
         User user = userDao.GetUserByUsername(txtUsername);
-        if (user != null)
+        if (user != null) {
           txtRegistrationErrors.Append("Username already exist, please choose another one");
+          scrollView.FullScroll(FocusSearchDirection.Down);
+          return;
+        }
         #endregion
 
         string ddlValue = spinner.SelectedItem.ToString();

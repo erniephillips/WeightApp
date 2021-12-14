@@ -62,7 +62,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="0%"
       app:layout_widthPercent="80%" />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_ma_update_info"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="0%"
       app:layout_widthPercent="80%" />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_ma_change_password"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="0%"
       app:layout_widthPercent="80%" />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_ma_update_sec_info"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"

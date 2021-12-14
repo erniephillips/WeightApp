@@ -3,7 +3,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:id="@+id/reg_scrollview">
   <android.support.percent.PercentRelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -151,7 +152,7 @@
       app:layout_marginTopPercent="0%"
       app:layout_widthPercent="80%" />
     <!-- Register Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_reg_register"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
@@ -223,7 +224,7 @@
     app:layout_marginLeftPercent="3%"
     app:layout_marginTopPercent="16%"
     app:layout_widthPercent="50%" />
-  <Button
+  <androidx.appcompat.widget.AppCompatButton 
     android:id="@+id/login"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"

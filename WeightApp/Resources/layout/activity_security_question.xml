@@ -64,7 +64,7 @@
       app:layout_marginTopPercent="0%"
       app:layout_widthPercent="80%" />
     <!-- Login Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_verify_sa"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"

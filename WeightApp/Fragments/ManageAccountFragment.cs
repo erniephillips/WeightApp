@@ -157,9 +157,11 @@ namespace WeightApp.Fragments {
       btnUpdateSecurityInfo.Click += (s, e) => {
         #region VALIDATION
         txtErrors.Text = ""; //clear errors
-        if (String.IsNullOrEmpty(etSecurityAnswer.Text))
+        if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
           txtErrors.Text = "Security answer is required";
-        scrollView.FullScroll(FocusSearchDirection.Down);
+          scrollView.FullScroll(FocusSearchDirection.Down);
+          return;
+        }
         #endregion
 
         string selectedSpinnerValue = spinner.SelectedItem.ToString();
