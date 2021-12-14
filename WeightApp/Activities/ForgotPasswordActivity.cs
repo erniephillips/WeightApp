@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,9 @@ namespace WeightApp.Activities {
         string txtUsername = FindViewById<EditText>(Resource.Id.et_fp_username).Text;
         TextView txtLoginErrors = FindViewById<TextView>(Resource.Id.txt_fp_errors);
 
-        if(txtUsername == "") {
+        #region VALIDATION
+        txtLoginErrors.Text = "";
+        if (txtUsername == "") {
           txtLoginErrors.Text = "Username required";
           return;
         }
@@ -41,13 +44,13 @@ namespace WeightApp.Activities {
           txtLoginErrors.Text = "Username not found";
           return;
         }
+        #endregion
 
-        //set username in storage and navigate to security question activity
-        ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-        ISharedPreferencesEditor edit = pref.Edit();
-        edit.PutString("Username", user.USERNAME.Trim());
-        StartActivity(typeof(SecurityQuestionActivity));
-
+        //serialize user obj and send to next activity. This will save on making another db call
+        Intent intent = new Intent(this, typeof(SecurityQuestionActivity));
+        intent.PutExtra("User", JsonConvert.SerializeObject(user));
+        StartActivity(intent);
+        Finish();
       };
     }
   }
