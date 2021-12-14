@@ -43,6 +43,10 @@ namespace AndroidApp {
       await Task.Delay(1000); // Simulate a bit of startup work.
       Log.Debug(TAG, "Startup work is finished - checking login.");
 
+      //UserDao ud = new UserDao();
+      //ud.DeleteAll();
+      //var a = ud.GetUsers();
+
       //check users last login date, if within two weeks and logged in flag exists
       //https://www.c-sharpcorner.com/article/shared-preferences-in-xamarin-android/
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);

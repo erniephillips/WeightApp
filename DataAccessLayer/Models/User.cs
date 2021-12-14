@@ -35,5 +35,11 @@ namespace DataAccessLayer.Models {
     public DateTime CREATED_DATE { get; set; }
 
     public DateTime LAST_LOGIN_DATE { get; set; }
+
+    [NotNull]
+    public string SECURITY_QUESTION { get; set; }
+
+    [NotNull]
+    public string SECURITY_ANSWER { get; set; }
   }
 }

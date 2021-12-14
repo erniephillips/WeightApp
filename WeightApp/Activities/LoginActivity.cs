@@ -21,12 +21,16 @@ namespace WeightApp.Activities {
 
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_login_back);
       Button btnLogin = FindViewById<Button>(Resource.Id.btn_log_login);
+      TextView txtForgotPassword = FindViewById<TextView>(Resource.Id.txt_forgot_password);
 
       btnBack.Click += delegate {
         StartActivity(typeof(UserAccessActivity));
       };
 
-      //var users = userDao.GetUsers();
+      txtForgotPassword.Click += (s, e) => {
+        //send to forgot password screen
+        StartActivity(typeof(ForgotPasswordActivity));
+      };
 
       btnLogin.Click += (s, e) => {
         UserDao userDao = new UserDao();
