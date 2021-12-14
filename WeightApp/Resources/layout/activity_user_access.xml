@@ -29,7 +29,7 @@
       android:layout_width="wrap_content"
       android:layout_below="@+id/aua_app_logo"
       android:layout_centerHorizontal="true"
-      android:background="#004aad"
+      android:background="?attr/colorPrimary"
       android:text="Login"
       android:textColor="#fff"
       android:textSize="20sp"

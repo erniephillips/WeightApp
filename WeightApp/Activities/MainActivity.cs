@@ -100,7 +100,7 @@ namespace WeightApp {
       } else if (id == Resource.Id.nav_contact) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_manage_account) {
-        //account fragment
+        SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_logout) {
         //clear any login stored creds
         ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);

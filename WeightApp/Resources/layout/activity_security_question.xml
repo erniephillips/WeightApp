@@ -70,7 +70,7 @@
       android:layout_width="wrap_content"
       android:layout_below="@+id/et_security_answer"
       android:layout_centerHorizontal="true"
-      android:background="#004aad"
+      android:background="?attr/colorPrimary"
       android:text="Verify"
       android:textColor="#fff"
       android:textSize="20sp"

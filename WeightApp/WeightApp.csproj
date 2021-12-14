@@ -76,6 +76,7 @@
     <Compile Include="Fragments\ContactFragment.cs" />
     <Compile Include="Fragments\HistoryFragment.cs" />
     <Compile Include="Fragments\MainFragment.cs" />
+    <Compile Include="Fragments\ManageAccountFragment.cs" />
     <Compile Include="Fragments\ProfileFragment.cs" />
     <Compile Include="Activities\SecurityQuestionActivity.cs" />
     <Compile Include="Fragments\StatisticsFragment.cs" />
@@ -233,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_reset_password.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_manage_account.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
