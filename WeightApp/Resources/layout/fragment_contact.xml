@@ -8,6 +8,8 @@
   <android.support.percent.PercentRelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <!--Header-->
     <TextView
       android:id="@+id/tv_contact"
       android:layout_height="wrap_content"
@@ -17,17 +19,25 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Contact"/>
-    <EditText
+
+    <!--Name-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_contact_your_name"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/tv_contact"
-      android:hint="Name"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/contact_tiet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Contact Reason Drop Down-->
     <TextView
       android:id="@+id/contact_spinner_prompt_text"
       android:layout_width="fill_parent"
@@ -47,65 +57,64 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="2%"
       app:layout_widthPercent="80%"/>
-    <EditText
+
+    <!--Username-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_contact_comments"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/spinner_contact_reason"
-      android:hint="Comments"
-      android:textColor="#000"
-      android:textSize="20sp"
-      android:maxLines="4"
-      android:lines="4"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/contact_tiet_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:lines="4"
+        android:hint="Comments" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <!-- Login Button -->
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_contact_submit"
+      android:layout_below="@+id/et_contact_comments"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/et_contact_comments"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="Submit"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_menu_contact_mail"
+      app:backgroundTint="?android:attr/colorPrimary"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
 
-    <!--Errors-->
-    <TextView
-      android:id="@+id/txt_contact_errors"
-      android:text=""
-      android:layout_below="@+id/btn_contact_submit"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"
-      app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="3%"/>
-
+   
     <!--Visit My Portfolio-->
     <TextView
       android:id="@+id/txt_visit_me"
       android:text="For more work, please visit my portfolio at"
-      android:layout_below="@+id/txt_contact_errors"
+      android:layout_below="@+id/btn_contact_submit"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:gravity="center" 
+      android:gravity="center"
       android:textSize="14sp"
       app:layout_marginLeftPercent="10%"
       app:layout_marginRightPercent="10%"
       app:layout_marginTopPercent="3%"/>
-     <TextView 
-      android:id="@+id/website_link" 
-      android:layout_width="match_parent" 
+    <TextView
+      android:id="@+id/website_link"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:gravity="center" 
+      android:gravity="center"
       android:layout_below="@+id/txt_visit_me"
       android:textColorLink="#004aad"
       android:textSize="18sp"
-      android:text="https://erniephillips.github.io" 
+      android:text="https://erniephillips.github.io"
       android:autoLink="web" />
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>

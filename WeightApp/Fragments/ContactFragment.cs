@@ -2,8 +2,10 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Xamarin.Essentials;
 
 /*
@@ -29,9 +31,11 @@ namespace WeightApp.Fragments {
 
       ScrollView scrollView = view.FindViewById<ScrollView>(Resource.Id.contact_scrollview);
       Button btnSubmit = view.FindViewById<Button>(Resource.Id.btn_contact_submit);
-      TextView txtName = view.FindViewById<TextView>(Resource.Id.et_contact_your_name);
-      TextView txtComments = view.FindViewById<TextView>(Resource.Id.et_contact_comments);
-      TextView txtContactErrors = view.FindViewById<TextView>(Resource.Id.txt_contact_errors);
+
+      TextInputLayout txtIlName = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_your_name);
+      TextInputLayout txtIlComments = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_comments);
+      TextInputEditText txtName = view.FindViewById<TextInputEditText>(Resource.Id.contact_tiet_name);
+      TextInputEditText txtComments = view.FindViewById<TextInputEditText>(Resource.Id.contact_tiet_comments);
 
 
       //populate the drowdown
@@ -42,13 +46,18 @@ namespace WeightApp.Fragments {
 
       btnSubmit.Click += (s, e) => {
         #region VALIDATION
-        txtContactErrors.Text = "";
-        if(string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtComments.Text)) {
-          if (string.IsNullOrEmpty(txtName.Text))
-            txtContactErrors.Append("Name is required\n");
-          if (string.IsNullOrEmpty(txtComments.Text))
-            txtContactErrors.Append("Comments are required\n");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+        txtIlName.Error = "";
+        txtIlComments.Error = "";
+
+        if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtComments.Text)) {
+          if (string.IsNullOrEmpty(txtName.Text)) {
+            txtIlName.Error = "Name is required";
+            txtIlName.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (string.IsNullOrEmpty(txtComments.Text)) {
+            txtIlComments.Error = "Comments are required";
+            txtIlComments.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
         #endregion

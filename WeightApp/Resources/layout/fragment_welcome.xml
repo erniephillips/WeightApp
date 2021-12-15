@@ -31,17 +31,19 @@
       android:textStyle="bold"
       android:textSize="18sp"
       android:text="You can also access the \'My Profile\' feature from the navigation menu at any time to update your information."/>
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_go_to_profile"
+      android:layout_below="@+id/tv_get_started"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/tv_get_started"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="My Profile"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_menu_profile"
+      app:backgroundTint="?android:attr/colorPrimary"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>

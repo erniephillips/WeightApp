@@ -195,81 +195,19 @@
     </com.google.android.material.textfield.TextInputLayout>
    
     <!-- Register Button -->
-    <androidx.appcompat.widget.AppCompatButton 
+    <com.google.android.material.button.MaterialButton 
       android:id="@+id/btn_reg_register"
+      android:layout_below="@+id/et_reg_sec_answer"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/et_reg_sec_answer"
       android:layout_centerHorizontal="true"
-      android:background="#00B33C"
       android:text="Register"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_registration"
+      app:backgroundTint="#00B33C"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>
-<!--
-  <android.support.percent.PercentRelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <TextView
-    android:id="@+id/txtUserName"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:text="UserName :"
-    android:textColor="#000"
-    android:textSize="20sp"
-    app:layout_marginLeftPercent="10%"
-    app:layout_marginTopPercent="10%"
-    app:layout_widthPercent="30%" />
-  <TextView
-    android:id="@+id/txtPassword"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_below="@+id/txtUserName"
-    android:text="Password :"
-    android:textColor="#000"
-    android:textSize="20sp"
-    app:layout_marginLeftPercent="10%"
-    app:layout_marginTopPercent="4%"
-    app:layout_widthPercent="30%" />
-  <EditText
-    android:id="@+id/userName"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_toRightOf="@+id/txtUserName"
-    android:hint="User Name"
-    android:textColor="#000"
-    android:textSize="20sp"
-    app:layout_marginLeftPercent="3%"
-    app:layout_marginTopPercent="8%"
-    app:layout_widthPercent="50%" />
-  <EditText
-    android:id="@+id/password"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_toRightOf="@+id/txtPassword"
-    android:hint="Password"
-    android:inputType="textPassword"
-    android:textColor="#000"
-    android:textSize="20sp"
-    app:layout_marginLeftPercent="3%"
-    app:layout_marginTopPercent="16%"
-    app:layout_widthPercent="50%" />
-  <androidx.appcompat.widget.AppCompatButton 
-    android:id="@+id/login"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_below="@+id/password"
-    android:layout_centerHorizontal="true"
-    android:background="#00B33C"
-    android:text="Register"
-    android:textColor="#fff"
-    android:textSize="20sp"
-    app:layout_marginPercent="5%"
-    app:layout_widthPercent="80%" />
-</android.support.percent.PercentRelativeLayout>
--->

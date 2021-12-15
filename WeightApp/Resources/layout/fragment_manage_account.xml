@@ -157,18 +157,20 @@
     </com.google.android.material.textfield.TextInputLayout>
     
     <!-- Update Button for user info -->
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_update_info"
+      android:layout_below="@+id/et_ma_email"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/et_ma_email"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="Update"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_person"
+      app:backgroundTint="?android:attr/colorPrimary"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
 
     <!--Divider-->
     <View
@@ -247,18 +249,20 @@
     </com.google.android.material.textfield.TextInputLayout>
     
     <!--Submit Password Button-->
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_change_password"
+      android:layout_below="@+id/et_ma_confirm_password"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/et_ma_confirm_password"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="Update"
-      android:textColor="#fff"
       android:textSize="20sp"
+     style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_password"
+      app:backgroundTint="?android:attr/colorPrimary"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
 
    
     <!--Divider-->
@@ -323,17 +327,19 @@
     </com.google.android.material.textfield.TextInputLayout>
    
     <!--Update Security Info Button-->
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_update_sec_info"
+      android:layout_below="@+id/et_ma_sec_answer"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:layout_below="@+id/et_ma_sec_answer"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="Update"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_security_question"
+      app:backgroundTint="?android:attr/colorPrimary"
+      app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>

@@ -7,12 +7,13 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-
   <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--Application Logo-->
     <ImageView
       android:id="@+id/aua_app_logo"
       android:layout_width="wrap_content"
@@ -23,19 +24,25 @@
       android:layout_gravity="top"
       app:layout_widthPercent="40%"
       app:layout_heightPercent="40%"/>
-    <androidx.appcompat.widget.AppCompatButton 
+
+    <!--Google Material Buttons: https://ahsensaeed.com/android-material-design-library-material-button/-->
+
+    <!--Login Button-->
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/aua_login"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:layout_below="@+id/aua_app_logo"
       android:layout_centerHorizontal="true"
-      android:background="?attr/colorPrimary"
       android:text="Login"
-      android:textColor="#fff"
       android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_login"
+      app:backgroundTint="#1874CD"
       app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
+
     <TextView
       android:id="@+id/tv_OR"
       android:layout_below="@id/aua_login"
@@ -44,21 +51,24 @@
       app:layout_marginTopPercent="5%"
       android:layout_centerHorizontal="true"
       android:textStyle="bold|italic"
-      android:textSize="24sp"
+      android:textSize="20sp"
       android:text="OR"/>
-    <androidx.appcompat.widget.AppCompatButton 
+
+    <!--Register-->
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/aua_register"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:layout_below="@+id/tv_OR"
       android:layout_centerHorizontal="true"
-      android:background="#00B33C"
       android:text="Register"
-      android:textColor="#fff"
       android:textSize="20sp"
-      app:layout_marginTopPercent="8%"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_registration"
+      app:backgroundTint="#00B33C"
+      app:layout_marginTopPercent="10%"
       app:layout_marginPercent="5%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="70%" />
   </android.support.percent.PercentRelativeLayout>
   <!--<androidx.percentlayout.widget.PercentFrameLayout
     android:layout_width="match_parent"
