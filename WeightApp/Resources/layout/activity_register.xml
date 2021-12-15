@@ -37,7 +37,7 @@
           android:layout_gravity="top|left" />
       </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    
+
     <!--Info button-->
     <ImageButton
       android:id="@+id/btn_register_info"
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:hint="Username" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Password-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_password"
@@ -97,10 +97,10 @@
         android:id="@+id/register_tiet_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password" 
+        android:hint="Password"
         android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Confirm Password-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_confirm_password"
@@ -115,10 +115,10 @@
         android:id="@+id/register_tiet_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirm Password" 
+        android:hint="Confirm Password"
         android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-   
+
     <!--Name-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_name"
@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:hint="Your Name" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Email-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_email"
@@ -152,9 +152,27 @@
         android:layout_height="wrap_content"
         android:hint="Email" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Security Question-->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/spinner_reg_sec_question"
+      android:layout_below="@+id/et_email"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="Security Question"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%">
+      <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/reg_populate_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="none"
+        android:cursorVisible="false"
+        android:text="Select an item..." />
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--<TextView
       android:id="@+id/spinner_prompt_text"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -162,11 +180,11 @@
       android:text="@string/security_question_prompt"
       app:layout_marginLeftPercent="11%"
       app:layout_marginTopPercent="1%"
-      app:layout_widthPercent="80%"/>
+      app:layout_widthPercent="80%"/>-->
     <!-- Spinner Style
     https://newbedev.com/how-to-create-custom-spinner-like-border-around-the-spinner-with-down-triangle-on-the-right-side
   -->
-    <Spinner
+    <!--<Spinner
       android:id="@+id/spinner_reg_sec_question"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -175,7 +193,7 @@
       style="@android:style/Widget.Holo.Light.Spinner"
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="1%"
-      app:layout_widthPercent="80%"/>
+      app:layout_widthPercent="80%"/>-->
 
     <!--Security Answer-->
     <com.google.android.material.textfield.TextInputLayout
@@ -193,9 +211,9 @@
         android:layout_height="wrap_content"
         android:hint="Security Answer" />
     </com.google.android.material.textfield.TextInputLayout>
-   
+
     <!-- Register Button -->
-    <com.google.android.material.button.MaterialButton 
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_reg_register"
       android:layout_below="@+id/et_reg_sec_answer"
       android:layout_height="wrap_content"

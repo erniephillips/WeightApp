@@ -34,22 +34,26 @@ namespace WeightApp.Fragments {
 
       TextInputLayout txtIlName = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_your_name);
       TextInputLayout txtIlComments = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_comments);
+      TextInputLayout txtIlDropdown = view.FindViewById<TextInputLayout>(Resource.Id.spinner_contact_reason);
       TextInputEditText txtName = view.FindViewById<TextInputEditText>(Resource.Id.contact_tiet_name);
       TextInputEditText txtComments = view.FindViewById<TextInputEditText>(Resource.Id.contact_tiet_comments);
 
 
       //populate the drowdown
-      Spinner spinner = view.FindViewById<Spinner>(Resource.Id.spinner_contact_reason);
+      AutoCompleteTextView dropdownItems = view.FindViewById<AutoCompleteTextView>(Resource.Id.contact_populate_dropdown);
       ArrayAdapter adapter = ArrayAdapter.CreateFromResource(Activity, Resource.Array.contact_page_dropdown_array, Android.Resource.Layout.SimpleSpinnerItem);
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-      spinner.Adapter = adapter;
+      dropdownItems.Adapter = adapter;
 
       btnSubmit.Click += (s, e) => {
         #region VALIDATION
         txtIlName.Error = "";
         txtIlComments.Error = "";
+        txtIlDropdown.Error = "";
 
-        if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtComments.Text)) {
+        bool isDropdownDefaultValue = dropdownItems.Text == "Select an item...";
+
+        if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtComments.Text) || isDropdownDefaultValue) {
           if (string.IsNullOrEmpty(txtName.Text)) {
             txtIlName.Error = "Name is required";
             txtIlName.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -57,6 +61,10 @@ namespace WeightApp.Fragments {
           if (string.IsNullOrEmpty(txtComments.Text)) {
             txtIlComments.Error = "Comments are required";
             txtIlComments.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (isDropdownDefaultValue) {
+            txtIlDropdown.Error = "Reason for contact selection is required";
+            txtIlDropdown.SetErrorTextAppearance(Color.Red.ToArgb());
           }
           return;
         }
@@ -69,7 +77,7 @@ namespace WeightApp.Fragments {
         };
         try {
           var message = new EmailMessage {
-            Subject = spinner.SelectedItem.ToString() + " - " + txtName.Text,
+            Subject = dropdownItems.Text.ToString() + " - " + txtName.Text,
             Body = txtComments.Text,
             To = emailRecipients
           };

@@ -17,7 +17,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace WeightApp.Activities {
-  [Activity(Label = "RegisterActivity", NoHistory = true)]
+  [Activity(Theme = "@style/AppTheme", Label = "RegisterActivity", NoHistory = true)]
   public class RegisterActivity : Activity {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
@@ -29,10 +29,10 @@ namespace WeightApp.Activities {
       ScrollView scrollView = FindViewById<ScrollView>(Resource.Id.reg_scrollview);
 
       //populate the drowdown
-      Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner_reg_sec_question);
+      AutoCompleteTextView dropdownItems = FindViewById<AutoCompleteTextView>(Resource.Id.reg_populate_dropdown);
       ArrayAdapter adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.security_question_array, Android.Resource.Layout.SimpleSpinnerItem);
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-      spinner.Adapter = adapter;
+      dropdownItems.Adapter = adapter;
 
       btnBack.Click += delegate {
         StartActivity(typeof(UserAccessActivity));
@@ -49,6 +49,7 @@ namespace WeightApp.Activities {
 
       btnRegister.Click += (s, e) => {
         UserDao userDao = new UserDao();
+        TextInputLayout txtIlDropdown = FindViewById<TextInputLayout>(Resource.Id.spinner_reg_sec_question);
         TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_username);
         TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_password);
         TextInputLayout txtIlConfirmPassword = FindViewById<TextInputLayout>(Resource.Id.et_confirm_password);
@@ -71,9 +72,12 @@ namespace WeightApp.Activities {
         txtIlName.Error = "";
         txtIlEmail.Error = "";
         txtIlSecAns.Error = "";
+        txtIlDropdown.Error = "";
+
+        bool isDropdownDefaultValue = dropdownItems.Text == "Select an item...";
 
         //check for nulls
-        if (txtUsername.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "" || txtName.Text == "" || txtEmail.Text == "" || txtSecurityAnswer.Text == "") {
+        if (txtUsername.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "" || txtName.Text == "" || txtEmail.Text == "" || txtSecurityAnswer.Text == "" || isDropdownDefaultValue) {
           if (txtUsername.Text == "") {
             txtIlUsername.Error = "Username is required";
             txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -93,6 +97,10 @@ namespace WeightApp.Activities {
           if (txtEmail.Text == "") {
             txtIlEmail.Error = "Email is required";
             txtIlEmail.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (isDropdownDefaultValue) {
+            txtIlDropdown.Error = "Security question selection is required";
+            txtIlDropdown.SetErrorTextAppearance(Color.Red.ToArgb());
           }
           if (txtSecurityAnswer.Text == "") {
             txtIlSecAns.Error = "Security answer is required";
@@ -136,7 +144,7 @@ namespace WeightApp.Activities {
         }
         #endregion
 
-        string ddlValue = spinner.SelectedItem.ToString();
+        string ddlValue = dropdownItems.Text.ToString();
 
 
         //If reached here, all validation passed, time to store the user
