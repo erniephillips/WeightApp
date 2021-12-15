@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
@@ -87,14 +88,11 @@ namespace WeightApp.Activities {
           }
           StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
         } else { //user did not authenticate properly, show alert
-          AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-          AlertDialog alert = dialog.Create();
-          alert.SetTitle("Weight App Alert");
-          alert.SetMessage("Invalid Login Attempt. Please try again.");
-          alert.SetButton("OK", (c, ev) => {
-            // Ok button click task  
-          });
-          alert.Show();
+          new MaterialAlertDialogBuilder(this)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Invalid Login Attempt. Please try again.")
+          .SetPositiveButton("OK", (sender, e) => { })
+          .Show();
         }
       };
     }

@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.TextField;
 using Newtonsoft.Json;
 using System;
@@ -66,14 +67,20 @@ namespace WeightApp.Activities {
         UserDao userDao = new UserDao();
         userDao.UpdateUser(user);
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        AlertDialog alert = dialog.Create();
-        alert.SetTitle("Weight App Alert");
-        alert.SetMessage("Password successfully reset");
-        alert.SetButton("OK", (c, ev) => {
-          StartActivity(typeof(LoginActivity));  
-        });
-        alert.Show();
+        new MaterialAlertDialogBuilder(this)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Password successfully reset.")
+          .SetPositiveButton("OK", (sender, e) => {
+            StartActivity(typeof(LoginActivity));
+          }).Show();
+        //AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        //AlertDialog alert = dialog.Create();
+        //alert.SetTitle("Weight App Alert");
+        //alert.SetMessage("Password successfully reset");
+        //alert.SetButton("OK", (c, ev) => {
+        //  StartActivity(typeof(LoginActivity));
+        //});
+        //alert.Show();
       };
 
     }

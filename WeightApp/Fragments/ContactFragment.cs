@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
@@ -84,24 +85,16 @@ namespace WeightApp.Fragments {
           Email.ComposeAsync(message);
         } catch (FeatureNotSupportedException fbsEx) {
           // Email is not supported on this device
-          AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
-          AlertDialog alert = dialog.Create();
-          alert.SetTitle("Weight App Alert");
-          alert.SetMessage("Email is not supported on this device. Please email me directly at erniephillips.android@gmail.com. Thank you.");
-          alert.SetButton("OK", (c, ev) => {
-            // Ok button click task  
-          });
-          alert.Show();
+          new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Email is not supported on this device. Please email me directly at erniephillips.android@gmail.com. Thank you.")
+          .SetPositiveButton("OK", (sender, e) => { }).Show();
         } catch (Exception ex) {
           // Some other exception occurred
-          AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
-          AlertDialog alert = dialog.Create();
-          alert.SetTitle("Weight App Alert");
-          alert.SetMessage("An unexpected error occurred. Please email me directly at erniephillips.android@gmail.com. Thank you.");
-          alert.SetButton("OK", (c, ev) => {
-            // Ok button click task  
-          });
-          alert.Show();
+          new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetMessage("An unexpected error occurred.Please email me directly at erniephillips.android@gmail.com.Thank you.")
+          .SetPositiveButton("OK", (sender, e) => { }).Show();
         }
       };
 

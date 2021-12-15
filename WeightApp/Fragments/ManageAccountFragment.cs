@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
@@ -55,9 +56,7 @@ namespace WeightApp.Fragments {
       TextInputEditText etNewPassword = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_new_password);
       TextInputEditText etConfirmPassword = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_confirm_password);
       TextInputEditText etSecurityAnswer = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_security_answer);
-      
 
-      AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
 
       //set the user's information for display
       txtUsername.Text = user.USERNAME;
@@ -83,7 +82,7 @@ namespace WeightApp.Fragments {
         #region VALIDATION
         txtIlName.Error = "";
         txtIlEmail.Error = "";
-        
+
         //check for null
         if (String.IsNullOrEmpty(etName.Text) || String.IsNullOrEmpty(etEmail.Text)) {
           if (String.IsNullOrEmpty(etName.Text)) {
@@ -113,14 +112,12 @@ namespace WeightApp.Fragments {
         user.EMAIL = etEmail.Text;
         userDao.UpdateUser(user);
 
-        AlertDialog alertNameEmail = dialog.Create();
-        alertNameEmail.SetTitle("Weight App Alert");
-        alertNameEmail.SetMessage("Name and email have been updated");
-        alertNameEmail.SetButton("OK", (c, ev) => {
-          //reload page
-          this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
-        });
-        alertNameEmail.Show();
+        new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Name and email have been updated.")
+          .SetPositiveButton("OK", (sender, e) => {
+            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
+          }).Show();
       };
 
       //Password btn click
@@ -153,7 +150,7 @@ namespace WeightApp.Fragments {
           return;
         }
 
-        if(etNewPassword.Text != etConfirmPassword.Text) {
+        if (etNewPassword.Text != etConfirmPassword.Text) {
           txtIlNewPassword.Error = "Passwords do not match";
           txtIlNewPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           txtIlConfirmPassword.Error = "Passwords do not match";
@@ -168,24 +165,23 @@ namespace WeightApp.Fragments {
         userDao.UpdateUser(user);
 
         //confirmation
-        AlertDialog alertPasswordUpdated = dialog.Create();
-        alertPasswordUpdated.SetTitle("Weight App Alert");
-        alertPasswordUpdated.SetMessage("Password has been updated. Please login again.");
-        alertPasswordUpdated.SetButton("OK", (c, ev) => {
-          //log the user out and have them log back in
-          ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-          ISharedPreferencesEditor edit = pref.Edit();
-          edit.Clear();
-          edit.Commit();
-          Activity.StartActivity(typeof(LoginActivity));
-        });
-        alertPasswordUpdated.Show();
+        new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Password has been updated. Please login again.")
+          .SetPositiveButton("OK", (sender, e) => {
+            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+            ISharedPreferencesEditor edit = pref.Edit();
+            edit.Clear();
+            edit.Commit();
+            Activity.StartActivity(typeof(LoginActivity));
+          }).Show();
+
       };
-      
+
       //Security info btn click
       btnUpdateSecurityInfo.Click += (s, e) => {
         #region VALIDATION
-        txtIlSecurityAnswer.Error = ""; 
+        txtIlSecurityAnswer.Error = "";
 
         if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
           txtIlSecurityAnswer.Error = "Security answer is required";
@@ -201,14 +197,12 @@ namespace WeightApp.Fragments {
         userDao.UpdateUser(user);
 
         //confirmation
-        AlertDialog alertSecurityInfo = dialog.Create();
-        alertSecurityInfo.SetTitle("Weight App Alert");
-        alertSecurityInfo.SetMessage("Security info has been updated");
-        alertSecurityInfo.SetButton("OK", (c, ev) => {
-          //reload page
-          this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
-        });
-        alertSecurityInfo.Show();
+        new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetMessage("Security info has been updated.")
+          .SetPositiveButton("OK", (sender, e) => {
+            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
+          }).Show();
       };
 
       return view;
