@@ -101,12 +101,20 @@
       android:text=""/>
 
     <!--Divider-->
+   <!-- <com.google.android.material.divider.MaterialDivider
+      android:id="@+id/ma_divider_one"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginRightPercent="10%"/>-->
     <View
       android:id="@+id/ma_divider_one"
       android:layout_width="match_parent"
       android:layout_height="2dp"
       android:layout_below="@+id/tv_ma_user_last_login"
       app:layout_marginTopPercent="3%"
+      app:layout_marginLeftPercent="5%"
+      app:layout_marginRightPercent="5%"
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
@@ -122,7 +130,7 @@
       android:textSize="32sp"
       android:text="Manage Info"/>
 
-     <!--Name-->
+    <!--Name-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_name"
       android:layout_below="@+id/tv_manage_info"
@@ -138,8 +146,8 @@
         android:layout_height="wrap_content"
         android:hint="Your name" />
     </com.google.android.material.textfield.TextInputLayout>
-    
-     <!--Email-->
+
+    <!--Email-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_email"
       android:layout_below="@+id/et_ma_name"
@@ -155,7 +163,7 @@
         android:layout_height="wrap_content"
         android:hint="Email" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!-- Update Button for user info -->
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_update_info"
@@ -179,6 +187,8 @@
       android:layout_height="2dp"
       android:layout_below="@+id/btn_ma_update_info"
       app:layout_marginTopPercent="3%"
+      app:layout_marginLeftPercent="5%"
+      app:layout_marginRightPercent="5%"
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
@@ -202,6 +212,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="3%"
       app:layout_widthPercent="80%"
+      app:endIconMode="password_toggle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <com.google.android.material.textfield.TextInputEditText
@@ -211,7 +222,7 @@
         android:hint="Current Password"
         android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--New Password-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_password"
@@ -220,6 +231,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="1%"
       app:layout_widthPercent="80%"
+      app:endIconMode="password_toggle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <com.google.android.material.textfield.TextInputEditText
@@ -229,7 +241,7 @@
         android:hint="New Password"
         android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Confirm Password-->
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_confirm_password"
@@ -238,6 +250,7 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="1%"
       app:layout_widthPercent="80%"
+      app:endIconMode="password_toggle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <com.google.android.material.textfield.TextInputEditText
@@ -247,7 +260,7 @@
         android:hint="Confirm Password"
         android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!--Submit Password Button-->
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_change_password"
@@ -257,14 +270,14 @@
       android:layout_centerHorizontal="true"
       android:text="Update"
       android:textSize="20sp"
-     style="@style/Widget.MaterialComponents.Button"
+      style="@style/Widget.MaterialComponents.Button"
       app:icon="@drawable/ic_password"
       app:backgroundTint="?android:attr/colorPrimary"
       app:layout_marginTopPercent="3%"
       app:layout_marginPercent="5%"
       app:layout_widthPercent="70%" />
 
-   
+
     <!--Divider-->
     <View
       android:id="@+id/ma_divider_three"
@@ -272,6 +285,8 @@
       android:layout_height="2dp"
       android:layout_below="@+id/btn_ma_change_password"
       app:layout_marginTopPercent="3%"
+      app:layout_marginLeftPercent="5%"
+      app:layout_marginRightPercent="5%"
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
@@ -325,7 +340,7 @@
         android:layout_height="wrap_content"
         android:hint="Security Answer"/>
     </com.google.android.material.textfield.TextInputLayout>
-   
+
     <!--Update Security Info Button-->
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_ma_update_sec_info"
