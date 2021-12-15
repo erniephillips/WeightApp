@@ -291,6 +291,7 @@
       android:background="@android:color/darker_gray" />
 
     <!--Header - Security Question -->
+
     <TextView
       android:id="@+id/tv_update_sec_question"
       android:layout_height="wrap_content"
@@ -303,7 +304,25 @@
       android:text="Security Info"/>
 
     <!--Security Question-->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/spinner_ma_sec_question"
+      android:layout_below="@+id/tv_update_sec_question"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="Security Question"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%">
+      <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/ma_populate_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="none"
+        android:cursorVisible="false"
+        android:text="Select an item..." />
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--<TextView
       android:id="@+id/spinner_ma_prompt_text"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -321,7 +340,7 @@
       style="@android:style/Widget.Holo.Light.Spinner"
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="2%"
-      app:layout_widthPercent="80%"/>
+      app:layout_widthPercent="80%"/>-->
 
     <!--Security Answer-->
     <!--Password-->

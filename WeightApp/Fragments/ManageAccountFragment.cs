@@ -65,15 +65,17 @@ namespace WeightApp.Fragments {
       txtLastLogin.Text = user.LAST_LOGIN_DATE.ToString();
 
       //set the spinner, load all values first then loop each value and match with stored question, then set index of spinner when matched
-      Spinner spinner = view.FindViewById<Spinner>(Resource.Id.spinner_ma_sec_question);
+      AutoCompleteTextView dropdownItems = view.FindViewById<AutoCompleteTextView>(Resource.Id.ma_populate_dropdown);
       ArrayAdapter adapter = ArrayAdapter.CreateFromResource(Activity, Resource.Array.security_question_array, Android.Resource.Layout.SimpleSpinnerItem);
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-      spinner.Adapter = adapter;
-      for (int i = 0; i < spinner.Count; i++) {
-        if (spinner.GetItemAtPosition(i).ToString().Equals(user.SECURITY_QUESTION)) {
-          spinner.SetSelection(i);
-        }
-      }
+      dropdownItems.Adapter = adapter;
+
+      dropdownItems.SetText(user.SECURITY_QUESTION, false);
+      //for (int i = 0; i < dropdownItems.LineCount; i++) {
+      //  if (dropdownItems.item(i).ToString().Equals(user.SECURITY_QUESTION)) {
+      //    dropdownItems.SetSelection(i);
+      //  }
+      //}
 
       //set button click events
 
@@ -190,7 +192,7 @@ namespace WeightApp.Fragments {
         }
         #endregion
 
-        string selectedSpinnerValue = spinner.SelectedItem.ToString();
+        string selectedSpinnerValue = dropdownItems.Text;
 
         user.SECURITY_QUESTION = selectedSpinnerValue;
         user.SECURITY_ANSWER = etSecurityAnswer.Text; ;
