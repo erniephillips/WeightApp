@@ -93,7 +93,7 @@ namespace WeightApp {
 
     private void FabOnClick(object sender, EventArgs eventArgs) {
       //send user to contact page
-      SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
+      SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
       //View view = (View)sender;
       //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
       //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
