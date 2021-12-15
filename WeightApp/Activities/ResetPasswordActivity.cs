@@ -6,9 +6,11 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.TextField;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -27,24 +29,32 @@ namespace WeightApp.Activities {
       };
 
       btnResetPassword.Click += delegate {
-        TextView txtPassword = FindViewById<TextView>(Resource.Id.et_rp_password);
-        TextView txtConfirmPassword = FindViewById<TextView>(Resource.Id.et_rp_confirm_password);
-        TextView txtErrors = FindViewById<TextView>(Resource.Id.txt_rp_errors);
+        TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_rp_password);
+        TextInputLayout txtIlConfirmPassword = FindViewById<TextInputLayout>(Resource.Id.et_rp_confirm_password);
+        TextInputEditText txtPassword = FindViewById<TextInputEditText>(Resource.Id.rp_tiet_password);
+        TextInputEditText txtConfirmPassword = FindViewById<TextInputEditText>(Resource.Id.rp_tiet_confirm_password);
 
         #region VALIDATION
-        txtErrors.Text = "";
+        txtIlPassword.Error = "";
+        txtIlConfirmPassword.Error = "";
+
         if (String.IsNullOrEmpty(txtPassword.Text) || String.IsNullOrEmpty(txtConfirmPassword.Text)) {
-          if(String.IsNullOrEmpty(txtPassword.Text)) {
-            txtErrors.Append("Password is required\n");
+          if (txtPassword.Text == "") {
+            txtIlPassword.Error = "Password is required";
+            txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           }
-          if (String.IsNullOrEmpty(txtConfirmPassword.Text)) {
-            txtErrors.Append("Confirm password is required");
+          if (txtPassword.Text == "") {
+            txtIlConfirmPassword.Error = "Password confirmation is required";
+            txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           }
           return;
         }
 
         if (txtPassword.Text != txtConfirmPassword.Text) {
-          txtErrors.Text = "Passwords must match";
+          txtIlPassword.Error = "Passwords do not match";
+          txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          txtIlConfirmPassword.Error = "Passwords do not match";
+          txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion

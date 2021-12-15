@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -7,8 +8,10 @@ using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Google.Android.Material.Snackbar;
+using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -46,56 +49,89 @@ namespace WeightApp.Activities {
 
       btnRegister.Click += (s, e) => {
         UserDao userDao = new UserDao();
-        string txtUsername = FindViewById<EditText>(Resource.Id.et_username).Text;
-        string txtPassword = FindViewById<EditText>(Resource.Id.et_password).Text;
-        string txtConfirmPassword = FindViewById<EditText>(Resource.Id.et_confirm_password).Text;
-        string txtName = FindViewById<EditText>(Resource.Id.et_name).Text;
-        string txtEmail = FindViewById<EditText>(Resource.Id.et_email).Text;
-        string txtSecurityAnswer = FindViewById<EditText>(Resource.Id.et_reg_sec_answer).Text;
-        TextView txtRegistrationErrors = FindViewById<TextView>(Resource.Id.txt_reg_errors);
+        TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_username);
+        TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_password);
+        TextInputLayout txtIlConfirmPassword = FindViewById<TextInputLayout>(Resource.Id.et_confirm_password);
+        TextInputLayout txtIlName = FindViewById<TextInputLayout>(Resource.Id.et_name);
+        TextInputLayout txtIlEmail = FindViewById<TextInputLayout>(Resource.Id.et_email);
+        TextInputLayout txtIlSecAns = FindViewById<TextInputLayout>(Resource.Id.et_reg_sec_answer);
 
+        TextInputEditText txtUsername = FindViewById<TextInputEditText>(Resource.Id.register_tiet_username);
+        TextInputEditText txtPassword = FindViewById<TextInputEditText>(Resource.Id.register_tiet_password);
+        TextInputEditText txtConfirmPassword = FindViewById<TextInputEditText>(Resource.Id.register_tiet_confirm_password);
+        TextInputEditText txtName = FindViewById<TextInputEditText>(Resource.Id.register_tiet_name);
+        TextInputEditText txtEmail = FindViewById<TextInputEditText>(Resource.Id.register_tiet_email);
+        TextInputEditText txtSecurityAnswer = FindViewById<TextInputEditText>(Resource.Id.register_tiet_security_answer);
+        
 
         #region VALIDATION
-        txtRegistrationErrors.Text = ""; //clear textview if any value exists
+        txtIlUsername.Error = "";
+        txtIlPassword.Error = "";
+        txtIlConfirmPassword.Error = "";
+        txtIlName.Error = "";
+        txtIlEmail.Error = "";
+        txtIlSecAns.Error = "";
 
-        if (txtUsername == "" || txtPassword == "" || txtConfirmPassword == "" || txtName == "" || txtEmail == "" || txtSecurityAnswer == "") {
-          if (txtUsername == "")
-            txtRegistrationErrors.Append("Please enter a username\n");
-          if (txtPassword == "")
-            txtRegistrationErrors.Append("Please enter a password\n");
-          if (txtConfirmPassword == "")
-            txtRegistrationErrors.Append("Please enter a confirm password\n");
-          if (txtName == "")
-            txtRegistrationErrors.Append("Please enter a name\n");
-          if (txtEmail == "")
-            txtRegistrationErrors.Append("Please enter an email\n");
-          if (txtSecurityAnswer == "")
-            txtRegistrationErrors.Append("Please enter a security answer\n");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+        //check for nulls
+        if (txtUsername.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "" || txtName.Text == "" || txtEmail.Text == "" || txtSecurityAnswer.Text == "") {
+          if (txtUsername.Text == "") {
+            txtIlUsername.Error = "Username is required";
+            txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtPassword.Text == "") {
+            txtIlPassword.Error = "Password is required";
+            txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtConfirmPassword.Text == "") {
+            txtIlConfirmPassword.Error = "Password confirmation is required";
+            txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtName.Text == "") {
+            txtIlName.Error = "Name is required";
+            txtIlName.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtEmail.Text == "") {
+            txtIlEmail.Error = "Email is required";
+            txtIlEmail.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtSecurityAnswer.Text == "") {
+            txtIlSecAns.Error = "Security answer is required";
+            txtIlSecAns.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
 
         //check passwords
-        if (txtPassword != txtConfirmPassword) {
-          txtRegistrationErrors.Append("Passwords do not match");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+        if (txtPassword.Text != txtConfirmPassword.Text) {
+          txtIlPassword.Error = "Passwords do not match";
+          txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          txtIlConfirmPassword.Error = "Passwords do not match";
+          txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
 
         //check email
-        string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        string pattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$";
         var regex = new Regex(pattern);
-        if (!regex.IsMatch(txtEmail)) {
-          txtRegistrationErrors.Append("Please enter a valid email address");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+        if (!regex.IsMatch(txtEmail.Text)) {
+          txtIlEmail.Error = "Enter a valid email address";
+          txtIlEmail.SetErrorTextAppearance(Color.Red.ToArgb());
+          return;
+        }
+
+        //check username for spaces
+        if (txtUsername.Text.Any(x => Char.IsWhiteSpace(x))) {
+          txtIlUsername.Error = "Username may not contain any spaces";
+          txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
 
         //check username does not exist
-        User user = userDao.GetUserByUsername(txtUsername);
+        User user = userDao.GetUserByUsername(txtUsername.Text);
         if (user != null) {
-          txtRegistrationErrors.Append("Username already exist, please choose another one");
-          scrollView.FullScroll(FocusSearchDirection.Down);
+          txtIlUsername.Error = "Username already exist, please choose another one";
+          txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion
@@ -105,16 +141,16 @@ namespace WeightApp.Activities {
 
         //If reached here, all validation passed, time to store the user
         User userToStore = new User() {
-          USERNAME = txtUsername,
-          PASSWORD = txtPassword,
-          EMAIL = txtEmail,
-          NAME = txtName,
+          USERNAME = txtUsername.Text,
+          PASSWORD = txtPassword.Text,
+          EMAIL = txtEmail.Text,
+          NAME = txtName.Text,
           IS_LOCKED = false,
           FAILED_LOGIN_ATTEMPT = 0,
           CREATED_DATE = DateTime.Now,
           LAST_LOGIN_DATE = DateTime.Now,
           SECURITY_QUESTION = ddlValue,
-          SECURITY_ANSWER = txtSecurityAnswer
+          SECURITY_ANSWER = txtSecurityAnswer.Text
         };
 
         userDao.AddUser(userToStore);

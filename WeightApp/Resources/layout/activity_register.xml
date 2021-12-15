@@ -11,6 +11,7 @@
     <!--
     TextView's for labels and EditText for getting value from user
     -->
+    <!--App Bar-->
     <com.google.android.material.appbar.AppBarLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
       </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     
+    <!--Info button-->
     <ImageButton
       android:id="@+id/btn_register_info"
       android:src="@drawable/ic_info"
@@ -51,6 +53,8 @@
       app:layout_marginRightPercent="3%"
       app:layout_marginTopPercent="3%"
       android:layout_gravity="top|end" />
+
+    <!--Header-->
     <TextView
       android:id="@+id/tv_Register"
       android:layout_height="wrap_content"
@@ -61,63 +65,95 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Register"/>
-    <EditText
+
+    <!--Username-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_username"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/tv_Register"
-      android:hint="Username"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_password"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_username"
-      android:hint="Password"
-      android:inputType="textPassword"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password" 
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Confirm Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_confirm_password"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_password"
-      android:hint="Confirm Password"
-      android:inputType="textPassword"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password" 
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+   
+    <!--Name-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_name"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_confirm_password"
-      android:hint="Your Name"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Your Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Email-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_email"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_name"
-      android:hint="Email"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Security Question-->
     <TextView
       android:id="@+id/spinner_prompt_text"
       android:layout_width="fill_parent"
@@ -125,7 +161,7 @@
       android:layout_below="@+id/et_email"
       android:text="@string/security_question_prompt"
       app:layout_marginLeftPercent="11%"
-      app:layout_marginTopPercent="3%"
+      app:layout_marginTopPercent="1%"
       app:layout_widthPercent="80%"/>
     <!-- Spinner Style
     https://newbedev.com/how-to-create-custom-spinner-like-border-around-the-spinner-with-down-triangle-on-the-right-side
@@ -138,19 +174,26 @@
       android:prompt="@string/security_question_prompt"
       style="@android:style/Widget.Holo.Light.Spinner"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="2%"
+      app:layout_marginTopPercent="1%"
       app:layout_widthPercent="80%"/>
-    <EditText
+
+    <!--Security Answer-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_reg_sec_answer"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/spinner_reg_sec_question"
-      android:hint="Security Answer"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_security_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Security Answer" />
+    </com.google.android.material.textfield.TextInputLayout>
+   
     <!-- Register Button -->
     <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_reg_register"
@@ -164,14 +207,6 @@
       android:textSize="20sp"
       app:layout_marginPercent="5%"
       app:layout_widthPercent="80%" />
-    <TextView
-      android:id="@+id/txt_reg_errors"
-      app:layout_marginLeftPercent="10%"
-      android:text=""
-      android:layout_below="@+id/btn_reg_register"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"/>
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>
 <!--

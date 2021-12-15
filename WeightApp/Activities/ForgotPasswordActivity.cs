@@ -6,9 +6,11 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.TextField;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using WeightApp.Fragments;
@@ -29,19 +31,25 @@ namespace WeightApp.Activities {
 
       btnForgotPassword.Click += (s, e) => { 
         UserDao userDao = new UserDao();
-        string txtUsername = FindViewById<EditText>(Resource.Id.et_fp_username).Text;
-        TextView txtLoginErrors = FindViewById<TextView>(Resource.Id.txt_fp_errors);
+
+        TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_fp_username);
+        TextInputEditText txtUsername = FindViewById<TextInputEditText>(Resource.Id.fp_tiet_username);
 
         #region VALIDATION
-        txtLoginErrors.Text = "";
-        if (txtUsername == "") {
-          txtLoginErrors.Text = "Username required";
+        txtIlUsername.Error = "";
+        if (txtUsername.Text == "") {
+          if (txtUsername.Text == "") {
+            txtIlUsername.Error = "Username is required";
+            txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
 
-        User user = userDao.GetUserByUsername(txtUsername);
+        User user = userDao.GetUserByUsername(txtUsername.Text);
+        
         if (user == null) {
-          txtLoginErrors.Text = "Username not found";
+          txtIlUsername.Error = "Username not found";
+          txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion

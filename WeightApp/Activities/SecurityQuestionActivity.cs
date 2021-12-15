@@ -7,9 +7,11 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.TextField;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using WeightApp.Activities;
@@ -24,16 +26,16 @@ namespace WeightApp.Fragments {
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_sq_back);
       Button btnVerifySA = FindViewById<Button>(Resource.Id.btn_verify_sa);
       TextView txtSecurityQuestion = FindViewById<TextView>(Resource.Id.txt_security_question);
-      
+
+
       //set the security question text
       User user = JsonConvert.DeserializeObject<User>(Intent.GetStringExtra("User"));
       txtSecurityQuestion.Text = user.SECURITY_QUESTION.ToString();
-      PercentRelativeLayout.LayoutParams lp = new PercentRelativeLayout.LayoutParams(LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent);
-      
-      lp.AddRule(LayoutRules.Below, Resource.Id.tv_sec_q);
-      lp.LeftMargin = 50;
-      lp.TopMargin = 100;
-      txtSecurityQuestion.LayoutParameters = lp;
+      //PercentRelativeLayout.LayoutParams lp = new PercentRelativeLayout.LayoutParams(LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent);
+      //lp.AddRule(LayoutRules.Below, Resource.Id.tv_sec_q);
+      //lp.LeftMargin = 50;
+      //lp.TopMargin = 100;
+      //txtSecurityQuestion.LayoutParameters = lp;
 
 
       btnBack.Click += delegate {
@@ -41,18 +43,20 @@ namespace WeightApp.Fragments {
       };
 
       btnVerifySA.Click += (s, e) => {
-        EditText etSecurityAnswer = FindViewById<EditText>(Resource.Id.et_security_answer);
-        TextView txtError = FindViewById<TextView>(Resource.Id.txt_sq_errors);
+        TextInputLayout txtIlSecurityAnswer = FindViewById<TextInputLayout>(Resource.Id.sq_security_answer);
+        TextInputEditText txtSecurityAnswer = FindViewById<TextInputEditText>(Resource.Id.sq_tiet_sec_answer);
 
         #region VALIDATION
-        txtError.Text = "";
-        if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
-          txtError.Text = "Security answer is required";
+        txtIlSecurityAnswer.Error = "";
+        if (String.IsNullOrEmpty(txtSecurityAnswer.Text)) {
+          txtIlSecurityAnswer.Error = "Security answer is required";
+          txtIlSecurityAnswer.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
 
-        if (etSecurityAnswer.Text.ToLower() != user.SECURITY_ANSWER.ToLower()) {
-          txtError.Text = "Incorrect security answer provided";
+        if (txtSecurityAnswer.Text.ToLower() != user.SECURITY_ANSWER.ToLower()) {
+          txtIlSecurityAnswer.Error = "Incorrect security answer provided";
+          txtIlSecurityAnswer.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion

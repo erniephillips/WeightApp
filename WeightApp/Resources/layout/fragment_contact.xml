@@ -88,7 +88,7 @@
     <!--Visit My Portfolio-->
     <TextView
       android:id="@+id/txt_visit_me"
-      android:text="For more work, please visit my portfolio at:"
+      android:text="For more work, please visit my portfolio at"
       android:layout_below="@+id/txt_contact_errors"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

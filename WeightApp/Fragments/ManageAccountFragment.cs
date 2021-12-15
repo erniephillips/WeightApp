@@ -7,8 +7,10 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,15 +41,21 @@ namespace WeightApp.Fragments {
       Button btnUpdateInfo = view.FindViewById<Button>(Resource.Id.btn_ma_update_info);
       Button btnUpdatePassword = view.FindViewById<Button>(Resource.Id.btn_ma_change_password);
       Button btnUpdateSecurityInfo = view.FindViewById<Button>(Resource.Id.btn_ma_update_sec_info);
-      EditText etName = view.FindViewById<EditText>(Resource.Id.et_ma_name);
-      EditText etEmail = view.FindViewById<EditText>(Resource.Id.et_ma_email);
-      EditText etCurrentPassword = view.FindViewById<EditText>(Resource.Id.et_ma_current_password);
-      EditText etNewPassword = view.FindViewById<EditText>(Resource.Id.et_ma_password);
-      EditText etConfirmPassword = view.FindViewById<EditText>(Resource.Id.et_ma_confirm_password);
-      EditText etSecurityAnswer = view.FindViewById<EditText>(Resource.Id.et_ma_sec_answer);
-      TextView txtInfoErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_info_errors);
-      TextView txtPasswordErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_password_errors);
-      TextView txtSecInfoErrors = view.FindViewById<TextView>(Resource.Id.txt_ma_sec_info_errors);
+
+      TextInputLayout txtIlName = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_name);
+      TextInputLayout txtIlEmail = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_email);
+      TextInputLayout txtIlCurrentPassword = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_current_password);
+      TextInputLayout txtIlNewPassword = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_password);
+      TextInputLayout txtIlConfirmPassword = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_confirm_password);
+      TextInputLayout txtIlSecurityAnswer = view.FindViewById<TextInputLayout>(Resource.Id.et_ma_sec_answer);
+
+      TextInputEditText etName = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_name);
+      TextInputEditText etEmail = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_email);
+      TextInputEditText etCurrentPassword = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_current_password);
+      TextInputEditText etNewPassword = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_new_password);
+      TextInputEditText etConfirmPassword = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_confirm_password);
+      TextInputEditText etSecurityAnswer = view.FindViewById<TextInputEditText>(Resource.Id.ma_tiet_security_answer);
+      
 
       AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
 
@@ -73,22 +81,28 @@ namespace WeightApp.Fragments {
       //Update Info btn click
       btnUpdateInfo.Click += (s, e) => {
         #region VALIDATION
-        txtInfoErrors.Text = ""; //clear errors
+        txtIlName.Error = "";
+        txtIlEmail.Error = "";
+        
         //check for null
-        if(String.IsNullOrEmpty(etName.Text) || String.IsNullOrEmpty(etEmail.Text)) {
-          if (String.IsNullOrEmpty(etName.Text))
-            txtInfoErrors.Append("Name is required\n");
-          if (String.IsNullOrEmpty(etEmail.Text))
-            txtInfoErrors.Append("Email is required\n");
-          //scrollView.FullScroll(FocusSearchDirection.Down);
+        if (String.IsNullOrEmpty(etName.Text) || String.IsNullOrEmpty(etEmail.Text)) {
+          if (String.IsNullOrEmpty(etName.Text)) {
+            txtIlName.Error = "Name is required";
+            txtIlName.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (String.IsNullOrEmpty(etEmail.Text)) {
+            txtIlEmail.Error = "Email is required";
+            txtIlEmail.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
 
         //check email
-        string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        string pattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(etEmail.Text)) {
-          txtInfoErrors.Append("Please enter a valid email address\n");
+          txtIlEmail.Error = "Please enter a valid email address";
+          txtIlEmail.SetErrorTextAppearance(Color.Red.ToArgb());
           //scrollView.FullScroll(FocusSearchDirection.Down);
           return;
         }
@@ -112,28 +126,38 @@ namespace WeightApp.Fragments {
       //Password btn click
       btnUpdatePassword.Click += (s, e) => {
         #region VALIDATION
-        txtPasswordErrors.Text = ""; //clear errors
+        txtIlCurrentPassword.Error = "";
+        txtIlNewPassword.Error = "";
+        txtIlConfirmPassword.Error = "";
+
         if (String.IsNullOrEmpty(etCurrentPassword.Text) || String.IsNullOrEmpty(etNewPassword.Text) || String.IsNullOrEmpty(etConfirmPassword.Text)) {
-          if (String.IsNullOrEmpty(etCurrentPassword.Text))
-            txtPasswordErrors.Append("Current password is required\n");
-          if (String.IsNullOrEmpty(etNewPassword.Text))
-            txtPasswordErrors.Append("New password is required\n");
-          if (String.IsNullOrEmpty(etConfirmPassword.Text))
-            txtPasswordErrors.Append("Password confirmation is required\n");
-          //scrollView.FullScroll(FocusSearchDirection.Down);
+          if (String.IsNullOrEmpty(etCurrentPassword.Text)) {
+            txtIlCurrentPassword.Error = "Current password is required";
+            txtIlCurrentPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (String.IsNullOrEmpty(etNewPassword.Text)) {
+            txtIlNewPassword.Error = "New password is required";
+            txtIlNewPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (String.IsNullOrEmpty(etConfirmPassword.Text)) {
+            txtIlConfirmPassword.Error = "Password confirmation is required";
+            txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
 
         //check the current password against db store
         if (etCurrentPassword.Text != user.PASSWORD) {
-          txtPasswordErrors.Text = "Current password does not match your entry\n";
-          //scrollView.FullScroll(FocusSearchDirection.Down);
+          txtIlCurrentPassword.Error = "Current password does not match your entry";
+          txtIlCurrentPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
 
         if(etNewPassword.Text != etConfirmPassword.Text) {
-          txtPasswordErrors.Text = "New password and confirm password do not match\n";
-          //scrollView.FullScroll(FocusSearchDirection.Down);
+          txtIlNewPassword.Error = "Passwords do not match";
+          txtIlNewPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          txtIlConfirmPassword.Error = "Passwords do not match";
+          txtIlConfirmPassword.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion
@@ -161,10 +185,11 @@ namespace WeightApp.Fragments {
       //Security info btn click
       btnUpdateSecurityInfo.Click += (s, e) => {
         #region VALIDATION
-        txtSecInfoErrors.Text = ""; //clear errors
+        txtIlSecurityAnswer.Error = ""; 
+
         if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
-          txtSecInfoErrors.Text = "Security answer is required\n";
-          //scrollView.FullScroll(FocusSearchDirection.Down);
+          txtIlSecurityAnswer.Error = "Security answer is required";
+          txtIlSecurityAnswer.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion

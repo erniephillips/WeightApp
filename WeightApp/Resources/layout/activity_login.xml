@@ -44,7 +44,42 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Login"/>
-    <EditText
+
+    <!--Username-->
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_login_username"
+      android:layout_below="@+id/tv_Login"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/login_tiet_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_login_password"
+      android:layout_below="@+id/et_login_username"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/login_tiet_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--<EditText
       android:id="@+id/et_login_username"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
@@ -66,7 +101,7 @@
       android:textSize="20sp"
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_widthPercent="80%" />-->
     <!-- Login Button -->
     <androidx.appcompat.widget.AppCompatButton 
       android:id="@+id/btn_log_login"
@@ -99,14 +134,5 @@
       android:textColor="#1874CD"
       app:layout_marginRightPercent="10%"
       app:layout_marginTopPercent="1%"/>
-    <TextView
-      android:id="@+id/txt_login_errors"
-      android:text=""
-      android:layout_below="@+id/chk_remember_me"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"
-      app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="3%"/>
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>

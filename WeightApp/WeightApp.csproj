@@ -81,6 +81,7 @@
     <Compile Include="Activities\SecurityQuestionActivity.cs" />
     <Compile Include="Fragments\StatisticsFragment.cs" />
     <Compile Include="Fragments\WeightEntryFragment.cs" />
+    <Compile Include="Fragments\WelcomeFragment.cs" />
     <Compile Include="Helpers\UserListViewAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +237,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_manage_account.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_welcome.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

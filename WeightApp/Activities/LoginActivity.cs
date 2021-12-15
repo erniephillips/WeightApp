@@ -6,8 +6,10 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -34,18 +36,26 @@ namespace WeightApp.Activities {
 
       btnLogin.Click += (s, e) => {
         UserDao userDao = new UserDao();
-        string txtUsername = FindViewById<EditText>(Resource.Id.et_login_username).Text;
-        string txtPassword = FindViewById<EditText>(Resource.Id.et_login_password).Text;
+
+        TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_login_username);
+        TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_login_password);
+        TextInputEditText txtUsername = FindViewById<TextInputEditText>(Resource.Id.login_tiet_username);
+        TextInputEditText txtPassword = FindViewById<TextInputEditText>(Resource.Id.login_tiet_password);
         CheckBox chkRememberMe = FindViewById<CheckBox>(Resource.Id.chk_remember_me);
-        TextView txtLoginErrors = FindViewById<TextView>(Resource.Id.txt_login_errors);
 
         #region VALIDATION
-        txtLoginErrors.Text = ""; //clear textview if any value exists
-        if (txtUsername == "" || txtPassword == "") {
-          if (txtUsername == "")
-            txtLoginErrors.Append("Please enter a username\n");
-          if(txtPassword == "")
-            txtLoginErrors.Append("Please enter a password\n");
+        txtIlUsername.Error = "";
+        txtIlPassword.Error = "";
+
+        if (txtUsername.Text == "" || txtPassword.Text == "") {
+          if (txtUsername.Text == "") {
+            txtIlUsername.Error = "Username is required";
+            txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
+          if (txtPassword.Text == "") {
+            txtIlPassword.Error = "Password is required";
+            txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
+          }
           return;
         }
         #endregion
@@ -55,9 +65,9 @@ namespace WeightApp.Activities {
         ISharedPreferencesEditor edit = pref.Edit();
 
         //verify the passed in username and password
-        bool userCanLogin = userDao.VerifyLogin(txtUsername, txtPassword);
+        bool userCanLogin = userDao.VerifyLogin(txtUsername.Text, txtPassword.Text);
         if (userCanLogin) { //user gave correct username and password
-          User user = userDao.GetUserByUsername(txtUsername); //find the user
+          User user = userDao.GetUserByUsername(txtUsername.Text); //find the user
           user.LAST_LOGIN_DATE = DateTime.Now; //set last logged in date to now
           userDao.UpdateUser(user); //update the user with last logged in date
 
@@ -65,12 +75,14 @@ namespace WeightApp.Activities {
           if (chkRememberMe.Checked) { //set a session (sort of)
             edit.PutString("UserId", user.USER_ID.ToString());
             edit.PutString("Username", user.USERNAME.Trim());
+            edit.PutString("Name", user.NAME.Trim());
             edit.PutString("Password", user.PASSWORD.Trim());
             edit.PutString("LastLogin", user.LAST_LOGIN_DATE.ToString());
             edit.Apply();
           } else { //save the username and PK for app reference
             edit.PutString("UserId", user.USER_ID.ToString());
             edit.PutString("Username", user.USERNAME.Trim());
+            edit.PutString("Name", user.NAME.Trim());
             edit.Apply();
           }
           StartActivity(typeof(MainActivity)); //send user to main applicaiton logic

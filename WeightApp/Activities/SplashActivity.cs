@@ -53,10 +53,11 @@ namespace AndroidApp {
 
       string userId = pref.GetString("UserId", String.Empty);
       string userName = pref.GetString("Username", String.Empty);
+      string name = pref.GetString("Name", String.Empty);
       string password = pref.GetString("Password", String.Empty);
       string lastLogin = pref.GetString("LastLogin", String.Empty);
 
-      if (userId == null || userName == String.Empty || password == String.Empty || lastLogin == null) {
+      if (userId == null || userName == String.Empty || name == String.Empty || password == String.Empty || lastLogin == null) {
         //No saved credentials, take user to login screen  
         StartActivity(typeof(UserAccessActivity));
       } else {

@@ -8,6 +8,8 @@ using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
+using DataAccessLayer.Dao;
+using DataAccessLayer.Models;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
@@ -23,7 +25,7 @@ using Xamarin.Essentials;
 namespace WeightApp {
   //[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
   //Remove Main launcher since splash screen is activity to be launched
-  [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", NoHistory = true)]
+  [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
   public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
@@ -43,15 +45,26 @@ namespace WeightApp {
       NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
       navigationView.SetNavigationItemSelectedListener(this);
 
-      //Load the main fragment after creating nav drawer and nav view
-      SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new MainFragment(), "Fragment").Commit();
-
       //set the user's name through nav view, then find txtView
       ISharedPreferences prefs = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userName = prefs.GetString("Username", String.Empty);
+      string name = prefs.GetString("Name", String.Empty);
       NavigationView nv = FindViewById<NavigationView>(Resource.Id.nav_view);
       Android.Widget.TextView txtUsername = nv.GetHeaderView(0).FindViewById<Android.Widget.TextView>(Resource.Id.txt_username);
-      txtUsername.Text = String.IsNullOrEmpty(userName) ? "Welcome" : "Welcome, " + userName;
+      txtUsername.Text = String.IsNullOrEmpty(name) ? "Welcome" : "Welcome, " + name;
+
+
+      //Check if the user account has an associated profile. 
+      //If not send them to the welcome screen which will have a welcome message and link to the profile page ELSE send to the My Stats page
+      UserDao userDao = new UserDao();
+      User user = userDao.GetUserByUsername(userName); 
+      ProfileDao profileDao = new ProfileDao();
+      Profile profile = profileDao.GetProfileByUserId(user.USER_ID);
+
+      if(profile != null)
+        SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
+      else
+        SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WelcomeFragment(), "Fragment").Commit();
     }
 
     public override void OnBackPressed() {

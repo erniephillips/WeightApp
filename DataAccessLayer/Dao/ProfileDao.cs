@@ -32,6 +32,11 @@ namespace DataAccessLayer.Dao {
       return _SQLiteConnection.Get<Profile>(id);
     }
 
+    //GET BY USER ID
+    public Profile GetProfileByUserId(int userId) {
+      return _SQLiteConnection.Table<Profile>().Where(x => x.USER_ID == userId).FirstOrDefault();
+    }
+
     //INSERT
     public void AddProfile(Profile profile) {
       _SQLiteConnection.Insert(profile);

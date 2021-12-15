@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--View User Info-->
+    <!--Header - View User Info-->
     <TextView
       android:id="@+id/tv_your_info"
       android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
-    <!--Edit User Info-->
+    <!--Header - Edit User Info-->
     <TextView
       android:id="@+id/tv_manage_info"
       android:layout_height="wrap_content"
@@ -121,28 +121,42 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Manage Info"/>
-    <EditText
+
+     <!--Name-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_name"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/tv_manage_info"
-      android:hint="Your Name"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Your name" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+     <!--Email-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_email"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_ma_name"
-      android:hint="Email"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!-- Update Button for user info -->
     <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/btn_ma_update_info"
       android:layout_height="wrap_content"
@@ -156,27 +170,17 @@
       app:layout_marginPercent="5%"
       app:layout_widthPercent="80%" />
 
-    <!--Errors-->
-    <TextView
-      android:id="@+id/txt_ma_info_errors"
-      app:layout_marginLeftPercent="10%"
-      android:text=""
-      android:layout_below="@+id/btn_ma_update_info"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"/>
-
     <!--Divider-->
     <View
       android:id="@+id/ma_divider_two"
       android:layout_width="match_parent"
       android:layout_height="2dp"
-      android:layout_below="@+id/txt_ma_info_errors"
+      android:layout_below="@+id/btn_ma_update_info"
       app:layout_marginTopPercent="3%"
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
-    <!--Change Password-->
+    <!--Header - Change Password-->
     <TextView
       android:id="@+id/tv_change_password"
       android:layout_height="wrap_content"
@@ -187,42 +191,62 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Change Password"/>
-    <EditText
+
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_current_password"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/tv_change_password"
-      android:hint="Current Password"
-      android:inputType="textPassword"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_current_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Current Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--New Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_password"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_ma_current_password"
-      android:hint="New Password"
-      android:inputType="textPassword"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
-    <EditText
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_new_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Confirm Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_confirm_password"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/et_ma_password"
-      android:hint="Confirm Password"
-      android:inputType="textPassword"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!--Submit Password Button-->
     <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/btn_ma_change_password"
       android:layout_height="wrap_content"
@@ -236,27 +260,18 @@
       app:layout_marginPercent="5%"
       app:layout_widthPercent="80%" />
 
-    <!--Errors-->
-    <TextView
-      android:id="@+id/txt_ma_password_errors"
-      app:layout_marginLeftPercent="10%"
-      android:text=""
-      android:layout_below="@+id/btn_ma_change_password"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"/>
-
+   
     <!--Divider-->
     <View
       android:id="@+id/ma_divider_three"
       android:layout_width="match_parent"
       android:layout_height="2dp"
-      android:layout_below="@+id/txt_ma_password_errors"
+      android:layout_below="@+id/btn_ma_change_password"
       app:layout_marginTopPercent="3%"
       android:layout_marginTop="4dp"
       android:background="@android:color/darker_gray" />
 
-    <!-- Security Question -->
+    <!--Header - Security Question -->
     <TextView
       android:id="@+id/tv_update_sec_question"
       android:layout_height="wrap_content"
@@ -267,6 +282,8 @@
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Security Info"/>
+
+    <!--Security Question-->
     <TextView
       android:id="@+id/spinner_ma_prompt_text"
       android:layout_width="fill_parent"
@@ -286,17 +303,26 @@
       app:layout_marginLeftPercent="10%"
       app:layout_marginTopPercent="2%"
       app:layout_widthPercent="80%"/>
-    <EditText
+
+    <!--Security Answer-->
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/et_ma_sec_answer"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:layout_below="@+id/spinner_ma_sec_question"
-      android:hint="Security Answer"
-      android:textColor="#000"
-      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       app:layout_marginLeftPercent="10%"
-      app:layout_marginTopPercent="0%"
-      app:layout_widthPercent="80%" />
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ma_tiet_security_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Security Answer"/>
+    </com.google.android.material.textfield.TextInputLayout>
+   
+    <!--Update Security Info Button-->
     <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/btn_ma_update_sec_info"
       android:layout_height="wrap_content"
@@ -309,15 +335,5 @@
       android:textSize="20sp"
       app:layout_marginPercent="5%"
       app:layout_widthPercent="80%" />
-
-    <!--Errors-->
-    <TextView
-      android:id="@+id/txt_ma_sec_info_errors"
-      app:layout_marginLeftPercent="10%"
-      android:text=""
-      android:layout_below="@+id/btn_ma_update_sec_info"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textColor="#ff0000"/>
   </android.support.percent.PercentRelativeLayout>
 </ScrollView>
