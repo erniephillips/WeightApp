@@ -13,6 +13,7 @@ using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
 using WeightApp.Activities;
 using WeightApp.Fragments;
+using Xamarin.Essentials;
 
 /*
 * Ernie Phillips III : 12/09/2021
@@ -84,7 +85,7 @@ namespace WeightApp {
     }
 
     public bool OnNavigationItemSelected(IMenuItem item) {
-      
+
       int id = item.ItemId;
 
       if (id == Resource.Id.nav_statistics) {
@@ -96,7 +97,13 @@ namespace WeightApp {
       } else if (id == Resource.Id.nav_profile) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_share) {
-        Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
+        //https://docs.microsoft.com/en-us/xamarin/essentials/share?tabs=android
+        Share.RequestAsync(new ShareTextRequest {
+          Uri = "https://github.com/erniephillips/WeightApp/",
+          Text = "Eventually the below link will link to this app in the Play Store. For now, please visit my repository.",
+          Title = "Check out this weight app"
+        });
+        //Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
       } else if (id == Resource.Id.nav_contact) {
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_manage_account) {

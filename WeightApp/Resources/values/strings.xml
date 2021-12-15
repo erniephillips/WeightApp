@@ -3,11 +3,18 @@
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
   <string name="security_question_prompt">Choose a security question</string>
+  <string name="contact_page_dropdown_prompt">Reason for Contact</string>
   <string-array name="security_question_array">
     <item>In what city were you born?</item>
     <item>What is the name of your favorite pet?</item>
     <item>What is your mother\'s maiden name?</item>
     <item>What was the make of your first car?</item>
     <item>What was your favorite food as a child?</item>
+  </string-array>
+  <string-array name="contact_page_dropdown_array">
+    <item>Praise the Developer</item>
+    <item>Gripe to the Developer</item>
+    <item>Suggestion for the Developer</item>
+    <item>Bug the Developer</item>
   </string-array>
 </resources>
