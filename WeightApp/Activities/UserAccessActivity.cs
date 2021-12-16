@@ -22,7 +22,7 @@ namespace WeightApp.Activities {
 
       Button btnLogin = FindViewById<Button>(Resource.Id.aua_login);
       Button btnRegister = FindViewById<Button>(Resource.Id.aua_register);
-
+      
       btnLogin.Click += delegate {
         StartActivity(typeof(LoginActivity));
       };

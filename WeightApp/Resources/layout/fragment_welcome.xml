@@ -1,13 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ScrollView
+<!--<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:id="@+id/contact_scrollview">
+  android:id="@+id/contact_scrollview">-->
   <android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/veggies"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scaleType="fitEnd"
+      android:alpha="0.1"
+      app:srcCompat="@drawable/background_image_access_page" />
+
+    <!--Header-->
     <TextView
       android:id="@+id/tv_welcome"
       android:layout_height="wrap_content"
@@ -16,6 +28,7 @@
       app:layout_marginRightPercent="10%"
       app:layout_marginLeftPercent="10%"
       android:layout_centerHorizontal="true"
+      android:justificationMode="inter_word"
       android:textStyle="bold"
       android:textSize="18sp"
       android:text="Welcome to the weight app, a way to track and monitor your progress. Let\'s get you started, by filling out your profile information and targeting your goals."/>
@@ -28,6 +41,7 @@
       app:layout_marginRightPercent="10%"
       app:layout_marginLeftPercent="10%"
       android:layout_centerHorizontal="true"
+      android:justificationMode="inter_word"
       android:textStyle="bold"
       android:textSize="18sp"
       android:text="You can also access the \'My Profile\' feature from the navigation menu at any time to update your information."/>
@@ -46,4 +60,4 @@
       app:layout_marginPercent="5%"
       app:layout_widthPercent="70%" />
   </android.support.percent.PercentRelativeLayout>
-</ScrollView>
+<!--</ScrollView>-->

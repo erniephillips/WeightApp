@@ -1,78 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<LinearLayout
+<!--<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/fragment_user_access"
-  android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="wrap_content"
+  android:id="@+id/profile_scrollview">-->
 
-  <android.support.percent.PercentRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.percent.PercentRelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <androidx.appcompat.widget.AppCompatImageView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scaleType="fitXY"
+    android:adjustViewBounds="true"
+    app:layout_marginTopPercent="0%"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:alpha="0.7"
+    app:srcCompat="@drawable/user_access_screen_image" />
+  <!--android:scaleType="fitXY"
+        android:gravity="center"-->
+  <!--Application Logo-->
+  <ImageView
+    android:id="@+id/aua_app_logo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="App Logo"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/new_weight_app_logo_black_transparent"
+    android:layout_gravity="top"
+    app:layout_widthPercent="40%"
+    app:layout_heightPercent="40%"/>
 
-    <!--Application Logo-->
-    <ImageView
-      android:id="@+id/aua_app_logo"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:contentDescription="App Logo"
-      android:layout_centerHorizontal="true"
-      android:src="@drawable/weight_app_logo_transparent"
-      android:layout_gravity="top"
-      app:layout_widthPercent="40%"
-      app:layout_heightPercent="40%"/>
+  <!--Google Material Buttons: https://ahsensaeed.com/android-material-design-library-material-button/-->
 
-    <!--Google Material Buttons: https://ahsensaeed.com/android-material-design-library-material-button/-->
+  <!--Login Button-->
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/aua_login"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_below="@+id/aua_app_logo"
+    android:layout_centerHorizontal="true"
+    android:text="Login"
+    android:textSize="20sp"
+    style="@style/Widget.MaterialComponents.Button"
+    app:icon="@drawable/ic_login"
+    app:backgroundTint="#1874CD"
+    app:layout_marginTopPercent="3%"
+    app:layout_marginPercent="5%"
+    app:layout_widthPercent="70%" />
 
-    <!--Login Button-->
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/aua_login"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:layout_below="@+id/aua_app_logo"
-      android:layout_centerHorizontal="true"
-      android:text="Login"
-      android:textSize="20sp"
-      style="@style/Widget.MaterialComponents.Button"
-      app:icon="@drawable/ic_login"
-      app:backgroundTint="#1874CD"
-      app:layout_marginTopPercent="3%"
-      app:layout_marginPercent="5%"
-      app:layout_widthPercent="70%" />
+  <TextView
+    android:id="@+id/tv_OR"
+    android:layout_below="@id/aua_login"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_marginTopPercent="5%"
+    android:layout_centerHorizontal="true"
+    android:textStyle="bold|italic"
+    android:textSize="20sp"
+    android:text="OR"/>
 
-    <TextView
-      android:id="@+id/tv_OR"
-      android:layout_below="@id/aua_login"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:layout_marginTopPercent="5%"
-      android:layout_centerHorizontal="true"
-      android:textStyle="bold|italic"
-      android:textSize="20sp"
-      android:text="OR"/>
-
-    <!--Register-->
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/aua_register"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:layout_below="@+id/tv_OR"
-      android:layout_centerHorizontal="true"
-      android:text="Register"
-      android:textSize="20sp"
-      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-      app:icon="@drawable/ic_registration"
-      app:strokeColor="#00B33C"
-      android:textColor="#00B33C"
-      app:iconTint="#00B33C"
-      app:layout_marginTopPercent="10%"
-      app:layout_marginPercent="5%"
-      app:layout_widthPercent="70%" />
-  </android.support.percent.PercentRelativeLayout>
-  <!--<androidx.percentlayout.widget.PercentFrameLayout
+  <!--Register-->
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/aua_register"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_below="@+id/tv_OR"
+    android:layout_centerHorizontal="true"
+    android:text="Register"
+    android:textSize="20sp"
+    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+    app:icon="@drawable/ic_registration"
+    app:strokeColor="#00B33C"
+    android:textColor="#00B33C"
+    app:iconTint="#00B33C"
+    app:layout_marginTopPercent="10%"
+    app:layout_marginPercent="5%"
+    app:layout_widthPercent="70%" />
+</android.support.percent.PercentRelativeLayout>
+<!--<androidx.percentlayout.widget.PercentFrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
@@ -95,4 +107,4 @@
         android:text="PercentRelativeLayout example"
         android:background="#bebebe"/>
   </androidx.percentlayout.widget.PercentFrameLayout>-->
-</LinearLayout>
+<!--</ScrollView>-->

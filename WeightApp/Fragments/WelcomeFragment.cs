@@ -22,7 +22,17 @@ namespace WeightApp.Fragments {
       View view = inflater.Inflate(Resource.Layout.fragment_welcome, container, false);
 
       Button btnMyProfile = view.FindViewById<Button>(Resource.Id.btn_go_to_profile);
-     
+
+      //ImageView img = view.FindViewById<ImageView>(Resource.Id.veggies);
+      //DisplayMetrics metrics = new DisplayMetrics();
+      //IWindowManager wm = Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
+      //wm.DefaultDisplay.GetMetrics(metrics);
+      //int height = metrics.HeightPixels;
+      //int width = metrics.WidthPixels;
+
+      //img.LayoutParameters.Height = height - 50;
+      //img.LayoutParameters.Width = width - 50;
+
       btnMyProfile.Click += delegate {
         this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
       };

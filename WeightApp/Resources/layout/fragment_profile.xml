@@ -1,14 +1,164 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<LinearLayout
+<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/fragment_profile"
-  android:orientation="vertical"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="80dp"
-    android:layout_centerInParent="true"
-    android:text="My Profile" />
-</LinearLayout>
+  android:layout_height="wrap_content"
+  android:id="@+id/profile_scrollview">
+  <android.support.percent.PercentRelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:alpha="0.1"
+      app:srcCompat="@drawable/background_image_measurement"
+      android:layout_margin="0dp" />
+    
+    <!--Header-->
+    <TextView
+      android:id="@+id/tv_Profile"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      app:layout_marginTopPercent="10%"
+      android:layout_centerHorizontal="true"
+      android:textStyle="bold"
+      android:textSize="32sp"
+      android:text="My Profile"/>
+
+    <TextView
+      android:id="@+id/tv_profile_text"
+      android:layout_below="@+id/tv_Profile"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      app:layout_marginTopPercent="3%"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginRightPercent="10%"
+      android:justificationMode="inter_word"
+      android:textSize="16sp"
+      android:text="Please fill out your current information and what your future goals are. Weight App will use this information to bring you up-to-date statistics, providing you with a means to track and monitor current progress against these goals."/>
+
+    <!--Username-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_username"
+      android:layout_below="@+id/tv_Profile"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="3%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--Password-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_password"
+      android:layout_below="@+id/et_username"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      app:endIconMode="password_toggle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--Confirm Password-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_confirm_password"
+      android:layout_below="@+id/et_password"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      app:endIconMode="password_toggle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--Name-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_name"
+      android:layout_below="@+id/et_confirm_password"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Your Name" />
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--Email-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_email"
+      android:layout_below="@+id/et_name"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--Security Answer-->
+    <!--<com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/et_reg_sec_answer"
+      android:layout_below="@+id/spinner_reg_sec_question"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      app:layout_marginLeftPercent="10%"
+      app:layout_marginTopPercent="1%"
+      app:layout_widthPercent="80%"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/register_tiet_security_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Security Answer" />
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!-- Register Button -->
+    <!--<com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_reg_register"
+      android:layout_below="@+id/et_reg_sec_answer"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:text="Register"
+      android:textSize="20sp"
+      style="@style/Widget.MaterialComponents.Button"
+      app:icon="@drawable/ic_registration"
+      app:backgroundTint="#00B33C"
+      app:layout_marginTopPercent="3%"
+      app:layout_marginPercent="5%"
+      app:layout_widthPercent="70%" />-->
+  </android.support.percent.PercentRelativeLayout>
+</ScrollView>
