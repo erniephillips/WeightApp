@@ -7,5 +7,6 @@ namespace DataAccessLayer.Models {
     public int Id { get; set; }
     public string TextLeftSide {get;set;}
     public string TextRightSide { get; set; }
+    public string HiddenTextForConversion { get; set; }
   }
 }

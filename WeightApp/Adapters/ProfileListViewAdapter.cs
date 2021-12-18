@@ -26,10 +26,12 @@ namespace WeightApp.Adapters {
     }
 
     //experimenting if I can set the object text. Doesn't work for me to set text for listview item and maintain right and left alignment
-    public void SetSelectedTextValue(int position, string value) {
+    public void SetSelectedTextValue(int position, string value, string textToSave) {
       View view = this.fragment.View;
+      profileItems[position].HiddenTextForConversion = textToSave;
       profileItems[position].TextRightSide = value;
       view.FindViewById<TextView>(Resource.Id.profile_listview_item_right).Text = profileItems[position].TextRightSide;
+      NotifyDataSetChanged(); //had to add this to notify observer of change in data. Only first value was updating
     }
 
     //return the profile items for validation

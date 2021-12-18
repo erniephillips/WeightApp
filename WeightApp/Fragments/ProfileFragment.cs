@@ -50,20 +50,20 @@ namespace WeightApp.Fragments {
             View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
 
             //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-            
+
             NumberPicker pckWeightPoundsNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
             NumberPicker pckWeightOzNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
 
-            TextView txtTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-            TextView txtTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
-            txtTextOne.Text = "lbs";
-            txtTextTwo.Text = "oz";
+            TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
+            TextView txtWeightTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
+            txtWeightTextOne.Text = "lbs";
+            txtWeightTextTwo.Text = "oz";
 
             //set the whole weight number
             string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckWeightPoundsNum.MinValue = 1;
             pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
-            pckWeightPoundsNum.Value = 100; //set the start value
+            pckWeightPoundsNum.Value = 150; //set the start value
             pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
 
             //set the whole weight number
@@ -76,27 +76,62 @@ namespace WeightApp.Fragments {
             new MaterialAlertDialogBuilder(Activity).SetView(weightView)
               .SetTitle("What's your current weight?")
               .SetMessage("")
+              .SetNegativeButton("Cancel", (s, e) => { })
               .SetPositiveButton("OK", (sender, e) => {
-                
+
                 var selectedLbs = pckWeightPoundsNum.Value;
                 var selectedOz = pckWeightOzNum.Value;
 
-                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs");
+                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs", selectedLbs + "." + selectedOz);
               })
               .Show();
             break;
-          case 1:
-            new MaterialAlertDialogBuilder(Activity)
-              .SetTitle("Input your height")
+          case 1://HEIGHT OPTION
+            View heightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+
+            //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
+
+            NumberPicker pckHeightFtNum = heightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
+            NumberPicker pckHeightInNum = heightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
+
+            TextView txtHeightTextOne = heightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
+            TextView txtHeightTextTwo = heightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
+            txtHeightTextOne.Text = "ft";
+            txtHeightTextTwo.Text = "in";
+
+            //set the whole weight number
+            string[] heightFeetNumbers = Enumerable.Range(1, 8).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckHeightFtNum.MinValue = 1;
+            pckHeightFtNum.MaxValue = heightFeetNumbers.Length;
+            pckHeightFtNum.Value = 5; //set the start value
+            pckHeightFtNum.SetDisplayedValues(heightFeetNumbers);
+
+            //set the whole weight number
+            string[] weightInchNumbers = Enumerable.Range(1, 15).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckHeightInNum.MinValue = 1;
+            pckHeightInNum.MaxValue = weightInchNumbers.Length;
+            pckHeightInNum.Value = 1; //set the start value
+            pckHeightInNum.SetDisplayedValues(weightInchNumbers);
+
+            new MaterialAlertDialogBuilder(Activity).SetView(heightView)
+              .SetTitle("What's your height?")
               .SetMessage("")
-              .SetPositiveButton("OK", (sender, e) => { })
+              .SetNegativeButton("Cancel", (s, e) => { })
+              .SetPositiveButton("OK", (sender, e) => {
+
+                var selectedFt = pckHeightFtNum.Value;
+                var selectedIn = pckHeightInNum.Value;
+
+                adapter.SetSelectedTextValue(eLV.Position, selectedFt + " ft " + selectedIn + " in", selectedFt + "." + selectedIn);
+              })
               .Show();
             break;
           case 2:
             new MaterialAlertDialogBuilder(Activity)
               .SetTitle("Select your gender")
               .SetMessage("")
-              .SetPositiveButton("OK", (sender, e) => { })
+              .SetPositiveButton("OK", (sender, e) => {
+              })
               .Show();
             break;
           case 3:
@@ -122,11 +157,11 @@ namespace WeightApp.Fragments {
         List<ProfileListview> profileListviews = adapter.ValidateProfile();
         string error = "";
         foreach (ProfileListview profileItem in profileListviews) {
-          if(profileItem.TextRightSide == "N/a") {
+          if (profileItem.TextRightSide == "N/a") {
             error += profileItem.TextLeftSide + " is required.\n";
           }
         }
-        if(error != "") {
+        if (error != "") {
           new MaterialAlertDialogBuilder(Activity)
              .SetTitle("Weight App Alert")
              .SetMessage(error)
@@ -164,7 +199,7 @@ namespace WeightApp.Fragments {
       }
 
       adapter = new ProfileListViewAdapter(this, profileItems);
-      
+
       // set new items
       listView.Adapter = adapter;
     }
