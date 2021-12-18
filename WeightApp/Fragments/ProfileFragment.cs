@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.DatePicker;
 using Google.Android.Material.Dialog;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.TextField;
@@ -46,7 +47,8 @@ namespace WeightApp.Fragments {
       listView.ItemClick += (s, eLV) => {
         //setting up a swith for the position selected to pull up a dialog box for user to make a selection depending
         switch (eLV.Position) {
-          case 0: //WEIGHT OPTION
+          #region WEIGHT OPTION
+          case 0:
             View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
 
             //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
@@ -86,6 +88,8 @@ namespace WeightApp.Fragments {
               })
               .Show();
             break;
+          #endregion
+          #region HEIGHT OPTION
           case 1://HEIGHT OPTION
             View heightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
 
@@ -126,28 +130,96 @@ namespace WeightApp.Fragments {
               })
               .Show();
             break;
+          #endregion
+          #region GENDER OPTION
           case 2:
-            new MaterialAlertDialogBuilder(Activity)
+            View goalGenderView = inflater.Inflate(Resource.Layout.dialog_gender, container, false);
+            
+            RadioGroup rdgGender = goalGenderView.FindViewById<RadioGroup>(Resource.Id.radio_gender_group);
+
+            new MaterialAlertDialogBuilder(Activity).SetView(goalGenderView)
               .SetTitle("Select your gender")
               .SetMessage("")
               .SetPositiveButton("OK", (sender, e) => {
+                RadioButton radioGenderButton = goalGenderView.FindViewById<RadioButton>(rdgGender.CheckedRadioButtonId);
+                adapter.SetSelectedTextValue(eLV.Position, radioGenderButton.Text, radioGenderButton.Text);
+              }).Show();
+            break;
+          #endregion
+          #region GOAL WEIGHT OPTION
+          case 3:
+            View goalWeightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+
+            //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
+
+            NumberPicker pckGoalWeightPoundsNum = goalWeightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
+            NumberPicker pckGoalWeightOzNum = goalWeightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
+
+            TextView txtGoalWeightTextOne = goalWeightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
+            TextView txtGoalWeightTextTwo = goalWeightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
+            txtGoalWeightTextOne.Text = "lbs";
+            txtGoalWeightTextTwo.Text = "oz";
+
+            //set the whole weight number
+            string[] goalWeightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckGoalWeightPoundsNum.MinValue = 1;
+            pckGoalWeightPoundsNum.MaxValue = goalWeightPoundNumbers.Length;
+            pckGoalWeightPoundsNum.Value = 150; //set the start value
+            pckGoalWeightPoundsNum.SetDisplayedValues(goalWeightPoundNumbers);
+
+            //set the whole weight number
+            string[] goalWeightOzNumbers = Enumerable.Range(1, 16).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckGoalWeightOzNum.MinValue = 1;
+            pckGoalWeightOzNum.MaxValue = goalWeightOzNumbers.Length;
+            pckGoalWeightOzNum.Value = 1; //set the start value
+            pckGoalWeightOzNum.SetDisplayedValues(goalWeightOzNumbers);
+
+            new MaterialAlertDialogBuilder(Activity).SetView(goalWeightView)
+              .SetTitle("What's your goal weight?")
+              .SetMessage("")
+              .SetNegativeButton("Cancel", (s, e) => { })
+              .SetPositiveButton("OK", (sender, e) => {
+
+                var selectedLbs = pckGoalWeightPoundsNum.Value;
+                var selectedOz = pckGoalWeightOzNum.Value;
+
+                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs", selectedLbs + "." + selectedOz);
               })
               .Show();
             break;
-          case 3:
-            new MaterialAlertDialogBuilder(Activity)
-              .SetTitle("Input your goal weight")
-              .SetMessage("")
-              .SetPositiveButton("OK", (sender, e) => { })
-              .Show();
-            break;
+          #endregion
+          #region GOAL DATE OPTION
           case 4:
-            new MaterialAlertDialogBuilder(Activity)
-              .SetTitle("Input your goal weight date")
-              .SetMessage("")
-              .SetPositiveButton("OK", (sender, e) => { })
-              .Show();
+            //I can't seem to expose the onpositivebutton click which I need. Will need android calendar
+            //MaterialDatePicker datePicker = MaterialDatePicker.Builder.DatePicker()
+            //      .SetTitleText("What is your goal date for your goal weight?")
+            //      .Build();
+            //datePicker.Show(FragmentManager, "");
+
+            //Capture onclick for OK button: https://stackoverflow.com/questions/49009155/xamarin-forms-android-datepicker-timepicker-button-listener
+            DatePickerDialog datePicker = new DatePickerDialog(Context);
+            datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
+              //int selectedDay = datePicker.DatePicker.DayOfMonth;
+              //int selectedMonth = datePicker.DatePicker.Month + 1; //the months seem to be indexed at zero so I need to add 1
+              //int selectedYear = datePicker.DatePicker.Year;
+
+              //can just access whole date by calling datetime
+              DateTime selectedDate = datePicker.DatePicker.DateTime;
+
+              if (selectedDate < DateTime.Now) {
+                new MaterialAlertDialogBuilder(Activity)
+               .SetTitle("Weight App Alert?")
+               .SetMessage("Date must be greater than today's date")
+               .SetPositiveButton("OK", (sender, e) => { })
+               .Show();
+              } else { //date passed check
+                adapter.SetSelectedTextValue(eLV.Position, selectedDate.ToShortDateString(), selectedDate.ToString());
+              }
+            });
+            datePicker.Show();
+
             break;
+            #endregion
         }
       };
 
@@ -169,6 +241,42 @@ namespace WeightApp.Fragments {
              .Show();
         }
         #endregion
+
+        //everything validated, update profile
+        string userId = pref.GetString("UserId", String.Empty);
+
+        Profile profile = new Profile() {
+          USER_ID = Convert.ToInt32(userId),
+          START_DATE = DateTime.Now
+        };
+        foreach (ProfileListview profileItem in profileListviews) {
+          if (profileItem.TextLeftSide == "Weight")
+            profile.START_WEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+          if (profileItem.TextLeftSide == "Height")
+            profile.HEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+          if (profileItem.TextLeftSide == "Gender")
+            profile.GENDER = profileItem.HiddenTextForConversion;
+          if (profileItem.TextLeftSide == "Goal Weight")
+            profile.TARGET_WEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+          if (profileItem.TextLeftSide == "Goal Target Date")
+            profile.TARGET_DATE = DateTime.Parse(profileItem.HiddenTextForConversion);
+        }
+
+        //add to database if doesn't exist otherwise update
+        Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+        if(tempProfile == null)
+          profileDao.AddProfile(profile);
+        else {
+          tempProfile.START_WEIGHT = profile.START_WEIGHT;
+          tempProfile.HEIGHT = profile.HEIGHT;
+          tempProfile.GENDER = profile.GENDER;
+          tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
+          tempProfile.TARGET_DATE = profile.TARGET_DATE;
+          profileDao.UpdateProfile(tempProfile);
+        }
+
+        //redirect user to weight entry
+        this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
       };
 
       return view;
@@ -190,11 +298,11 @@ namespace WeightApp.Fragments {
         };
       } else {
         profileItems = new List<ProfileListview>() {
-          new ProfileListview{ Id = 1, TextLeftSide = "Weight", TextRightSide = profile.START_WEIGHT.ToString() },
-          new ProfileListview{ Id = 2, TextLeftSide = "Height", TextRightSide = profile.HEIGHT.ToString() },
-          new ProfileListview{ Id = 3, TextLeftSide = "Gender", TextRightSide = profile.GENDER },
-          new ProfileListview{ Id = 4, TextLeftSide = "Goal Weight", TextRightSide = profile.TARGET_WEIGHT.ToString() },
-          new ProfileListview{ Id = 5, TextLeftSide = "Goal Target Date", TextRightSide = profile.TARGET_DATE.ToShortDateString() }
+          new ProfileListview{ Id = 1, TextLeftSide = "Weight", TextRightSide = profile.START_WEIGHT.ToString(), HiddenTextForConversion = profile.START_WEIGHT.ToString() },
+          new ProfileListview{ Id = 2, TextLeftSide = "Height", TextRightSide = profile.HEIGHT.ToString(), HiddenTextForConversion = profile.HEIGHT.ToString() },
+          new ProfileListview{ Id = 3, TextLeftSide = "Gender", TextRightSide = profile.GENDER, HiddenTextForConversion = profile.GENDER.ToString() },
+          new ProfileListview{ Id = 4, TextLeftSide = "Goal Weight", TextRightSide = profile.TARGET_WEIGHT.ToString(), HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
+          new ProfileListview{ Id = 5, TextLeftSide = "Goal Target Date", TextRightSide = profile.TARGET_DATE.ToShortDateString(), HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
         };
       }
 
