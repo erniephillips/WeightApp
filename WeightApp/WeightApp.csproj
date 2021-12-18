@@ -295,7 +295,7 @@
     <AndroidResource Include="Resources\layout\listview_profile.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\dialog_weight.xml" />
+    <AndroidResource Include="Resources\layout\dialog_spinner.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

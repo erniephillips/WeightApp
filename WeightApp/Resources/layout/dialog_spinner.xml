@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center">
+
+  <!--Spinner 1-->
+  <NumberPicker
+    android:id="@+id/dialog_spinner_number_picker_one"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" />
+
+  <TextView
+    android:id="@+id/dialog_spinner_text_one"
+    android:layout_toRightOf="@+id/dialog_spinner_number_picker_one"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:layout_centerVertical="true"
+    app:layout_marginLeftPercent="2%"/>
+
+  <NumberPicker
+    android:id="@+id/dialog_spinner_number_picker_two"
+    android:layout_toRightOf="@+id/dialog_spinner_text_one"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignTop="@+id/numberPicker2"
+    app:layout_marginLeftPercent="10%"/>
+
+  <TextView
+    android:id="@+id/dialog_spinner_text_two"
+    android:layout_toRightOf="@+id/dialog_spinner_number_picker_two"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:layout_centerVertical="true"
+    app:layout_marginLeftPercent="2%"/>
+</android.support.percent.PercentRelativeLayout>

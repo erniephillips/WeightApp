@@ -23,6 +23,7 @@ namespace WeightApp.Fragments {
 
     ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
     ProfileDao profileDao = new ProfileDao();
+    ProfileListViewAdapter adapter;
     Profile profile = new Profile();
     ListView listView;
 
@@ -39,29 +40,49 @@ namespace WeightApp.Fragments {
       Button btnUpdateProfile = view.FindViewById<Button>(Resource.Id.btn_update_profile);
 
       listView = view.FindViewById<ListView>(Resource.Id.profile_listView);
-      LoadData(-1); //clear any position index
+      LoadData(); //clear any position index
 
       //set the listview item click
-      listView.ItemClick += (s, e) => {
+      listView.ItemClick += (s, eLV) => {
         //setting up a swith for the position selected to pull up a dialog box for user to make a selection depending
-        switch (e.Position) {
+        switch (eLV.Position) {
           case 0: //WEIGHT OPTION
-            View weightView = inflater.Inflate(Resource.Layout.dialog_weight, container, false);
+            View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
 
             //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-            NumberPicker pckWeightWholeNum = weightView.FindViewById<NumberPicker>(Resource.Id.profile_picker_weight_whole_number);
+            
+            NumberPicker pckWeightPoundsNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
+            NumberPicker pckWeightOzNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
+
+            TextView txtTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
+            TextView txtTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
+            txtTextOne.Text = "lbs";
+            txtTextTwo.Text = "oz";
 
             //set the whole weight number
-            string[] weightWholeNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-            pckWeightWholeNum.MinValue = 1;
-            pckWeightWholeNum.MaxValue = weightWholeNumbers.Length;
-            pckWeightWholeNum.Value = 100; //set the start value
-            pckWeightWholeNum.SetDisplayedValues(weightWholeNumbers);
+            string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckWeightPoundsNum.MinValue = 1;
+            pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
+            pckWeightPoundsNum.Value = 100; //set the start value
+            pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
+
+            //set the whole weight number
+            string[] weightOzNumbers = Enumerable.Range(1, 16).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            pckWeightOzNum.MinValue = 1;
+            pckWeightOzNum.MaxValue = weightOzNumbers.Length;
+            pckWeightOzNum.Value = 1; //set the start value
+            pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-              .SetTitle("Input your current weight")
+              .SetTitle("What's your current weight?")
               .SetMessage("")
-              .SetPositiveButton("OK", (sender, e) => { })
+              .SetPositiveButton("OK", (sender, e) => {
+                
+                var selectedLbs = pckWeightPoundsNum.Value;
+                var selectedOz = pckWeightOzNum.Value;
+
+                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs");
+              })
               .Show();
             break;
           case 1:
@@ -95,12 +116,30 @@ namespace WeightApp.Fragments {
         }
       };
 
-      
+      btnUpdateProfile.Click += (s, e) => {
+        #region VALIDATION
+        //provide validation check on fields and return dialog with missing
+        List<ProfileListview> profileListviews = adapter.ValidateProfile();
+        string error = "";
+        foreach (ProfileListview profileItem in profileListviews) {
+          if(profileItem.TextRightSide == "N/a") {
+            error += profileItem.TextLeftSide + " is required.\n";
+          }
+        }
+        if(error != "") {
+          new MaterialAlertDialogBuilder(Activity)
+             .SetTitle("Weight App Alert")
+             .SetMessage(error)
+             .SetPositiveButton("OK", (sender, e) => { })
+             .Show();
+        }
+        #endregion
+      };
 
       return view;
     }
 
-    private void LoadData(int position) {
+    private void LoadData() {
       string userId = pref.GetString("UserId", String.Empty);
       profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
 
@@ -124,18 +163,10 @@ namespace WeightApp.Fragments {
         };
       }
 
-      ProfileListViewAdapter adapter = new ProfileListViewAdapter(this, profileItems);
-      adapter.SetSelectedId(position);
-
-      // Save the ListView state (= includes scroll position) as a Parceble
-      IParcelable state = listView.OnSaveInstanceState();
-
+      adapter = new ProfileListViewAdapter(this, profileItems);
+      
       // set new items
       listView.Adapter = adapter;
-
-      // Restore previous state (including selected item index and scroll position)
-      listView.OnRestoreInstanceState(state);
-
     }
   }
 }

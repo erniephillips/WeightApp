@@ -25,10 +25,17 @@ namespace WeightApp.Adapters {
       return profileItems[position].Id;
     }
 
-    public void SetSelectedId(int position) {
-      selectedId = position;
+    //experimenting if I can set the object text. Doesn't work for me to set text for listview item and maintain right and left alignment
+    public void SetSelectedTextValue(int position, string value) {
+      View view = this.fragment.View;
+      profileItems[position].TextRightSide = value;
+      view.FindViewById<TextView>(Resource.Id.profile_listview_item_right).Text = profileItems[position].TextRightSide;
     }
 
+    //return the profile items for validation
+    public List<ProfileListview> ValidateProfile() {
+      return profileItems;
+    }
 
     public override View GetView(int position, View convertView, ViewGroup parent) {
       var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.listview_profile, parent, false);
