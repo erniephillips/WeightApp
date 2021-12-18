@@ -57,14 +57,18 @@ namespace WeightApp {
       //Check if the user account has an associated profile. 
       //If not send them to the welcome screen which will have a welcome message and link to the profile page ELSE send to the My Stats page
       UserDao userDao = new UserDao();
-      User user = userDao.GetUserByUsername(userName); 
+      User user = userDao.GetUserByUsername(userName);
       ProfileDao profileDao = new ProfileDao();
       Profile profile = profileDao.GetProfileByUserId(user.USER_ID);
 
-      if(profile != null)
+      if (profile != null) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
-      else
+      } else {
+        //hide floating action button. If user gets to this screen they wouldn't be inputting a weight yet b/c no profile info exists yet
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WelcomeFragment(), "Fragment").Commit();
+      }
     }
 
     public override void OnBackPressed() {
@@ -104,14 +108,20 @@ namespace WeightApp {
       int id = item.ItemId;
 
       if (id == Resource.Id.nav_statistics) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_weight_entry) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_history) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new HistoryFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_profile) {
+        //Hide the floating action button for weight entry since screen is not scrollview
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_share) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         //https://docs.microsoft.com/en-us/xamarin/essentials/share?tabs=android
         Share.RequestAsync(new ShareTextRequest {
           Uri = "https://github.com/erniephillips/WeightApp/",
@@ -120,8 +130,10 @@ namespace WeightApp {
         });
         //Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
       } else if (id == Resource.Id.nav_contact) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_manage_account) {
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_logout) {
         //clear any login stored creds

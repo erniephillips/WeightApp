@@ -6,7 +6,7 @@ using DataAccessLayer.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
-using WeightApp.Helpers;
+using WeightApp.Adapters;
 
 /*
 * Ernie Phillips III : 12/09/2021

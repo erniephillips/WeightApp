@@ -4,7 +4,7 @@ using Android.Widget;
 using DataAccessLayer.Models;
 using System.Collections.Generic;
 
-namespace WeightApp.Helpers {
+namespace WeightApp.Adapters {
   public class UserListViewAdapter : BaseAdapter {
 
     private AndroidX.Fragment.App.Fragment fragment;
@@ -30,10 +30,8 @@ namespace WeightApp.Helpers {
       selectedId = position;
     }
 
-    public static void TestMethod() { }
-
     public override View GetView(int position, View convertView, ViewGroup parent) {
-      var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.list_view_user, parent, false);
+      var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.listview_user, parent, false);
       TextView txtUserID = view.FindViewById<TextView>(Resource.Id.txtView_UserID);
       TextView txtUserName = view.FindViewById<TextView>(Resource.Id.txtView_UserName);
       TextView txtPassword = view.FindViewById<TextView>(Resource.Id.txtView_Password);
