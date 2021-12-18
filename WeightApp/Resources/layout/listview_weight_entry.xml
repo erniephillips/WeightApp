@@ -75,7 +75,7 @@
 
   <!--Goal Date-->
   <TextView
-    android:text="Goal Target Date: "
+    android:text="Goal Date: "
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

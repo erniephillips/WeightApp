@@ -239,6 +239,7 @@ namespace WeightApp.Fragments {
              .SetMessage(error)
              .SetPositiveButton("OK", (sender, e) => { })
              .Show();
+          return;
         }
         #endregion
 
@@ -258,7 +259,7 @@ namespace WeightApp.Fragments {
             profile.GENDER = profileItem.HiddenTextForConversion;
           if (profileItem.TextLeftSide == "Goal Weight")
             profile.TARGET_WEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
-          if (profileItem.TextLeftSide == "Goal Target Date")
+          if (profileItem.TextLeftSide == "Goal Date")
             profile.TARGET_DATE = DateTime.Parse(profileItem.HiddenTextForConversion);
         }
 
@@ -294,7 +295,7 @@ namespace WeightApp.Fragments {
           new ProfileListview{ Id = 2, TextLeftSide = "Height", TextRightSide = "N/a" },
           new ProfileListview{ Id = 3, TextLeftSide = "Gender", TextRightSide = "N/a" },
           new ProfileListview{ Id = 4, TextLeftSide = "Goal Weight", TextRightSide = "N/a" },
-          new ProfileListview{ Id = 5, TextLeftSide = "Goal Target Date", TextRightSide = "N/a" }
+          new ProfileListview{ Id = 5, TextLeftSide = "Goal Date", TextRightSide = "N/a" }
         };
       } else {
         profileItems = new List<ProfileListview>() {
@@ -302,7 +303,7 @@ namespace WeightApp.Fragments {
           new ProfileListview{ Id = 2, TextLeftSide = "Height", TextRightSide = profile.HEIGHT.ToString(), HiddenTextForConversion = profile.HEIGHT.ToString() },
           new ProfileListview{ Id = 3, TextLeftSide = "Gender", TextRightSide = profile.GENDER, HiddenTextForConversion = profile.GENDER.ToString() },
           new ProfileListview{ Id = 4, TextLeftSide = "Goal Weight", TextRightSide = profile.TARGET_WEIGHT.ToString(), HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
-          new ProfileListview{ Id = 5, TextLeftSide = "Goal Target Date", TextRightSide = profile.TARGET_DATE.ToShortDateString(), HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
+          new ProfileListview{ Id = 5, TextLeftSide = "Goal Date", TextRightSide = profile.TARGET_DATE.ToShortDateString(), HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
         };
       }
 
