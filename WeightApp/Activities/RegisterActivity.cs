@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
 using System;
@@ -161,8 +162,14 @@ namespace WeightApp.Activities {
           SECURITY_ANSWER = txtSecurityAnswer.Text
         };
 
-        userDao.AddUser(userToStore);
-
+        try {
+          userDao.AddUser(userToStore);
+        } catch (Exception ex) {
+          new MaterialAlertDialogBuilder(this)
+             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+             .SetPositiveButton("OK", (sender, e) => { })
+             .Show();
+        }
         //redirect to login page
         StartActivity(typeof(LoginActivity)); //send user to main applicaiton logic
       };

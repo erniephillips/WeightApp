@@ -112,14 +112,22 @@ namespace WeightApp.Fragments {
         //update user info
         user.NAME = etName.Text;
         user.EMAIL = etEmail.Text;
-        userDao.UpdateUser(user);
+
+        try {
+          userDao.UpdateUser(user);
+        } catch (Exception ex) {
+          new MaterialAlertDialogBuilder(Activity)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+        }
 
         new MaterialAlertDialogBuilder(Activity)
-          .SetTitle("Weight App Alert")
-          .SetMessage("Name and email have been updated.")
-          .SetPositiveButton("OK", (sender, e) => {
-            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
-          }).Show();
+        .SetTitle("Weight App Alert")
+        .SetMessage("Name and email have been updated.")
+        .SetPositiveButton("OK", (sender, e) => {
+          this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
+        }).Show();
       };
 
       //Password btn click
@@ -164,19 +172,27 @@ namespace WeightApp.Fragments {
 
         //update the user's password
         user.PASSWORD = etNewPassword.Text;
-        userDao.UpdateUser(user);
+
+        try {
+          userDao.UpdateUser(user);
+        } catch (Exception ex) {
+          new MaterialAlertDialogBuilder(Activity)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+        }
 
         //confirmation
         new MaterialAlertDialogBuilder(Activity)
-          .SetTitle("Weight App Alert")
-          .SetMessage("Password has been updated. Please login again.")
-          .SetPositiveButton("OK", (sender, e) => {
-            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-            ISharedPreferencesEditor edit = pref.Edit();
-            edit.Clear();
-            edit.Commit();
-            Activity.StartActivity(typeof(LoginActivity));
-          }).Show();
+        .SetTitle("Weight App Alert")
+        .SetMessage("Password has been updated. Please login again.")
+        .SetPositiveButton("OK", (sender, e) => {
+          ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+          ISharedPreferencesEditor edit = pref.Edit();
+          edit.Clear();
+          edit.Commit();
+          Activity.StartActivity(typeof(LoginActivity));
+        }).Show();
 
       };
 
@@ -195,16 +211,24 @@ namespace WeightApp.Fragments {
         string selectedSpinnerValue = dropdownItems.Text;
 
         user.SECURITY_QUESTION = selectedSpinnerValue;
-        user.SECURITY_ANSWER = etSecurityAnswer.Text; ;
-        userDao.UpdateUser(user);
+        user.SECURITY_ANSWER = etSecurityAnswer.Text;
+
+        try {
+          userDao.UpdateUser(user);
+        } catch (Exception ex) {
+          new MaterialAlertDialogBuilder(Activity)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+        }
 
         //confirmation
         new MaterialAlertDialogBuilder(Activity)
-          .SetTitle("Weight App Alert")
-          .SetMessage("Security info has been updated.")
-          .SetPositiveButton("OK", (sender, e) => {
-            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
-          }).Show();
+        .SetTitle("Weight App Alert")
+        .SetMessage("Security info has been updated.")
+        .SetPositiveButton("OK", (sender, e) => {
+          this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
+        }).Show();
       };
 
       return view;

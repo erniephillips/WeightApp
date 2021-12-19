@@ -69,22 +69,24 @@ namespace WeightApp.Fragments {
             pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
 
             //set the whole weight number
-            string[] weightOzNumbers = Enumerable.Range(1, 16).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckWeightOzNum.MinValue = 1;
-            pckWeightOzNum.MaxValue = weightOzNumbers.Length;
+            pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
             pckWeightOzNum.Value = 1; //set the start value
             pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(weightView)
               .SetTitle("What's your current weight?")
-              .SetMessage("")
               .SetNegativeButton("Cancel", (s, e) => { })
               .SetPositiveButton("OK", (sender, e) => {
 
                 var selectedLbs = pckWeightPoundsNum.Value;
-                var selectedOz = pckWeightOzNum.Value;
+                var selectedOz = pckWeightOzNum.Value - 1;
 
-                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs", selectedLbs + "." + selectedOz);
+                adapter.SetSelectedTextValue(
+                  eLV.Position,
+                  selectedLbs + " lbs " + selectedOz + " oz",
+                  selectedLbs + "." + selectedOz);
               })
               .Show();
             break;
@@ -104,29 +106,31 @@ namespace WeightApp.Fragments {
             txtHeightTextTwo.Text = "in";
 
             //set the whole weight number
-            string[] heightFeetNumbers = Enumerable.Range(1, 8).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            string[] heightFeetNumbers = Enumerable.Range(1, 11).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightFtNum.MinValue = 1;
             pckHeightFtNum.MaxValue = heightFeetNumbers.Length;
             pckHeightFtNum.Value = 5; //set the start value
             pckHeightFtNum.SetDisplayedValues(heightFeetNumbers);
 
             //set the whole weight number
-            string[] weightInchNumbers = Enumerable.Range(1, 15).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            string[] weightInchNumbers = Enumerable.Range(0, 13).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightInNum.MinValue = 1;
-            pckHeightInNum.MaxValue = weightInchNumbers.Length;
+            pckHeightInNum.MaxValue = weightInchNumbers.Length - 1;
             pckHeightInNum.Value = 1; //set the start value
             pckHeightInNum.SetDisplayedValues(weightInchNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(heightView)
               .SetTitle("What's your height?")
-              .SetMessage("")
               .SetNegativeButton("Cancel", (s, e) => { })
               .SetPositiveButton("OK", (sender, e) => {
 
                 var selectedFt = pckHeightFtNum.Value;
-                var selectedIn = pckHeightInNum.Value;
+                var selectedIn = pckHeightInNum.Value - 1;
 
-                adapter.SetSelectedTextValue(eLV.Position, selectedFt + " ft " + selectedIn + " in", selectedFt + "." + selectedIn);
+                adapter.SetSelectedTextValue(
+                  eLV.Position,
+                  selectedFt + " ft " + selectedIn + " in",
+                  selectedFt + "." + selectedIn);
               })
               .Show();
             break;
@@ -134,12 +138,11 @@ namespace WeightApp.Fragments {
           #region GENDER OPTION
           case 2:
             View goalGenderView = inflater.Inflate(Resource.Layout.dialog_gender, container, false);
-            
+
             RadioGroup rdgGender = goalGenderView.FindViewById<RadioGroup>(Resource.Id.radio_gender_group);
 
             new MaterialAlertDialogBuilder(Activity).SetView(goalGenderView)
               .SetTitle("Select your gender")
-              .SetMessage("")
               .SetPositiveButton("OK", (sender, e) => {
                 RadioButton radioGenderButton = goalGenderView.FindViewById<RadioButton>(rdgGender.CheckedRadioButtonId);
                 adapter.SetSelectedTextValue(eLV.Position, radioGenderButton.Text, radioGenderButton.Text);
@@ -168,22 +171,24 @@ namespace WeightApp.Fragments {
             pckGoalWeightPoundsNum.SetDisplayedValues(goalWeightPoundNumbers);
 
             //set the whole weight number
-            string[] goalWeightOzNumbers = Enumerable.Range(1, 16).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            string[] goalWeightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckGoalWeightOzNum.MinValue = 1;
-            pckGoalWeightOzNum.MaxValue = goalWeightOzNumbers.Length;
+            pckGoalWeightOzNum.MaxValue = goalWeightOzNumbers.Length - 1;
             pckGoalWeightOzNum.Value = 1; //set the start value
             pckGoalWeightOzNum.SetDisplayedValues(goalWeightOzNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(goalWeightView)
               .SetTitle("What's your goal weight?")
-              .SetMessage("")
               .SetNegativeButton("Cancel", (s, e) => { })
               .SetPositiveButton("OK", (sender, e) => {
 
                 var selectedLbs = pckGoalWeightPoundsNum.Value;
-                var selectedOz = pckGoalWeightOzNum.Value;
+                var selectedOz = pckGoalWeightOzNum.Value - 1;
 
-                adapter.SetSelectedTextValue(eLV.Position, selectedLbs + "." + selectedOz + " lbs", selectedLbs + "." + selectedOz);
+                adapter.SetSelectedTextValue(
+                  eLV.Position,
+                  selectedLbs + " lbs " + selectedOz + " oz",
+                  selectedLbs + "." + selectedOz);
               })
               .Show();
             break;
@@ -252,28 +257,43 @@ namespace WeightApp.Fragments {
         };
         foreach (ProfileListview profileItem in profileListviews) {
           if (profileItem.TextLeftSide == "Weight")
-            profile.START_WEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+            profile.START_WEIGHT = profileItem.HiddenTextForConversion;
           if (profileItem.TextLeftSide == "Height")
-            profile.HEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+            profile.HEIGHT = profileItem.HiddenTextForConversion;
           if (profileItem.TextLeftSide == "Gender")
             profile.GENDER = profileItem.HiddenTextForConversion;
           if (profileItem.TextLeftSide == "Goal Weight")
-            profile.TARGET_WEIGHT = Convert.ToDecimal(profileItem.HiddenTextForConversion);
+            profile.TARGET_WEIGHT = profileItem.HiddenTextForConversion;
           if (profileItem.TextLeftSide == "Goal Date")
             profile.TARGET_DATE = DateTime.Parse(profileItem.HiddenTextForConversion);
         }
 
         //add to database if doesn't exist otherwise update
         Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
-        if(tempProfile == null)
-          profileDao.AddProfile(profile);
+        if (tempProfile == null)
+          try {
+            profileDao.AddProfile(profile);
+          } catch (Exception ex) {
+            new MaterialAlertDialogBuilder(Activity)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+          }
         else {
           tempProfile.START_WEIGHT = profile.START_WEIGHT;
           tempProfile.HEIGHT = profile.HEIGHT;
           tempProfile.GENDER = profile.GENDER;
           tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
           tempProfile.TARGET_DATE = profile.TARGET_DATE;
-          profileDao.UpdateProfile(tempProfile);
+
+          try {
+            profileDao.UpdateProfile(tempProfile);
+          } catch (Exception ex) {
+            new MaterialAlertDialogBuilder(Activity)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+          }
         }
 
         //redirect user to weight entry
@@ -298,12 +318,31 @@ namespace WeightApp.Fragments {
           new ProfileListview{ Id = 5, TextLeftSide = "Goal Date", TextRightSide = "N/a" }
         };
       } else {
+        string[] weightSplit = profile.START_WEIGHT.ToString().Split(".");
+        string[] heightSplit = profile.HEIGHT.ToString().Split(".");
+        string[] goalWeightSplit = profile.TARGET_WEIGHT.ToString().Split(".");
         profileItems = new List<ProfileListview>() {
-          new ProfileListview{ Id = 1, TextLeftSide = "Weight", TextRightSide = profile.START_WEIGHT.ToString(), HiddenTextForConversion = profile.START_WEIGHT.ToString() },
-          new ProfileListview{ Id = 2, TextLeftSide = "Height", TextRightSide = profile.HEIGHT.ToString(), HiddenTextForConversion = profile.HEIGHT.ToString() },
-          new ProfileListview{ Id = 3, TextLeftSide = "Gender", TextRightSide = profile.GENDER, HiddenTextForConversion = profile.GENDER.ToString() },
-          new ProfileListview{ Id = 4, TextLeftSide = "Goal Weight", TextRightSide = profile.TARGET_WEIGHT.ToString(), HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
-          new ProfileListview{ Id = 5, TextLeftSide = "Goal Date", TextRightSide = profile.TARGET_DATE.ToShortDateString(), HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
+          new ProfileListview{ 
+            //I set strings to always save with a "." so there shouldn't be an error here (unless record doesn't save properly)
+            Id = 1, TextLeftSide = "Weight",
+            TextRightSide = weightSplit[0] + " lbs " + weightSplit[1] + " oz",
+            HiddenTextForConversion = profile.START_WEIGHT.ToString() },
+          new ProfileListview{
+            Id = 2, TextLeftSide = "Height",
+            TextRightSide = heightSplit[0] + " ft " + heightSplit[1] + " in",
+            HiddenTextForConversion = profile.HEIGHT.ToString() },
+          new ProfileListview{
+            Id = 3, TextLeftSide = "Gender",
+            TextRightSide = profile.GENDER,
+            HiddenTextForConversion = profile.GENDER.ToString() },
+          new ProfileListview{
+            Id = 4, TextLeftSide = "Goal Weight",
+            TextRightSide = goalWeightSplit[0] + " lbs " + goalWeightSplit[1] + " oz",
+            HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
+          new ProfileListview{
+            Id = 5, TextLeftSide = "Goal Date",
+            TextRightSide = profile.TARGET_DATE.ToShortDateString(),
+            HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
         };
       }
 

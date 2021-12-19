@@ -46,6 +46,9 @@ namespace AndroidApp {
       //UserDao ud = new UserDao();
       //ud.DeleteAll();
       //var a = ud.GetUsers();
+      ProfileDao profileDao = new ProfileDao();
+      //profileDao.DeleteAll();
+      var a = profileDao.GetProfiles();
 
       //check users last login date, if within two weeks and logged in flag exists
       //https://www.c-sharpcorner.com/article/shared-preferences-in-xamarin-android/

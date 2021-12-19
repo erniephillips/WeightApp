@@ -21,19 +21,19 @@ namespace DataAccessLayer.Models {
     public int USER_ID { get; set; }
 
     [NotNull]
-    public decimal START_WEIGHT { get; set; }
+    public string START_WEIGHT { get; set; }
 
     [NotNull]
     public DateTime START_DATE { get; set; }
 
     [NotNull]
-    public decimal HEIGHT { get; set; }
+    public string HEIGHT { get; set; }
 
     [MaxLength(15), NotNull]
     public string GENDER { get; set; }
 
     [NotNull]
-    public decimal TARGET_WEIGHT { get; set; }
+    public string TARGET_WEIGHT { get; set; }
 
     [NotNull]
     public DateTime TARGET_DATE { get; set; }

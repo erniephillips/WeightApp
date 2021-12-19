@@ -19,7 +19,7 @@ namespace DataAccessLayer.Models {
     public int PROFILE_ID { get; set; }
 
     [NotNull]
-    public decimal WEIGHT_ENTRY { get; set; }
+    public string WEIGHT_ENTRY { get; set; }
 
     [NotNull]
     public DateTime DATE_ENTRY { get; set; }

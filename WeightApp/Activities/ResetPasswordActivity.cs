@@ -65,8 +65,15 @@ namespace WeightApp.Activities {
         user.PASSWORD = txtPassword.Text;
 
         UserDao userDao = new UserDao();
-        userDao.UpdateUser(user);
 
+        try {
+          userDao.UpdateUser(user);
+        } catch (Exception ex) {
+          new MaterialAlertDialogBuilder(this)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+        }
         new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
           .SetMessage("Password successfully reset.")

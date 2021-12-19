@@ -70,8 +70,15 @@ namespace WeightApp.Activities {
         if (userCanLogin) { //user gave correct username and password
           User user = userDao.GetUserByUsername(txtUsername.Text); //find the user
           user.LAST_LOGIN_DATE = DateTime.Now; //set last logged in date to now
-          userDao.UpdateUser(user); //update the user with last logged in date
 
+          try {
+            userDao.UpdateUser(user); //update the user with last logged in date
+          } catch (Exception ex) {
+            new MaterialAlertDialogBuilder(this)
+            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+            .SetPositiveButton("OK", (sender, e) => { })
+            .Show();
+          }
           //set a session for the user
           if (chkRememberMe.Checked) { //set a session (sort of)
             edit.PutString("UserId", user.USER_ID.ToString());
