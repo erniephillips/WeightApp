@@ -29,6 +29,11 @@ namespace DataAccessLayer.Dao {
       return _SQLiteConnection.Get<Weight>(id);
     }
 
+    //GET BY USER ID
+    public List<Weight> GetWeightsByProfileId(int userId) {
+      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == userId).ToList();
+    }
+
     //INSERT
     public void AddWeight(Weight weight) {
       _SQLiteConnection.Insert(weight);

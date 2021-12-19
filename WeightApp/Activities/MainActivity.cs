@@ -111,7 +111,8 @@ namespace WeightApp {
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_weight_entry) {
-        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
+        //fab button not needed here since it links to this page
+        FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_history) {
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();

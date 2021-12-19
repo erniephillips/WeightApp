@@ -1,0 +1,3 @@
+- Add checkbox right top corner
+- add leave page event with dialog
+- weight entry button not hidden from weight page if user clicks the fab itself

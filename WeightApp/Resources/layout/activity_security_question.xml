@@ -19,21 +19,18 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:contentInsetStart="5dp">
+        app:popupTheme="@style/AppTheme.PopupOverlay">
         <ImageButton
           android:id="@+id/btn_sq_back"
           android:src="@drawable/ic_back_arrow"
-          android:background="@android:color/transparent"
-          android:layout_width="50.0dp"
-          android:layout_height="50.0dp"
-          android:layout_marginLeft="-20dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
           android:scaleType="fitCenter"
           android:adjustViewBounds="true"
-          android:layout_gravity="top|left" />
+          android:layout_height="32.5dp"
+          android:layout_width="32.5dp" />
       </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    
+
     <!--Header-->
     <TextView
       android:id="@+id/tv_sec_q"
@@ -74,7 +71,7 @@
         android:layout_height="wrap_content"
         android:hint="Security Answer" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <!-- Check Answer Button -->
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_verify_sa"

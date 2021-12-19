@@ -23,23 +23,20 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:contentInsetStart="5dp">
+        app:popupTheme="@style/AppTheme.PopupOverlay">
         <ImageButton
           android:id="@+id/btn_register_back"
           android:src="@drawable/ic_back_arrow"
-          android:background="@android:color/transparent"
-          android:layout_width="50.0dp"
-          android:layout_height="50.0dp"
-          android:layout_marginLeft="-20dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
           android:scaleType="fitCenter"
           android:adjustViewBounds="true"
-          android:layout_gravity="top|left" />
+          android:layout_height="32.5dp"
+          android:layout_width="32.5dp" />
       </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--Info button-->
-    <ImageButton
+    <!-- <ImageButton
       android:id="@+id/btn_register_info"
       android:src="@drawable/ic_info"
       android:background="@android:color/transparent"
@@ -51,8 +48,8 @@
       android:layout_alignParentEnd="true"
       android:layout_alignParentRight="true"
       app:layout_marginRightPercent="3%"
-      app:layout_marginTopPercent="3%"
-      android:layout_gravity="top|end" />
+      app:layout_marginTopPercent="13%"
+      android:layout_gravity="top|end" />-->
 
     <!--Header-->
     <TextView
@@ -62,6 +59,8 @@
       android:layout_below="@+id/register_appbar"
       app:layout_marginTopPercent="3%"
       android:layout_centerHorizontal="true"
+      android:drawablePadding="2dp"
+      android:drawableLeft="@drawable/ic_info"
       android:textStyle="bold"
       android:textSize="32sp"
       android:text="Register"/>

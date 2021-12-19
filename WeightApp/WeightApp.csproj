@@ -73,7 +73,7 @@
     <Compile Include="Activities\RegisterActivity.cs" />
     <Compile Include="Activities\ResetPasswordActivity.cs" />
     <Compile Include="Activities\UserAccessActivity.cs" />
-    <Compile Include="Adapters\ProfileListViewAdapter.cs" />
+    <Compile Include="Adapters\ListViewTextLeftRightAdapter.cs" />
     <Compile Include="Fragments\ContactFragment.cs" />
     <Compile Include="Fragments\HistoryFragment.cs" />
     <Compile Include="Fragments\MainFragment.cs" />
@@ -289,17 +289,12 @@
     <AndroidResource Include="Resources\drawable\new_weight_app_logo_white_transparent.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\listview_weight_entry.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\listview_profile.xml" />
+    <AndroidResource Include="Resources\layout\listview_left_right_text.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\dialog_spinner.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\layout\dialog_gender.xml" />
   </ItemGroup>

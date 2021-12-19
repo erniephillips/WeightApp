@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Diagrams\DB brainstorm.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)Diagrams\to-do.txt" />
     <Content Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERD.png" />
     <Content Include="$(MSBuildThisFileDirectory)Diagrams\Weight App ERM.png" />
   </ItemGroup>
@@ -24,7 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dao\UserDao.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISQLiteConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Profile.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\ProfileListview.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ListviewTextLeftRight.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Weight.cs" />
   </ItemGroup>

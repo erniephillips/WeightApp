@@ -26,7 +26,8 @@ namespace WeightApp.Activities {
 
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_register_back);
       Button btnRegister = FindViewById<Button>(Resource.Id.btn_reg_register);
-      ImageView btnInfo = FindViewById<ImageView>(Resource.Id.btn_register_info);
+      //ImageView btnInfo = FindViewById<ImageView>(Resource.Id.btn_register_info);
+      TextView txtRegister = FindViewById<TextView>(Resource.Id.tv_Register);
       ScrollView scrollView = FindViewById<ScrollView>(Resource.Id.reg_scrollview);
 
       //populate the drowdown
@@ -39,9 +40,9 @@ namespace WeightApp.Activities {
         StartActivity(typeof(UserAccessActivity));
       };
 
-      btnInfo.Click += (s, e) => {
+      txtRegister.Click += (s, e) => {
         //set a snackbar message for user about data. Data was being truncated. Override the snackbar view max lines
-        Snackbar snackbar = Snackbar.Make(btnInfo, "Data is only stored on your phone and cannot be recovered. Please remember your login information and security answer.", 7000);
+        Snackbar snackbar = Snackbar.Make(txtRegister, "Data is only stored on your phone and cannot be recovered. Please remember your login information and security answer.", 7000);
         View snackbarView = snackbar.View;
         TextView snackTextView = (TextView)snackbarView.FindViewById(Resource.Id.snackbar_text);
         snackTextView.SetMaxLines(3);
