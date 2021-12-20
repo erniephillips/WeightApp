@@ -1,4 +1,5 @@
 ﻿using System;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -6,10 +7,12 @@ using Android.Runtime;
 using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
+using AndroidX.Core.App;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
@@ -68,6 +71,25 @@ namespace WeightApp {
         //hide floating action button. If user gets to this screen they wouldn't be inputting a weight yet b/c no profile info exists yet
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WelcomeFragment(), "Fragment").Commit();
+      }
+
+      //Requesting camera permissions: https://docs.microsoft.com/en-us/xamarin/android/app-fundamentals/permissions?tabs=windows
+      var requiredPermissions = new String[] {
+        Manifest.Permission.Camera,
+        Manifest.Permission.WriteExternalStorage
+      };
+      if (
+        ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.Camera) ||
+        ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.WriteExternalStorage)) {
+        new MaterialAlertDialogBuilder(this)
+          .SetTitle("Weight App Alert")
+          .SetMessage("In order to take, access, and store photos, please allow permissions. If you do not see a popup after closing this prompt, go under Settings > Apps > Weight App and allow all seen permissions.")
+          .SetPositiveButton("OK", (s, e) => {
+            ActivityCompat.RequestPermissions(this, requiredPermissions, 0);
+          })
+          .Show();
+      } else {
+        ActivityCompat.RequestPermissions(this, requiredPermissions, 0);
       }
     }
 

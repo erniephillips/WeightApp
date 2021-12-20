@@ -1,13 +1,19 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
+using Android.Hardware;
 using Android.OS;
+using Android.Provider;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.App;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Google.Android.Material.Dialog;
+using Google.Android.Material.Snackbar;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WeightApp.Adapters;
 
@@ -25,6 +31,12 @@ namespace WeightApp.Fragments {
     Weight weight = new Weight();
     ListView listView;
 
+    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults) {
+      Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+      base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
 
@@ -35,6 +47,8 @@ namespace WeightApp.Fragments {
       View view = inflater.Inflate(Resource.Layout.fragment_weight_entry, container, false);
 
       listView = view.FindViewById<ListView>(Resource.Id.weight_entry_listView);
+      ImageButton btnImage = view.FindViewById<ImageButton>(Resource.Id.we_camera_icon_click);
+
       LoadData(); //clear any position index
 
       //set the listview item click
@@ -88,7 +102,7 @@ namespace WeightApp.Fragments {
           #region DATE OPTION
           case 1:
             DatePickerDialog datePicker = new DatePickerDialog(Context);
-            datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => { 
+            datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
               DateTime selectedDate = datePicker.DatePicker.DateTime;
               adapter.SetSelectedTextValue(eLV.Position, selectedDate.ToShortDateString(), selectedDate.ToString());
             });
@@ -97,6 +111,39 @@ namespace WeightApp.Fragments {
             break;
             #endregion
         }
+      };
+
+      btnImage.Click += (s, e) => {
+        View photoView = inflater.Inflate(Resource.Layout.dialog_photo, container, false);
+        Button btnTakePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_take_photo);
+        Button btnUploadPhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_gallery);
+        Button btnDeletePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_delete_photo);
+
+        //if image icon click not set to camera
+        var i = btnImage.Drawable;
+        btnDeletePhoto.Click += (s, e) => { };
+
+        btnTakePhoto.Click += (s, e) => {
+          //check that user has granted camera permissions
+          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
+            //user has accepted camera permissions, start camera
+            Intent intent = new Intent(MediaStore.ActionImageCapture);
+            StartActivityForResult(intent, 0);
+          }
+        };
+        btnUploadPhoto.Click += (s, e) => {
+          //check that user has granted camera permissions
+          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
+            //user has accepted upload image permissions, start image picker
+            //https://www.c-sharpcorner.com/article/xamarin-android-how-to-pick-a-image-from-gallery-in-android-phone-using-visual/
+            Intent intent = new Intent();
+            intent.SetType("image/*");
+            intent.SetAction(Intent.ActionGetContent);
+            StartActivityForResult(Intent.CreateChooser(intent, "Select Picture"), 0);
+          }
+        };
+
+        new MaterialAlertDialogBuilder(Activity).SetTitle("Add a Progress Photo").SetView(photoView).Show();
       };
 
       return view;

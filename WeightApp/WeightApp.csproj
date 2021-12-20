@@ -294,9 +294,17 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\dialog_spinner.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\dialog_photo.xml" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\dialog_gender.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_trash_forever.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_trash.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

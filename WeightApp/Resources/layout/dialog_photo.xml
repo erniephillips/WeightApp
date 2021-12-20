@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<android.support.percent.PercentRelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="start">
+
+  <!-- Login Button -->
+  <Button
+    android:id="@+id/dp_btn_take_photo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Take Photo"
+    android:textColor="#000"
+    android:gravity="left|center_vertical"
+    android:drawableLeft="@android:drawable/ic_menu_camera"
+    style="?android:attr/borderlessButtonStyle"
+    app:layout_widthPercent="100%"/>
+  <Button
+    android:id="@+id/dp_btn_gallery"
+    android:layout_below="@+id/dp_btn_take_photo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Upload Photo"
+    android:textColor="#000"
+    android:gravity="left|center_vertical"
+    android:drawableLeft="@android:drawable/ic_menu_gallery"
+    style="?android:attr/borderlessButtonStyle"
+    app:layout_widthPercent="100%"/>
+   <Button
+    android:id="@+id/dp_btn_delete_photo"
+    android:layout_below="@+id/dp_btn_gallery"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Delete Photo"
+    android:textColor="#000"
+    android:gravity="left|center_vertical"
+    android:drawableLeft="@drawable/ic_trash"
+    style="?android:attr/borderlessButtonStyle"
+    app:layout_widthPercent="100%"/>
+  <!--<com.google.android.material.button.MaterialButton
+    android:id="@+id/dp_btn_take_photo"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:text="Take Photo"
+    android:textSize="20sp"
+    
+    app:icon="@drawable/ic_login"
+    android:textColor="#000"
+    app:backgroundTint="@android:color/transparent"
+    app:layout_marginTopPercent="0%"
+    app:layout_marginPercent="5%"
+    app:layout_widthPercent="70%" />-->
+
+  <!-- <com.google.android.material.button.MaterialButton
+    android:id="@+id/dp_btn_take_gallery"
+    android:layout_below="@+id/dp_btn_take_photo"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:text="Upload Photo"
+    android:textSize="20sp"
+    style="@style/Widget.MaterialComponents.Button"
+    app:icon="@drawable/ic_login"
+    app:backgroundTint="?android:attr/colorPrimary"
+    app:layout_marginTopPercent="3%"
+    app:layout_marginPercent="5%"
+    app:layout_widthPercent="70%" />-->
+
+   <!--<com.google.android.material.button.MaterialButton
+    android:id="@+id/dp_btn_delete_photo"
+    android:layout_below="@+id/dp_btn_take_gallery"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:text="Delete Photo"
+    android:textSize="20sp"
+    style="@style/Widget.MaterialComponents.Button"
+    app:icon="@drawable/ic_login"
+    app:backgroundTint="?android:attr/colorPrimary"
+    app:layout_marginTopPercent="3%"
+    app:layout_marginPercent="5%"
+    app:layout_widthPercent="70%" />-->
+</android.support.percent.PercentRelativeLayout>
