@@ -1,6 +1,7 @@
 ﻿using Android;
 using Android.App;
 using Android.Content;
+using Android.Graphics.Drawables;
 using Android.Hardware;
 using Android.OS;
 using Android.Provider;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using WeightApp.Adapters;
 
 /*
@@ -30,12 +32,6 @@ namespace WeightApp.Fragments {
     ListViewTextLeftRightAdapter adapter;
     Weight weight = new Weight();
     ListView listView;
-
-    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults) {
-      Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-      base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
@@ -119,36 +115,56 @@ namespace WeightApp.Fragments {
         Button btnUploadPhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_gallery);
         Button btnDeletePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_delete_photo);
 
+
+        AndroidX.AppCompat.App.AlertDialog imagePickerDialog = 
+          new MaterialAlertDialogBuilder(Activity).SetTitle("Add a Progress Photo").SetView(photoView).Create();
+        imagePickerDialog.Show();
+
         //if image icon click not set to camera
-        var i = btnImage.Drawable;
-        btnDeletePhoto.Click += (s, e) => { };
+        string imageTag = (string)btnImage.Tag;
+        if(imageTag == "IMAGE_ICON") {
+          btnDeletePhoto.Visibility = ViewStates.Gone;
+        } else {
+          btnDeletePhoto.Visibility = ViewStates.Visible;
+          btnDeletePhoto.Click += (s, e) => {
+            imagePickerDialog.Dismiss();
+            btnImage.Tag = "IMAGE_ICON";
+            btnImage.SetImageResource(Android.Resource.Drawable.IcMenuCamera);
+          };
+        }
+
+        
 
         btnTakePhoto.Click += (s, e) => {
+          imagePickerDialog.Dismiss();
+          btnImage.Tag = "CAMERA_IMAGE";
           //check that user has granted camera permissions
           if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
             //user has accepted camera permissions, start camera
             Intent intent = new Intent(MediaStore.ActionImageCapture);
-            StartActivityForResult(intent, 0);
+            MainActivity.Instance.StartActivityForResult(intent, MainActivity.WEIGHT_ENTRY_CAMERA_REQUEST);
           }
         };
         btnUploadPhoto.Click += (s, e) => {
+          imagePickerDialog.Dismiss();
+          btnImage.Tag = "GALLERY_IMAGE";
           //check that user has granted camera permissions
-          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
+          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.ReadExternalStorage)) {
             //user has accepted upload image permissions, start image picker
             //https://www.c-sharpcorner.com/article/xamarin-android-how-to-pick-a-image-from-gallery-in-android-phone-using-visual/
             Intent intent = new Intent();
             intent.SetType("image/*");
             intent.SetAction(Intent.ActionGetContent);
-            StartActivityForResult(Intent.CreateChooser(intent, "Select Picture"), 0);
+
+            // Start the picture-picker activity (resumes in MainActivity.cs)
+            MainActivity.Instance.StartActivityForResult(Intent.CreateChooser(intent, "Select Picture"), MainActivity.WEIGHT_ENTRY_GALLERY_REQUEST);
           }
         };
-
-        new MaterialAlertDialogBuilder(Activity).SetTitle("Add a Progress Photo").SetView(photoView).Show();
       };
 
       return view;
     }
-
+   
     private void LoadData() {
       string userId = pref.GetString("UserId", String.Empty);
 

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -30,6 +33,10 @@ namespace WeightApp {
   //Remove Main launcher since splash screen is activity to be launched
   [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
   public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener {
+
+    //needed to allow fragments access to this activity instance
+    internal static MainActivity Instance { get; private set; }
+
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
       Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -91,6 +98,9 @@ namespace WeightApp {
       } else {
         ActivityCompat.RequestPermissions(this, requiredPermissions, 0);
       }
+
+      //set the instance
+      Instance = this;
     }
 
     public override void OnBackPressed() {
@@ -173,10 +183,25 @@ namespace WeightApp {
       drawer.CloseDrawer(GravityCompat.Start);
       return true;
     }
-    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
-      Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-      base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+    public static readonly int WEIGHT_ENTRY_CAMERA_REQUEST = 1;
+    public static readonly int WEIGHT_ENTRY_GALLERY_REQUEST = 2;
+
+    // Field, property, and method for Picture Picker
+    protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent) {
+      base.OnActivityResult(requestCode, resultCode, intent);
+      
+      if ((resultCode == Result.Ok) && (intent != null)) {
+        if (requestCode == WEIGHT_ENTRY_CAMERA_REQUEST) {
+          Android.Widget.ImageButton btnImage = FindViewById<Android.Widget.ImageButton>(Resource.Id.we_camera_icon_click);
+          Bitmap bitmap = (Bitmap)intent.Extras.Get("data");
+          btnImage.SetImageBitmap(bitmap);
+        } else if (requestCode == WEIGHT_ENTRY_GALLERY_REQUEST) {
+          Android.Widget.ImageButton btnImage = FindViewById<Android.Widget.ImageButton>(Resource.Id.we_camera_icon_click);
+          Android.Net.Uri uri = intent.Data;
+          btnImage.SetImageURI(uri);
+        }
+      }
     }
   }
 }

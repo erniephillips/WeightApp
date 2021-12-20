@@ -51,6 +51,7 @@
       android:id="@+id/we_camera_icon_click"
       android:src="@android:drawable/ic_menu_camera"
       android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:tag="IMAGE_ICON"
       android:layout_width="35.0dp"
       android:layout_height="35.0dp"
       android:scaleType="fitCenter"
