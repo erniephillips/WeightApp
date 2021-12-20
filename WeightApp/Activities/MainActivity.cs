@@ -112,6 +112,7 @@ namespace WeightApp {
       }
     }
 
+    //overriding the menu in fragments and showing as needed
     //public override bool OnCreateOptionsMenu(IMenu menu) {
     //  MenuInflater.Inflate(Resource.Menu.menu_main, menu);
     //  return true;
@@ -119,7 +120,7 @@ namespace WeightApp {
 
     //public override bool OnOptionsItemSelected(IMenuItem item) {
     //  int id = item.ItemId;
-    //  if (id == Resource.Id.action_manage_accounts) {
+    //  if (id == Resource.Id.menu_save) {
     //    Android.Widget.Toast.MakeText(this, "Manage accounts functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
     //    return true;
     //  }
@@ -138,7 +139,7 @@ namespace WeightApp {
     public bool OnNavigationItemSelected(IMenuItem item) {
 
       int id = item.ItemId;
-
+      
       if (id == Resource.Id.nav_statistics) {
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
@@ -184,10 +185,10 @@ namespace WeightApp {
       return true;
     }
 
+    //https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/dependency-service/photo-picker
     public static readonly int WEIGHT_ENTRY_CAMERA_REQUEST = 1;
     public static readonly int WEIGHT_ENTRY_GALLERY_REQUEST = 2;
-
-    // Field, property, and method for Picture Picker
+  
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent) {
       base.OnActivityResult(requestCode, resultCode, intent);
       

@@ -1,9 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <item
+  <!--<item
         android:id="@+id/action_manage_accounts"
         android:orderInCategory="100"
         android:title="Manage Accounts"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
+  <!--https://docs.microsoft.com/en-us/xamarin/android/user-interface/controls/tool-bar/replacing-the-action-bar-->
+  <item
+    android:id="@+id/menu_save"
+    android:icon="@drawable/ic_save"
+    app:showAsAction="always"
+    android:title="Save" />
+  <item
+    android:id="@+id/menu_edit"
+    android:icon="@drawable/ic_trash"
+    app:showAsAction="always"
+    android:title="Delete" />
+
+  <!--<item
+       android:id="@+id/menu_preferences"
+       android:showAsAction="never"
+       android:title="Preferences" />-->
 </menu>

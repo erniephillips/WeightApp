@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Dialog;
+using Google.Android.Material.Navigation;
 using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,27 @@ using Xamarin.Essentials;
 
 namespace WeightApp.Fragments {
   public class ContactFragment : AndroidX.Fragment.App.Fragment {
+
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
+      //hide the options menu, save and delete do not apply here
+      HasOptionsMenu = false;
+     
 
-    // send email using native phone app
-    //https://docs.microsoft.com/en-us/xamarin/essentials/email?tabs=android
+      // send email using native phone app
+      //https://docs.microsoft.com/en-us/xamarin/essentials/email?tabs=android
 
-    //why I shouldn't use SMTP in the app (should build web service instead)
-    //https://social.msdn.microsoft.com/Forums/en-US/f0f661d2-24db-47b1-9fc7-6be02685f8f1/how-to-send-smtp-email-using-xamarinforms-without-user-interaction?forum=xamarinforms
+      //why I shouldn't use SMTP in the app (should build web service instead)
+      //https://social.msdn.microsoft.com/Forums/en-US/f0f661d2-24db-47b1-9fc7-6be02685f8f1/how-to-send-smtp-email-using-xamarinforms-without-user-interaction?forum=xamarinforms
     }
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+      
       // Use this to return your custom view for this Fragment
       View view = inflater.Inflate(Resource.Layout.fragment_contact, container, false);
+
+      //NavigationView navigationView = view.FindViewById<NavigationView>(Resource.Menu.menu_main);
+      //navigationView.Menu.FindItem(Resource.Id.menu_save).SetEnabled(false);
 
       ScrollView scrollView = view.FindViewById<ScrollView>(Resource.Id.contact_scrollview);
       Button btnSubmit = view.FindViewById<Button>(Resource.Id.btn_contact_submit);

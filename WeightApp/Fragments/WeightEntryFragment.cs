@@ -36,8 +36,34 @@ namespace WeightApp.Fragments {
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
 
-      // Create your fragment here
+      //show the options menu
+      HasOptionsMenu = true;
     }
+
+    public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
+      //MenuInflater.Inflate (Resource.Menu.Action_menu, menu);
+      //menu.Clear();
+      inflater.Inflate(Resource.Menu.menu_main, menu);
+
+      base.OnCreateOptionsMenu(menu, inflater);
+    }
+
+    public override bool OnOptionsItemSelected(IMenuItem menu) {
+      menu.SetChecked(true);
+      //switch (menu.ItemId) {
+      //  case Resource.Id.selecta:
+      //    Toast.MakeText(Application.Context, "Top", ToastLength.Long);
+
+      //    return true;
+      //  case Resource.Id.selectb:
+      //    Toast.MakeText(Application.Context, "New", ToastLength.Long);
+
+      //    return true;
+      //}
+      return base.OnOptionsItemSelected(menu);
+
+    }
+    
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View view = inflater.Inflate(Resource.Layout.fragment_weight_entry, container, false);
