@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="15dp">
+
+  <TextView
+    android:id="@+id/listview_history_weight"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
+    android:textStyle="bold"
+    android:text="Text 1"/>
+  <TextView
+    android:id="@+id/listview_history_date"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_marginTop="30dp"
+    android:layout_below="@+id/listview_history_weight"
+    android:textStyle="bold"
+    android:text="Text 1"/>
+
+  <ImageButton
+    android:id="@+id/listview_history_view"
+    android:src="@android:drawable/ic_menu_view"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="5dp"
+    android:text="Edit" />
+
+  <ImageButton
+    android:id="@+id/listview_history_edit"
+    android:src="@android:drawable/ic_menu_edit"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/listview_history_view"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="10dp"
+    android:text="View" />
+</RelativeLayout>

@@ -13,11 +13,15 @@
     app:showAsAction="always"
     android:title="Save" />
   <item
-    android:id="@+id/menu_edit"
+    android:id="@+id/menu_delete"
     android:icon="@drawable/ic_trash"
     app:showAsAction="always"
     android:title="Delete" />
-
+  <item
+    android:id="@+id/menu_back"
+    android:icon="@drawable/ic_back_arrow"
+    app:showAsAction="always"
+    android:title="Back" />
   <!--<item
        android:id="@+id/menu_preferences"
        android:showAsAction="never"

@@ -19,6 +19,7 @@ using Google.Android.Material.Dialog;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
+using Newtonsoft.Json;
 using WeightApp.Activities;
 using WeightApp.Fragments;
 using Xamarin.Essentials;
