@@ -82,6 +82,7 @@
     <Compile Include="Fragments\ProfileFragment.cs" />
     <Compile Include="Activities\SecurityQuestionActivity.cs" />
     <Compile Include="Fragments\StatisticsFragment.cs" />
+    <Compile Include="Fragments\ViewWeightEntryFragment.cs" />
     <Compile Include="Fragments\WeightEntryFragment.cs" />
     <Compile Include="Fragments\WelcomeFragment.cs" />
     <Compile Include="Adapters\UserListViewAdapter.cs" />
@@ -321,6 +322,21 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_view_weight_entry.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\menu_back.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_edit.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_view.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

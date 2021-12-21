@@ -67,13 +67,12 @@ namespace WeightApp.Adapters {
       };
 
       btnView.Click += (s, e) => {
-        new MaterialAlertDialogBuilder(view.RootView.Context)
-          .SetTitle(weightList[position].WEIGHT_ENTRY)
-          .SetPositiveButton("OK", (sender, e) => {
-            //reload the page
+        ViewWeightEntryFragment viewWeightEntryFragment = new ViewWeightEntryFragment();
+        Bundle args = new Bundle();
+        args.PutString("HistoryFragmentKey", JsonConvert.SerializeObject(weightList[position].WEIGHT_ID));
+        viewWeightEntryFragment.Arguments = args;
 
-          })
-          .Show();
+        ((FragmentActivity)parent.Context).SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, viewWeightEntryFragment, "Fragment").Commit();
       };
 
       if (selectedId == position) {
