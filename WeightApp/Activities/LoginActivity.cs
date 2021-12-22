@@ -97,6 +97,7 @@ namespace WeightApp.Activities {
         } else { //user did not authenticate properly, show alert
           new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
           .SetMessage("Invalid Login Attempt. Please try again.")
           .SetPositiveButton("OK", (sender, e) => { })
           .Show();

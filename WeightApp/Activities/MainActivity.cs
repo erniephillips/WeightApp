@@ -91,6 +91,7 @@ namespace WeightApp {
         ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.WriteExternalStorage)) {
         new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
           .SetMessage("In order to take, access, and store photos, please allow permissions. If you do not see a popup after closing this prompt, go under Settings > Apps > Weight App and allow all seen permissions.")
           .SetPositiveButton("OK", (s, e) => {
             ActivityCompat.RequestPermissions(this, requiredPermissions, 0);

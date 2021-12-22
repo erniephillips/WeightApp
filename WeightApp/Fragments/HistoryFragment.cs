@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using Google.Android.Material.Dialog;
 using System;
 using System.Collections.Generic;
 using WeightApp.Adapters;
@@ -44,19 +45,32 @@ namespace WeightApp.Fragments {
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userId = pref.GetString("UserId", String.Empty);
       Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
-      weightList = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
       
-      HistoryListViewAdapter adapter = new HistoryListViewAdapter(this, weightList);
-      adapter.SetSelectedId(position);
+      if (profile == null) {
+        new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
+          .SetMessage("Let's get your profile filled out so you can visit this page.")
+          .SetPositiveButton("OK", (sender, e) => {
+            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
+          })
+          .SetCancelable(false)
+          .Show();
+      } else {
+        weightList = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
 
-      // Save the ListView state (= includes scroll position) as a Parceble
-      //IParcelable state = listView.OnSaveInstanceState();
+        HistoryListViewAdapter adapter = new HistoryListViewAdapter(this, weightList);
+        adapter.SetSelectedId(position);
 
-      // set new items
-      listView.Adapter = adapter;
+        // Save the ListView state (= includes scroll position) as a Parceble
+        //IParcelable state = listView.OnSaveInstanceState();
 
-      // Restore previous state (including selected item index and scroll position)
-      //listView.OnRestoreInstanceState(state);
+        // set new items
+        listView.Adapter = adapter;
+
+        // Restore previous state (including selected item index and scroll position)
+        //listView.OnRestoreInstanceState(state);
+      }
 
     }
   }

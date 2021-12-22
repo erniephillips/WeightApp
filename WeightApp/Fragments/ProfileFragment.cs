@@ -58,6 +58,7 @@ namespace WeightApp.Fragments {
           {
             new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert")
+               .SetIcon(Resource.Drawable.ic_info)
                .SetMessage(error)
                .SetPositiveButton("OK", (sender, e) => { })
                .Show();
@@ -318,6 +319,7 @@ namespace WeightApp.Fragments {
               if (selectedDate < DateTime.Now) {
                 new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert?")
+               .SetIcon(Resource.Drawable.ic_info)
                .SetMessage("Date must be greater than today's date")
                .SetPositiveButton("OK", (sender, e) => { })
                .Show();

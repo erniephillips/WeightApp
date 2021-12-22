@@ -124,6 +124,7 @@ namespace WeightApp.Fragments {
 
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
+        .SetIcon(Resource.Drawable.ic_info)
         .SetMessage("Name and email have been updated.")
         .SetPositiveButton("OK", (sender, e) => {
           this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
@@ -185,6 +186,7 @@ namespace WeightApp.Fragments {
         //confirmation
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
+        .SetIcon(Resource.Drawable.ic_info)
         .SetMessage("Password has been updated. Please login again.")
         .SetPositiveButton("OK", (sender, e) => {
           ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
@@ -225,6 +227,7 @@ namespace WeightApp.Fragments {
         //confirmation
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
+        .SetIcon(Resource.Drawable.ic_info)
         .SetMessage("Security info has been updated.")
         .SetPositiveButton("OK", (sender, e) => {
           this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();

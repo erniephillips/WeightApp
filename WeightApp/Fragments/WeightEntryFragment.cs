@@ -75,6 +75,7 @@ namespace WeightApp.Fragments {
           if (error != "") {
             new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert")
+               .SetIcon(Resource.Drawable.ic_info)
                .SetMessage(error)
                .SetPositiveButton("OK", (sender, e) => { })
                .Show();
@@ -189,7 +190,7 @@ namespace WeightApp.Fragments {
         case Resource.Id.menu_back:
           this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new HistoryFragment(), "Fragment").Commit();
           return true;
-        #endregion
+          #endregion
       }
       return base.OnOptionsItemSelected(menu);
 
@@ -197,130 +198,145 @@ namespace WeightApp.Fragments {
 
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
       View view = inflater.Inflate(Resource.Layout.fragment_weight_entry, container, false);
 
-      listView = view.FindViewById<ListView>(Resource.Id.weight_entry_listView);
-      btnImage = view.FindViewById<ImageButton>(Resource.Id.we_camera_icon_click);
+      ProfileDao profileDao = new ProfileDao();
+      ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+      string userId = pref.GetString("UserId", String.Empty);
+      Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
 
-      LoadData(); //clear any position index
+      if (profile == null) {
+        new MaterialAlertDialogBuilder(Activity)
+          .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
+          .SetMessage("Let's get your profile filled out so you can visit this page.")
+          .SetPositiveButton("OK", (sender, e) => {
+            this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
+          })
+          .SetCancelable(false)
+          .Show();
+      } else {
+        listView = view.FindViewById<ListView>(Resource.Id.weight_entry_listView);
+        btnImage = view.FindViewById<ImageButton>(Resource.Id.we_camera_icon_click);
 
-      //set the listview item click
-      listView.ItemClick += (s, eLV) => {
-        //setting up a swith for the position selected to pull up a dialog box for user to make a selection depending
-        switch (eLV.Position) {
-          #region WEIGHT OPTION
-          case 0:
-            View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+        LoadData(); //clear any position index
 
-            //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
+        //set the listview item click
+        listView.ItemClick += (s, eLV) => {
+          //setting up a swith for the position selected to pull up a dialog box for user to make a selection depending
+          switch (eLV.Position) {
+            #region WEIGHT OPTION
+            case 0:
+              View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
 
-            NumberPicker pckWeightPoundsNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-            NumberPicker pckWeightOzNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
+              //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
 
-            TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-            TextView txtWeightTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
-            txtWeightTextOne.Text = "lbs";
-            txtWeightTextTwo.Text = "oz";
+              NumberPicker pckWeightPoundsNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
+              NumberPicker pckWeightOzNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
 
-            //set the whole weight number
-            string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-            pckWeightPoundsNum.MinValue = 1;
-            pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
-            pckWeightPoundsNum.Value = 150; //set the start value
-            pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
+              TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
+              TextView txtWeightTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
+              txtWeightTextOne.Text = "lbs";
+              txtWeightTextTwo.Text = "oz";
 
-            //set the whole weight number
-            string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-            pckWeightOzNum.MinValue = 1;
-            pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
-            pckWeightOzNum.Value = 1; //set the start value
-            pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
+              //set the whole weight number
+              string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+              pckWeightPoundsNum.MinValue = 1;
+              pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
+              pckWeightPoundsNum.Value = 150; //set the start value
+              pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
 
-            new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-              .SetTitle("What's your current weight?")
-              .SetNegativeButton("Cancel", (s, e) => { })
-              .SetPositiveButton("OK", (sender, e) => {
+              //set the whole weight number
+              string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+              pckWeightOzNum.MinValue = 1;
+              pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
+              pckWeightOzNum.Value = 1; //set the start value
+              pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
 
-                var selectedLbs = pckWeightPoundsNum.Value;
-                var selectedOz = pckWeightOzNum.Value - 1;
+              new MaterialAlertDialogBuilder(Activity).SetView(weightView)
+                .SetTitle("What's your current weight?")
+                .SetNegativeButton("Cancel", (s, e) => { })
+                .SetPositiveButton("OK", (sender, e) => {
 
-                adapter.SetSelectedTextValue(
-                  eLV.Position,
-                  selectedLbs + " lbs " + selectedOz + " oz",
-                  selectedLbs + "." + selectedOz);
-              })
-              .Show();
-            break;
-          #endregion
-          #region DATE OPTION
-          case 1:
-            DatePickerDialog datePicker = new DatePickerDialog(Context);
-            datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
-              DateTime selectedDate = datePicker.DatePicker.DateTime;
-              adapter.SetSelectedTextValue(eLV.Position, selectedDate.ToShortDateString(), selectedDate.ToString());
-            });
-            datePicker.Show();
+                  var selectedLbs = pckWeightPoundsNum.Value;
+                  var selectedOz = pckWeightOzNum.Value - 1;
 
-            break;
+                  adapter.SetSelectedTextValue(
+                    eLV.Position,
+                    selectedLbs + " lbs " + selectedOz + " oz",
+                    selectedLbs + "." + selectedOz);
+                })
+                .Show();
+              break;
             #endregion
-        }
-      };
+            #region DATE OPTION
+            case 1:
+              DatePickerDialog datePicker = new DatePickerDialog(Context);
+              datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
+                DateTime selectedDate = datePicker.DatePicker.DateTime;
+                adapter.SetSelectedTextValue(eLV.Position, selectedDate.ToShortDateString(), selectedDate.ToString());
+              });
+              datePicker.Show();
 
-      btnImage.Click += (s, e) => {
-        View photoView = inflater.Inflate(Resource.Layout.dialog_photo, container, false);
-        Button btnTakePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_take_photo);
-        Button btnUploadPhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_gallery);
-        Button btnDeletePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_delete_photo);
+              break;
+              #endregion
+          }
+        };
+
+        btnImage.Click += (s, e) => {
+          View photoView = inflater.Inflate(Resource.Layout.dialog_photo, container, false);
+          Button btnTakePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_take_photo);
+          Button btnUploadPhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_gallery);
+          Button btnDeletePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_delete_photo);
 
 
-        AndroidX.AppCompat.App.AlertDialog imagePickerDialog =
-          new MaterialAlertDialogBuilder(Activity).SetTitle("Add a Progress Photo").SetView(photoView).Create();
-        imagePickerDialog.Show();
+          AndroidX.AppCompat.App.AlertDialog imagePickerDialog =
+            new MaterialAlertDialogBuilder(Activity).SetTitle("Add a Progress Photo").SetView(photoView).Create();
+          imagePickerDialog.Show();
 
-        //if image icon click not set to camera
-        string imageTag = (string)btnImage.Tag;
-        if (imageTag == "ICON_IMAGE") {
-          btnDeletePhoto.Visibility = ViewStates.Gone;
-        } else {
-          btnDeletePhoto.Visibility = ViewStates.Visible;
-          btnDeletePhoto.Click += (s, e) => {
+          //if image icon click not set to camera
+          string imageTag = (string)btnImage.Tag;
+          if (imageTag == "ICON_IMAGE") {
+            btnDeletePhoto.Visibility = ViewStates.Gone;
+          } else {
+            btnDeletePhoto.Visibility = ViewStates.Visible;
+            btnDeletePhoto.Click += (s, e) => {
+              imagePickerDialog.Dismiss();
+              btnImage.Tag = "ICON_IMAGE";
+              btnImage.SetImageResource(Android.Resource.Drawable.IcMenuCamera);
+            };
+          }
+
+
+
+          btnTakePhoto.Click += (s, e) => {
             imagePickerDialog.Dismiss();
-            btnImage.Tag = "ICON_IMAGE";
-            btnImage.SetImageResource(Android.Resource.Drawable.IcMenuCamera);
+            btnImage.Tag = "CAMERA_IMAGE";
+            //check that user has granted camera permissions
+            if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
+              //user has accepted camera permissions, start camera
+              Intent intent = new Intent(MediaStore.ActionImageCapture);
+              MainActivity.Instance.StartActivityForResult(intent, MainActivity.WEIGHT_ENTRY_CAMERA_REQUEST);
+            }
           };
-        }
+          btnUploadPhoto.Click += (s, e) => {
+            imagePickerDialog.Dismiss();
+            btnImage.Tag = "GALLERY_IMAGE";
+            //check that user has granted camera permissions
+            if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.ReadExternalStorage)) {
+              //user has accepted upload image permissions, start image picker
+              //https://www.c-sharpcorner.com/article/xamarin-android-how-to-pick-a-image-from-gallery-in-android-phone-using-visual/
+              Intent intent = new Intent();
+              intent.SetType("image/*");
+              intent.SetAction(Intent.ActionPick);
+              //intent.SetAction(Intent.ActionGetContent);
 
-
-
-        btnTakePhoto.Click += (s, e) => {
-          imagePickerDialog.Dismiss();
-          btnImage.Tag = "CAMERA_IMAGE";
-          //check that user has granted camera permissions
-          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.Camera)) {
-            //user has accepted camera permissions, start camera
-            Intent intent = new Intent(MediaStore.ActionImageCapture);
-            MainActivity.Instance.StartActivityForResult(intent, MainActivity.WEIGHT_ENTRY_CAMERA_REQUEST);
-          }
+              // Start the picture-picker activity (resumes in MainActivity.cs)
+              MainActivity.Instance.StartActivityForResult(Intent.CreateChooser(intent, "Select Picture"), MainActivity.WEIGHT_ENTRY_GALLERY_REQUEST);
+            }
+          };
         };
-        btnUploadPhoto.Click += (s, e) => {
-          imagePickerDialog.Dismiss();
-          btnImage.Tag = "GALLERY_IMAGE";
-          //check that user has granted camera permissions
-          if (!ActivityCompat.ShouldShowRequestPermissionRationale(Activity, Manifest.Permission.ReadExternalStorage)) {
-            //user has accepted upload image permissions, start image picker
-            //https://www.c-sharpcorner.com/article/xamarin-android-how-to-pick-a-image-from-gallery-in-android-phone-using-visual/
-            Intent intent = new Intent();
-            intent.SetType("image/*");
-            intent.SetAction(Intent.ActionPick);
-            //intent.SetAction(Intent.ActionGetContent);
-
-            // Start the picture-picker activity (resumes in MainActivity.cs)
-            MainActivity.Instance.StartActivityForResult(Intent.CreateChooser(intent, "Select Picture"), MainActivity.WEIGHT_ENTRY_GALLERY_REQUEST);
-          }
-        };
-      };
-
+      }
       return view;
     }
 

@@ -76,6 +76,7 @@ namespace WeightApp.Activities {
         }
         new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
           .SetMessage("Password successfully reset.")
           .SetPositiveButton("OK", (sender, e) => {
             StartActivity(typeof(LoginActivity));

@@ -96,12 +96,14 @@ namespace WeightApp.Fragments {
           // Email is not supported on this device
           new MaterialAlertDialogBuilder(Activity)
           .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
           .SetMessage("Email is not supported on this device. Please email me directly at erniephillips.android@gmail.com. Thank you.")
           .SetPositiveButton("OK", (sender, e) => { }).Show();
         } catch (Exception ex) {
           // Some other exception occurred
           new MaterialAlertDialogBuilder(Activity)
           .SetTitle("Weight App Alert")
+          .SetIcon(Resource.Drawable.ic_info)
           .SetMessage("An unexpected error occurred.Please email me directly at erniephillips.android@gmail.com.Thank you.")
           .SetPositiveButton("OK", (sender, e) => { }).Show();
         }

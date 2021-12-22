@@ -14,17 +14,10 @@ namespace WeightApp.Utilities {
       double convertWeight = Convert.ToDouble(splitWeight[0]) + ConvertOuncesToDecimal(splitWeight[1]);
       double convertHeight = ConvertFeetToInches(height);
       //double BMI = (convertWeight / (convertHeight * convertHeight)) * 703;
-      double BMI = 703.0 * convertWeight / (convertHeight * convertHeight);
+      double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
+      //double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
 
-      // [weight (kg) / height (cm) / height (cm)] x 10,000
-      //double kg = ConvertPoundsToKg(convertWeight);
-      //double c = ConvertHeightToCm(convertHeight);
-      //double meters = ConvertHeightToMeters(Convert.ToDouble(splitHeight[0]), Convert.ToDouble(splitHeight[1]));
-      ////double test = (kg / c / c) * 10000;
-      //double test = kg / ((meters / 100) * (meters / 100));
-      double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
-
-      return bmi;
+      return BMI;
     }
 
     private double ConvertPoundsToKg(double pounds) {
