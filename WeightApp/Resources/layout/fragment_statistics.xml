@@ -19,9 +19,20 @@
       android:textSize="32sp"
       android:text="My Statistics"/>
 
+    <TextView
+      android:id="@+id/txt_bmi"
+      android:text="text"
+      android:layout_below="@+id/history_statistics"
+      android:gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="24sp"
+      app:layout_marginTopPercent="3%"/>
+
+
     <microcharts.droid.ChartView
       android:id="@+id/line_chart"
-      android:layout_below="@+id/history_statistics"
+      android:layout_below="@+id/txt_bmi"
       android:layout_width="match_parent"
       android:layout_height="220dp"/>
 

@@ -46,6 +46,12 @@ namespace DataAccessLayer.Dao {
         .OrderByDescending(x => x.DATE_ENTRY).ToList();
     }
 
+    //GET WEIGHTS BY USER ID - MOST RECENT WEIGHT
+    public Weight GetWeightsByProfileIdMostRecentDate(int id) {
+      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == id)
+        .OrderByDescending(x => x.DATE_ENTRY).FirstOrDefault();
+    }
+
     //INSERT
     public void AddWeight(Weight weight) {
       _SQLiteConnection.Insert(weight);

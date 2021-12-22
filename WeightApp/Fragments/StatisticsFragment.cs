@@ -12,6 +12,7 @@ using DataAccessLayer.Dao;
 using System;
 using Android.Content;
 using Android.App;
+using Android.Widget;
 
 /*
 * Ernie Phillips III : 12/09/2021
@@ -41,6 +42,14 @@ namespace WeightApp.Fragments {
       profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
       weights = weightDao.GetWeightsByProfileIdOrderByDateAsc(profile.PROFILE_ID);
 
+      Weight mostRecentEntry = weightDao.GetWeightsByProfileIdMostRecentDate(profile.PROFILE_ID);
+      Utilities.Calculations calculations = new Utilities.Calculations();
+      //var value = calculations.GetBmi(mostRecentEntry.WEIGHT_ENTRY, profile.HEIGHT);
+      var value = calculations.GetBmi("275.0", "5.5");
+
+      TextView txt = view.FindViewById<TextView>(Resource.Id.txt_bmi);
+      txt.Text = "BMI: " +  value.ToString();
+
       //https://www.c-sharpcorner.com/blogs/xamarin-android-microcharts
       double checkWeight = 1000;
       List<Entry> entries = new List<Entry>();
@@ -64,31 +73,10 @@ namespace WeightApp.Fragments {
 
       }
 
-      //List<Entry> entries = new List<Entry>
-      //  {
-      //      new Entry(200)
-      //      {
-      //          Color=SKColor.Parse("#FF1943"),
-      //          Label ="January",
-      //          ValueLabel = "200"
-      //      },
-      //      new Entry(400)
-      //      {
-      //          Color = SKColor.Parse("00BFFF"),
-      //          Label = "March",
-      //          ValueLabel = "400"
-      //      },
-      //      new Entry(-100)
-      //      {
-      //          Color =  SKColor.Parse("#00CED1"),
-      //          Label = "Octobar",
-      //          ValueLabel = "-100"
-      //      },
-      //    };
+     
       ChartView lineChart = view.FindViewById<ChartView>(Resource.Id.line_chart);
       var lineChartEntries = new LineChart() { 
         LabelTextSize = 21f,
-        
         Entries = entries 
       };
       lineChart.Chart = lineChartEntries;

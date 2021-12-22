@@ -7797,118 +7797,121 @@ namespace WeightApp
 			public const int txtView_UserName = 2131296860;
 			
 			// aapt resource value: 0x7F09025D
-			public const int txt_forgot_password = 2131296861;
+			public const int txt_bmi = 2131296861;
 			
 			// aapt resource value: 0x7F09025E
-			public const int txt_security_question = 2131296862;
+			public const int txt_forgot_password = 2131296862;
 			
 			// aapt resource value: 0x7F09025F
-			public const int txt_username = 2131296863;
+			public const int txt_security_question = 2131296863;
 			
 			// aapt resource value: 0x7F090260
-			public const int txt_visit_me = 2131296864;
+			public const int txt_username = 2131296864;
 			
 			// aapt resource value: 0x7F090261
-			public const int @unchecked = 2131296865;
+			public const int txt_visit_me = 2131296865;
 			
 			// aapt resource value: 0x7F090262
-			public const int uniform = 2131296866;
+			public const int @unchecked = 2131296866;
 			
 			// aapt resource value: 0x7F090263
-			public const int unlabeled = 2131296867;
+			public const int uniform = 2131296867;
 			
 			// aapt resource value: 0x7F090264
-			public const int up = 2131296868;
+			public const int unlabeled = 2131296868;
 			
 			// aapt resource value: 0x7F090265
-			public const int useLogo = 2131296869;
+			public const int up = 2131296869;
 			
 			// aapt resource value: 0x7F090266
-			public const int user_listView = 2131296870;
+			public const int useLogo = 2131296870;
 			
 			// aapt resource value: 0x7F090267
-			public const int veggies = 2131296871;
+			public const int user_listView = 2131296871;
 			
 			// aapt resource value: 0x7F090268
-			public const int veiw_weight_entry_date = 2131296872;
+			public const int veggies = 2131296872;
 			
 			// aapt resource value: 0x7F090269
-			public const int veiw_weight_entry_image = 2131296873;
+			public const int veiw_weight_entry_date = 2131296873;
 			
 			// aapt resource value: 0x7F09026A
-			public const int veiw_weight_entry_ll = 2131296874;
+			public const int veiw_weight_entry_image = 2131296874;
 			
 			// aapt resource value: 0x7F09026B
-			public const int veiw_weight_entry_weight = 2131296875;
+			public const int veiw_weight_entry_ll = 2131296875;
 			
 			// aapt resource value: 0x7F09026C
-			public const int vertical_only = 2131296876;
+			public const int veiw_weight_entry_weight = 2131296876;
 			
 			// aapt resource value: 0x7F09026D
-			public const int view_offset_helper = 2131296877;
+			public const int vertical_only = 2131296877;
 			
 			// aapt resource value: 0x7F09026E
-			public const int view_transition = 2131296878;
+			public const int view_offset_helper = 2131296878;
 			
 			// aapt resource value: 0x7F09026F
-			public const int view_tree_lifecycle_owner = 2131296879;
+			public const int view_transition = 2131296879;
 			
 			// aapt resource value: 0x7F090270
-			public const int view_tree_saved_state_registry_owner = 2131296880;
+			public const int view_tree_lifecycle_owner = 2131296880;
 			
 			// aapt resource value: 0x7F090271
-			public const int view_tree_view_model_store_owner = 2131296881;
+			public const int view_tree_saved_state_registry_owner = 2131296881;
 			
 			// aapt resource value: 0x7F090272
-			public const int view_weight_entry_header = 2131296882;
+			public const int view_tree_view_model_store_owner = 2131296882;
 			
 			// aapt resource value: 0x7F090273
-			public const int visible = 2131296883;
+			public const int view_weight_entry_header = 2131296883;
 			
 			// aapt resource value: 0x7F090274
-			public const int visible_removing_fragment_view_tag = 2131296884;
-			
-			// aapt resource value: 0x7F090277
-			public const int website_link = 2131296887;
-			
-			// aapt resource value: 0x7F090278
-			public const int weight_entry_image_text = 2131296888;
-			
-			// aapt resource value: 0x7F090279
-			public const int weight_entry_listView = 2131296889;
-			
-			// aapt resource value: 0x7F09027A
-			public const int west = 2131296890;
+			public const int visible = 2131296884;
 			
 			// aapt resource value: 0x7F090275
-			public const int we_camera_icon_click = 2131296885;
+			public const int visible_removing_fragment_view_tag = 2131296885;
 			
-			// aapt resource value: 0x7F090276
-			public const int we_divider_one = 2131296886;
+			// aapt resource value: 0x7F090278
+			public const int website_link = 2131296888;
 			
-			// aapt resource value: 0x7F09027C
-			public const int withinBounds = 2131296892;
+			// aapt resource value: 0x7F090279
+			public const int weight_entry_image_text = 2131296889;
+			
+			// aapt resource value: 0x7F09027A
+			public const int weight_entry_listView = 2131296890;
 			
 			// aapt resource value: 0x7F09027B
-			public const int withText = 2131296891;
+			public const int west = 2131296891;
+			
+			// aapt resource value: 0x7F090276
+			public const int we_camera_icon_click = 2131296886;
+			
+			// aapt resource value: 0x7F090277
+			public const int we_divider_one = 2131296887;
 			
 			// aapt resource value: 0x7F09027D
-			public const int wrap = 2131296893;
+			public const int withinBounds = 2131296893;
+			
+			// aapt resource value: 0x7F09027C
+			public const int withText = 2131296892;
 			
 			// aapt resource value: 0x7F09027E
-			public const int wrap_content = 2131296894;
+			public const int wrap = 2131296894;
 			
 			// aapt resource value: 0x7F09027F
-			public const int wrap_content_constrained = 2131296895;
+			public const int wrap_content = 2131296895;
 			
 			// aapt resource value: 0x7F090280
-			public const int x_left = 2131296896;
+			public const int wrap_content_constrained = 2131296896;
 			
 			// aapt resource value: 0x7F090281
-			public const int x_right = 2131296897;
+			public const int x_left = 2131296897;
 			
 			// aapt resource value: 0x7F090282
-			public const int zero_corner_chip = 2131296898;
+			public const int x_right = 2131296898;
+			
+			// aapt resource value: 0x7F090283
+			public const int zero_corner_chip = 2131296899;
 			
 			static Id()
 			{
