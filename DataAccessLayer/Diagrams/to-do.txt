@@ -1,4 +1,6 @@
-- Add checkbox right top corner
+- (DONE) Add checkbox right top corner
 - add leave page event with dialog
 - weight entry button not hidden from weight page if user clicks the fab itself
 - intent.SetAction(Intent.ActionGetContent); android.os.TransactionTooLargeException
+- have list view items populate dialogs with weight, height, etc that user had picked rather than scroll to find
+- show toast message as soon as user visits the reg page

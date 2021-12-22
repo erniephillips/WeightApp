@@ -23,7 +23,7 @@ namespace WeightApp.Fragments {
 
     //creation of menu. Set to not display delete button if not incoming record
     public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
-      inflater.Inflate(Resource.Menu.menu_back, menu);
+      inflater.Inflate(Resource.Menu.menu_edit_back, menu);
       base.OnCreateOptionsMenu(menu, inflater);
     }
 

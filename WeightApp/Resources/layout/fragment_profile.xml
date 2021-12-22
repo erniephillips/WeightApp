@@ -36,7 +36,7 @@
     android:text="Please fill out your current information and what your future goals are. Weight App will use this information to bring you up-to-date statistics, providing you with a means to track and monitor current progress against these goals."/>
 
   <!-- Update Profile-->
-  <com.google.android.material.button.MaterialButton
+ <!-- <com.google.android.material.button.MaterialButton
     android:id="@+id/btn_update_profile"
     android:layout_below="@+id/tv_profile_text"
     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
     app:backgroundTint="#00B33C"
     app:layout_marginTopPercent="5%"
     app:layout_marginPercent="5%"
-    app:layout_widthPercent="70%" />
+    app:layout_widthPercent="70%" />-->
 
   <ListView
     android:minWidth="25px"
@@ -57,6 +57,7 @@
     android:layout_marginTop="-25dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_marginTopPercent="5%"
     android:id="@+id/profile_listView"
-    android:layout_below="@+id/btn_update_profile"/>
+    android:layout_below="@+id/tv_profile_text"/>
 </android.support.percent.PercentRelativeLayout>

@@ -28,17 +28,121 @@ namespace WeightApp.Fragments {
     Profile profile = new Profile();
     ListView listView;
 
-    public override void OnCreate(Bundle savedInstanceState) {
-      base.OnCreate(savedInstanceState);
+    //creation of menu. Set to not display delete button if not incoming record
+    public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater)
+    {
+      inflater.Inflate(Resource.Menu.menu_save, menu);
+      base.OnCreateOptionsMenu(menu, inflater);
+    }
 
-      // Create your fragment here
+    //handle the menu click
+    public override bool OnOptionsItemSelected(IMenuItem menu)
+    {
+      menu.SetChecked(true);
+      switch (menu.ItemId)
+      {
+        #region SAVE BUTTON CLICK
+        case Resource.Id.menu_save:
+          #region VALIDATION
+          //provide validation check on fields and return dialog with missing
+          List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
+          string error = "";
+          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights)
+          {
+            if (profileItem.TextRightSide == "N/a")
+            {
+              error += profileItem.TextLeftSide + " is required.\n";
+            }
+          }
+          if (error != "")
+          {
+            new MaterialAlertDialogBuilder(Activity)
+               .SetTitle("Weight App Alert")
+               .SetMessage(error)
+               .SetPositiveButton("OK", (sender, e) => { })
+               .Show();
+            return true;
+          }
+          #endregion
+
+          //everything validated, update profile
+          string userId = pref.GetString("UserId", String.Empty);
+
+          Profile profile = new Profile()
+          {
+            USER_ID = Convert.ToInt32(userId),
+            START_DATE = DateTime.Now
+          };
+          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights)
+          {
+            if (profileItem.TextLeftSide == "Weight")
+              profile.START_WEIGHT = profileItem.HiddenTextForConversion;
+            if (profileItem.TextLeftSide == "Height")
+              profile.HEIGHT = profileItem.HiddenTextForConversion;
+            if (profileItem.TextLeftSide == "Gender")
+              profile.GENDER = profileItem.HiddenTextForConversion;
+            if (profileItem.TextLeftSide == "Goal Weight")
+              profile.TARGET_WEIGHT = profileItem.HiddenTextForConversion;
+            if (profileItem.TextLeftSide == "Goal Date")
+              profile.TARGET_DATE = DateTime.Parse(profileItem.HiddenTextForConversion);
+          }
+
+          //add to database if doesn't exist otherwise update
+          Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+          if (tempProfile == null)
+            try
+            {
+              profileDao.AddProfile(profile);
+            }
+            catch (Exception ex)
+            {
+              new MaterialAlertDialogBuilder(Activity)
+              .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+              .SetPositiveButton("OK", (sender, e) => { })
+              .Show();
+            }
+          else
+          {
+            tempProfile.START_WEIGHT = profile.START_WEIGHT;
+            tempProfile.HEIGHT = profile.HEIGHT;
+            tempProfile.GENDER = profile.GENDER;
+            tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
+            tempProfile.TARGET_DATE = profile.TARGET_DATE;
+
+            try
+            {
+              profileDao.UpdateProfile(tempProfile);
+            }
+            catch (Exception ex)
+            {
+              new MaterialAlertDialogBuilder(Activity)
+              .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+              .SetPositiveButton("OK", (sender, e) => { })
+              .Show();
+            }
+          }
+
+          //redirect user to weight entry
+          this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
+          return true;
+          #endregion
+      }
+      return base.OnOptionsItemSelected(menu);
+
+    }
+
+    public override void OnCreate(Bundle savedInstanceState)
+    {
+      base.OnCreate(savedInstanceState);
+      //show the options menu
+      HasOptionsMenu = true;
     }
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       // Use this to return your custom view for this Fragment
       View view = inflater.Inflate(Resource.Layout.fragment_profile, container, false);
 
-      Button btnUpdateProfile = view.FindViewById<Button>(Resource.Id.btn_update_profile);
+      //Button btnUpdateProfile = view.FindViewById<Button>(Resource.Id.btn_update_profile);
 
       listView = view.FindViewById<ListView>(Resource.Id.profile_listView);
       LoadData(); //clear any position index
@@ -106,7 +210,7 @@ namespace WeightApp.Fragments {
             txtHeightTextTwo.Text = "in";
 
             //set the whole weight number
-            string[] heightFeetNumbers = Enumerable.Range(1, 11).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
+            string[] heightFeetNumbers = Enumerable.Range(1, 8).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightFtNum.MinValue = 1;
             pckHeightFtNum.MaxValue = heightFeetNumbers.Length;
             pckHeightFtNum.Value = 5; //set the start value
@@ -228,77 +332,9 @@ namespace WeightApp.Fragments {
         }
       };
 
-      btnUpdateProfile.Click += (s, e) => {
-        #region VALIDATION
-        //provide validation check on fields and return dialog with missing
-        List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
-        string error = "";
-        foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-          if (profileItem.TextRightSide == "N/a") {
-            error += profileItem.TextLeftSide + " is required.\n";
-          }
-        }
-        if (error != "") {
-          new MaterialAlertDialogBuilder(Activity)
-             .SetTitle("Weight App Alert")
-             .SetMessage(error)
-             .SetPositiveButton("OK", (sender, e) => { })
-             .Show();
-          return;
-        }
-        #endregion
-
-        //everything validated, update profile
-        string userId = pref.GetString("UserId", String.Empty);
-
-        Profile profile = new Profile() {
-          USER_ID = Convert.ToInt32(userId),
-          START_DATE = DateTime.Now
-        };
-        foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-          if (profileItem.TextLeftSide == "Weight")
-            profile.START_WEIGHT = profileItem.HiddenTextForConversion;
-          if (profileItem.TextLeftSide == "Height")
-            profile.HEIGHT = profileItem.HiddenTextForConversion;
-          if (profileItem.TextLeftSide == "Gender")
-            profile.GENDER = profileItem.HiddenTextForConversion;
-          if (profileItem.TextLeftSide == "Goal Weight")
-            profile.TARGET_WEIGHT = profileItem.HiddenTextForConversion;
-          if (profileItem.TextLeftSide == "Goal Date")
-            profile.TARGET_DATE = DateTime.Parse(profileItem.HiddenTextForConversion);
-        }
-
-        //add to database if doesn't exist otherwise update
-        Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
-        if (tempProfile == null)
-          try {
-            profileDao.AddProfile(profile);
-          } catch (Exception ex) {
-            new MaterialAlertDialogBuilder(Activity)
-            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
-            .SetPositiveButton("OK", (sender, e) => { })
-            .Show();
-          }
-        else {
-          tempProfile.START_WEIGHT = profile.START_WEIGHT;
-          tempProfile.HEIGHT = profile.HEIGHT;
-          tempProfile.GENDER = profile.GENDER;
-          tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
-          tempProfile.TARGET_DATE = profile.TARGET_DATE;
-
-          try {
-            profileDao.UpdateProfile(tempProfile);
-          } catch (Exception ex) {
-            new MaterialAlertDialogBuilder(Activity)
-            .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
-            .SetPositiveButton("OK", (sender, e) => { })
-            .Show();
-          }
-        }
-
-        //redirect user to weight entry
-        this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
-      };
+      //btnUpdateProfile.Click += (s, e) => {
+        
+      //};
 
       return view;
     }

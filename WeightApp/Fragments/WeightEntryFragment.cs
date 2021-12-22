@@ -49,10 +49,10 @@ namespace WeightApp.Fragments {
     public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
       if (this.Arguments != null) {
         if (this.Arguments.GetString("HistoryFragmentKey") != null) {
-          inflater.Inflate(Resource.Menu.menu_save_delete, menu);
+          inflater.Inflate(Resource.Menu.menu_save_delete_back, menu);
         }
       } else {
-        inflater.Inflate(Resource.Menu.menu_save, menu);
+        inflater.Inflate(Resource.Menu.menu_save_back, menu);
       }
 
       base.OnCreateOptionsMenu(menu, inflater);
