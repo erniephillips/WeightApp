@@ -1,8 +1,11 @@
-﻿using Android.OS;
+﻿using Android.App;
+using Android.Content;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
+using System;
 using System.Collections.Generic;
 using WeightApp.Adapters;
 
@@ -37,7 +40,12 @@ namespace WeightApp.Fragments {
 
     private void LoadData(int position) {
 
-      weightList = weightDao.GetWeights();
+      ProfileDao profileDao = new ProfileDao();
+      ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+      string userId = pref.GetString("UserId", String.Empty);
+      Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      weightList = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
+      
       HistoryListViewAdapter adapter = new HistoryListViewAdapter(this, weightList);
       adapter.SetSelectedId(position);
 

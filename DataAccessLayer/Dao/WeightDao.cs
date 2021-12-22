@@ -30,8 +30,20 @@ namespace DataAccessLayer.Dao {
     }
 
     //GET BY USER ID
-    public List<Weight> GetWeightsByProfileId(int userId) {
-      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == userId).ToList();
+    public List<Weight> GetWeightsByProfileId(int id) {
+      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == id).ToList();
+    }
+
+    //GET WEIGHTS BY USER ID - ORDERY BY DATE ASC
+    public List<Weight> GetWeightsByProfileIdOrderByDateAsc(int id) {
+      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == id)
+        .OrderBy(x => x.DATE_ENTRY).ToList();
+    }
+
+    //GET WEIGHTS BY USER ID - ORDERY BY DATE DESC
+    public List<Weight> GetWeightsByProfileIdOrderByDateDesc(int id) {
+      return _SQLiteConnection.Table<Weight>().Where(x => x.PROFILE_ID == id)
+        .OrderByDescending(x => x.DATE_ENTRY).ToList();
     }
 
     //INSERT
@@ -40,7 +52,7 @@ namespace DataAccessLayer.Dao {
     }
 
     //UPDATE
-    public void UpdateWeight(Weight weight) { 
+    public void UpdateWeight(Weight weight) {
       _SQLiteConnection.Update(weight);
     }
 
