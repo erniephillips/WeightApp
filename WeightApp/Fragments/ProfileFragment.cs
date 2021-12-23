@@ -170,14 +170,14 @@ namespace WeightApp.Fragments {
             string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckWeightPoundsNum.MinValue = 1;
             pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
-            pckWeightPoundsNum.Value = 150; //set the start value
+            pckWeightPoundsNum.Value = profile != null ? pckWeightPoundsNum.Value = Convert.ToInt32(profile.START_WEIGHT.Split(".")?[0]) : 150;
             pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
 
             //set the whole weight number
             string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckWeightOzNum.MinValue = 1;
             pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
-            pckWeightOzNum.Value = 1; //set the start value
+            pckWeightOzNum.Value = profile != null ? Convert.ToInt32(profile.START_WEIGHT.Split(".")?[1]) + 1 : 1; //set the start value
             pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(weightView)
@@ -214,14 +214,14 @@ namespace WeightApp.Fragments {
             string[] heightFeetNumbers = Enumerable.Range(1, 8).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightFtNum.MinValue = 1;
             pckHeightFtNum.MaxValue = heightFeetNumbers.Length;
-            pckHeightFtNum.Value = 5; //set the start value
+            pckHeightFtNum.Value = profile != null ? Convert.ToInt32(profile.HEIGHT.Split(".")?[0]) : 5; //set the start value
             pckHeightFtNum.SetDisplayedValues(heightFeetNumbers);
 
             //set the whole weight number
             string[] weightInchNumbers = Enumerable.Range(0, 13).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightInNum.MinValue = 1;
             pckHeightInNum.MaxValue = weightInchNumbers.Length - 1;
-            pckHeightInNum.Value = 1; //set the start value
+            pckHeightInNum.Value = profile != null ? Convert.ToInt32(profile.HEIGHT.Split(".")?[1]) + 1: 1; //set the start value
             pckHeightInNum.SetDisplayedValues(weightInchNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(heightView)
@@ -272,14 +272,14 @@ namespace WeightApp.Fragments {
             string[] goalWeightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckGoalWeightPoundsNum.MinValue = 1;
             pckGoalWeightPoundsNum.MaxValue = goalWeightPoundNumbers.Length;
-            pckGoalWeightPoundsNum.Value = 150; //set the start value
+            pckGoalWeightPoundsNum.Value = profile != null ? Convert.ToInt32(profile.TARGET_WEIGHT.Split(".")?[0]) : 150; //set the start value
             pckGoalWeightPoundsNum.SetDisplayedValues(goalWeightPoundNumbers);
 
             //set the whole weight number
             string[] goalWeightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckGoalWeightOzNum.MinValue = 1;
             pckGoalWeightOzNum.MaxValue = goalWeightOzNumbers.Length - 1;
-            pckGoalWeightOzNum.Value = 1; //set the start value
+            pckGoalWeightOzNum.Value = profile != null ? Convert.ToInt32(profile.TARGET_WEIGHT.Split(".")?[1]) + 1 : 1; //set the start value
             pckGoalWeightOzNum.SetDisplayedValues(goalWeightOzNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(goalWeightView)
@@ -307,7 +307,13 @@ namespace WeightApp.Fragments {
             //datePicker.Show(FragmentManager, "");
 
             //Capture onclick for OK button: https://stackoverflow.com/questions/49009155/xamarin-forms-android-datepicker-timepicker-button-listener
+
             DatePickerDialog datePicker = new DatePickerDialog(Context);
+
+            if (profile != null) {
+              datePicker.DatePicker.DateTime = profile.TARGET_DATE;
+            } 
+             
             datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
               //int selectedDay = datePicker.DatePicker.DayOfMonth;
               //int selectedMonth = datePicker.DatePicker.Month + 1; //the months seem to be indexed at zero so I need to add 1

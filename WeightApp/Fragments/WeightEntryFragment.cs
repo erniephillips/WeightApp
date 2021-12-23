@@ -243,14 +243,14 @@ namespace WeightApp.Fragments {
               string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
               pckWeightPoundsNum.MinValue = 1;
               pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
-              pckWeightPoundsNum.Value = 150; //set the start value
+              pckWeightPoundsNum.Value = weight != null ? pckWeightPoundsNum.Value = Convert.ToInt32(weight.WEIGHT_ENTRY.Split(".")?[0]) : 150;
               pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
 
               //set the whole weight number
               string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
               pckWeightOzNum.MinValue = 1;
               pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
-              pckWeightOzNum.Value = 1; //set the start value
+              pckWeightOzNum.Value = weight != null ? Convert.ToInt32(weight.WEIGHT_ENTRY.Split(".")?[1]) + 1 : 1; //set the start value
               pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
 
               new MaterialAlertDialogBuilder(Activity).SetView(weightView)
@@ -272,6 +272,11 @@ namespace WeightApp.Fragments {
             #region DATE OPTION
             case 1:
               DatePickerDialog datePicker = new DatePickerDialog(Context);
+
+              if (profile != null) {
+                datePicker.DatePicker.DateTime = weight.DATE_ENTRY;
+              }
+
               datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
                 DateTime selectedDate = datePicker.DatePicker.DateTime;
                 adapter.SetSelectedTextValue(eLV.Position, selectedDate.ToShortDateString(), selectedDate.ToString());

@@ -36,6 +36,12 @@ namespace WeightApp.Activities {
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
       dropdownItems.Adapter = adapter;
 
+      Snackbar snackbar = Snackbar.Make(txtRegister, "Data is only stored on your phone and cannot be recovered. Please remember your login information and security answer.", 10000);
+      View snackbarView = snackbar.View;
+      TextView snackTextView = (TextView)snackbarView.FindViewById(Resource.Id.snackbar_text);
+      snackTextView.SetMaxLines(3);
+      snackbar.Show();
+
       btnBack.Click += delegate {
         StartActivity(typeof(UserAccessActivity));
       };
