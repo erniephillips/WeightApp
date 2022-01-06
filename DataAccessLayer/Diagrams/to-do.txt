@@ -1,9 +1,12 @@
 - (DONE) Add checkbox right top corner
-- add leave page event with dialog
 - (DONE) weight entry button not hidden from weight page if user clicks the fab itself
 - (FIXED) Due to sending binary image accross fragment, too high of a payload---intent.SetAction(Intent.ActionGetContent); android.os.TransactionTooLargeException
 - (DONE) have list view items populate dialogs with weight, height, etc that user had picked rather than scroll to find
-- show toast message as soon as user visits the reg page
+- (DONE) show toast message as soon as user visits the reg page
 - (DONE) need to modify all database calls to pull by user id. Forgot to account for different users in my queries
 - (DONE) add order by date on history page
 - (DONE) add check on the statistics page that profile is filled out or display something
+- add leave page event with dialog
+- look into nice layout for the statistics page
+- create defaults for History and Stats pages when no content is listed
+- weight entry page is crashing under emily profile

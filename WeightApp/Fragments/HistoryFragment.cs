@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Percent;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
@@ -9,6 +10,7 @@ using Google.Android.Material.Dialog;
 using System;
 using System.Collections.Generic;
 using WeightApp.Adapters;
+using static Android.Support.Constraints.Constraints;
 
 /*
 * Ernie Phillips III : 12/09/2021
@@ -34,6 +36,17 @@ namespace WeightApp.Fragments {
 
       listView = view.FindViewById<ListView>(Resource.Id.history_listView);
 
+      TextView emptyText = new TextView(Context) {
+        Text = "No Weight Entries Found",
+        TextSize = 20,
+        Visibility = ViewStates.Gone,
+        Gravity = GravityFlags.CenterHorizontal | GravityFlags.CenterVertical,
+        LayoutParameters = new ViewGroup.LayoutParams(LayoutParams.FillParent, LayoutParams.FillParent),
+      };
+
+      ((ViewGroup)listView.Parent).AddView(emptyText);
+      listView.EmptyView = emptyText;
+
       LoadData(-1); //clear any position index
 
       return view;
@@ -45,7 +58,7 @@ namespace WeightApp.Fragments {
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userId = pref.GetString("UserId", String.Empty);
       Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
-      
+
       if (profile == null) {
         new MaterialAlertDialogBuilder(Activity)
           .SetTitle("Weight App Alert")
