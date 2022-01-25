@@ -8,5 +8,7 @@
 - (DONE) add check on the statistics page that profile is filled out or display something
 - (FIXED) weight entry page is crashing under emily profile
 - add leave page event with dialog
-- look into nice layout for the statistics page
-- create defaults for History and Stats pages when no content is listed
+- create calculations for weight on stats page
+- (DONE) look into nice layout for the statistics page
+- (DONE) create defaults for History and Stats pages when no content is listed
+- (FIXED) fix weight entry date picker

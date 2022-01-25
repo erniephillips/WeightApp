@@ -273,8 +273,14 @@ namespace WeightApp.Fragments {
             case 1:
               DatePickerDialog datePicker = new DatePickerDialog(Context);
 
-              if (profile != null) {
-                datePicker.DatePicker.DateTime = weight.DATE_ENTRY;
+              if (this.Arguments != null) {
+                if (this.Arguments.GetString("HistoryFragmentKey") != null) {
+                  datePicker.DatePicker.DateTime = weight.DATE_ENTRY;
+                } else {
+                  datePicker.DatePicker.DateTime = DateTime.Now;
+                }
+              } else {
+                datePicker.DatePicker.DateTime = DateTime.Now;
               }
 
               datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
