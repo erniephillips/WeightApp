@@ -6,7 +6,7 @@
 - (DONE) need to modify all database calls to pull by user id. Forgot to account for different users in my queries
 - (DONE) add order by date on history page
 - (DONE) add check on the statistics page that profile is filled out or display something
+- (FIXED) weight entry page is crashing under emily profile
 - add leave page event with dialog
 - look into nice layout for the statistics page
 - create defaults for History and Stats pages when no content is listed
-- weight entry page is crashing under emily profile
