@@ -2,12 +2,15 @@
 <ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:id="@+id/reg_scrollview">
+
   <android.support.percent.PercentRelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <!--Header-->
     <TextView
       android:id="@+id/history_statistics"
@@ -19,20 +22,81 @@
       android:textSize="32sp"
       android:text="My Statistics"/>
 
-    <TextView
-      android:id="@+id/txt_bmi"
-      android:text=""
+    <!--CARDS-->
+    <android.support.v7.widget.CardView
+      android:id="@+id/card_bmi"
       android:layout_below="@+id/history_statistics"
-      android:gravity="center"
+      style="@style/CardView.Light"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textSize="24sp"
-      app:layout_marginTopPercent="3%"/>
+      android:layout_marginTop="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp">
 
+      <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+          android:id="@+id/avatar_image"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginStart="12dp"
+          android:padding="4dp"
+          android:scaleType="centerCrop"
+          android:src="@drawable/weight_app_logo_transparent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+          android:id="@+id/title_text"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:layout_marginStart="12dp"
+          android:layout_marginEnd="16dp"
+          android:text="BMI"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+          android:textColor="@android:color/holo_purple"
+          app:layout_constraintTop_toTopOf="@+id/avatar_image"
+          app:layout_constraintStart_toEndOf="@+id/avatar_image"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+          android:id="@+id/txt_bmi"
+          android:layout_below="@+id/title_text"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="12dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="4dp"
+          android:text="subhead"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+          android:textColor="@android:color/holo_green_dark"
+          app:layout_constraintStart_toEndOf="@+id/avatar_image"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintBottom_toBottomOf="@+id/avatar_image" />
+
+        <ImageView
+          android:id="@+id/media_image"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="12dp"
+          android:scaleType="centerCrop"
+          android:src="@drawable/weight_app_logo_transparent"
+          app:layout_constraintTop_toBottomOf="@+id/avatar_image"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+      </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
 
     <microcharts.droid.ChartView
       android:id="@+id/line_chart"
-      android:layout_below="@+id/txt_bmi"
+      android:layout_below="@+id/card_bmi"
       android:layout_width="match_parent"
       android:layout_height="220dp"/>
 
