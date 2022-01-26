@@ -4,9 +4,15 @@ using System.Collections.Generic;
 
 namespace WeightApp.Utilities {
   public class Calculations {
-    //calcuations: https://www.cdc.gov/nccdphp/dnpao/growthcharts/training/bmiage/page5_2.html
-    //Weight of 37 lbs and 4 oz = 37.25 lbs (16 ounces = 1 pound so 4 oz/16 oz = 0.25).
-    //(37.25 lbs / 41.5 in / 41.5 in) x 703 = 15.2
+
+    /// <summary>
+    /// //calcuations: https://www.cdc.gov/nccdphp/dnpao/growthcharts/training/bmiage/page5_2.html
+    ///Weight of 37 lbs and 4 oz = 37.25 lbs (16 ounces = 1 pound so 4 oz/16 oz = 0.25).
+    ///(37.25 lbs / 41.5 in / 41.5 in) x 703 = 15.2
+    /// </summary>
+    /// <param name="weight"></param>
+    /// <param name="height"></param>
+    /// <returns>double bmi weight</returns>
     public double GetBmi(string weight, string height) {
       string[] splitWeight = weight.Split(".");
       string[] splitHeight = height.Split(".");
@@ -17,25 +23,106 @@ namespace WeightApp.Utilities {
       double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
       //double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
 
-      return BMI;
+      double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
+
+      return roundedBmi;
     }
 
+    /// <summary>
+    /// Returns average weekly weight loss
+    /// </summary>
+    /// <param name="weights"></param>
+    /// <returns>double</returns>
+    public double AverageWeeklyWeightLoss(List<Weight> weights) {
+      return 1.0;
+    }
+
+    /// <summary>
+    /// Returns weight loss to date from list of weights passed
+    /// </summary>
+    /// <param name="weights"></param>
+    /// <returns>double</returns>
+    public double WeightLossToDate(List<Weight> weights) {
+      return 1.0;
+    }
+
+    /// <summary>
+    /// Get the bmi status
+    /// </summary>
+    /// <param name="weight"></param>
+    /// <returns>string</returns>
+    public string GetBmiStatus(double bmi) {
+      //BMI numbers as outlined here: https://www.rqhealth.ca/department/bariatric-surgical-program/bariatric-surgical-program-body-mass-index-bmi
+      if (bmi < 18.5) {
+        return "Underweight";
+      } else if (bmi >= 18.5 && bmi <= 24.9) {
+        return "Normal Weight";
+      } else if(bmi >= 25.0 && bmi <= 29.9) {
+        return "Overweight (Pre-obesity)";
+      } else if (bmi >= 30.0 && bmi <= 34.9) {
+        return "Overweight (Obesity class I)";
+      } else if (bmi >= 35.0 && bmi <= 39.9) {
+        return "Overweight (Obesity class II)";
+      } else if (bmi >= 40.0) {
+        return "Overweight (Obesity class III)";
+      }
+      return "";
+    }
+
+    public string GetBmiMessage(double bmi) {
+      //BMI numbers as outlined here: https://www.rqhealth.ca/department/bariatric-surgical-program/bariatric-surgical-program-body-mass-index-bmi
+      if (bmi < 18.5) {
+        return "You are at an increased risk of developing health problems";
+      } else if (bmi >= 18.5 && bmi <= 24.9) {
+        return "You are at a healthy BMI level";
+      } else if (bmi >= 25.0 && bmi <= 29.9) {
+        return "You are at an increased risk of developing health problems";
+      } else if (bmi >= 30.0 && bmi <= 34.9) {
+        return "You are at an high risk of developing health problems";
+      } else if (bmi >= 35.0 && bmi <= 39.9) {
+        return "You are at an very high risk of developing health problems";
+      } else if (bmi >= 40.0) {
+        return "You are at an extremely high risk of developing health problems";
+      }
+      return "";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pounds"></param>
+    /// <returns></returns>
     private double ConvertPoundsToKg(double pounds) {
       double kilograms = pounds * 0.45359237;
       return kilograms;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="feet"></param>
+    /// <param name="inches"></param>
+    /// <returns></returns>
     private double ConvertHeightToMeters(double feet, double inches) {
       double meters = feet * 0.3048 + inches * 0.0254;
       return meters;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="height"></param>
+    /// <returns></returns>
     private double ConvertHeightToCm(double height) {
       double cenimeters = height * 2.54;
       return cenimeters;
     }
 
-    //convert oz to a decimal format
+    /// <summary>
+    /// convert oz to a decimal format
+    /// </summary>
+    /// <param name="ounces"></param>
+    /// <returns></returns>
     private double ConvertOuncesToDecimal(string ounces) {
       double ozDecimal = 0.00;
       switch (Convert.ToInt32(ounces)) {
@@ -94,7 +181,11 @@ namespace WeightApp.Utilities {
       return ozDecimal;
     }
 
-    //convert inches to a decimal format
+    /// <summary>
+    /// convert inches to a decimal format
+    /// </summary>
+    /// <param name="inches"></param>
+    /// <returns></returns>
     private double ConvertInchesToDecimal(string inches) {
       double inDecimal = 0.00;
       switch (Convert.ToInt32(inches)) {
@@ -141,6 +232,11 @@ namespace WeightApp.Utilities {
       return inDecimal;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="height"></param>
+    /// <returns></returns>
     private double ConvertFeetToInches(string height) {
       var inches = Convert.ToDouble(height) * 12;
       return inches;
