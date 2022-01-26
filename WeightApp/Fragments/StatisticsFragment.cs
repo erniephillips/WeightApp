@@ -53,14 +53,35 @@ namespace WeightApp.Fragments {
           .Show();
       } else {
         weights = weightDao.GetWeightsByProfileIdOrderByDateAsc(profile.PROFILE_ID);
-
         Weight mostRecentEntry = weightDao.GetWeightsByProfileIdMostRecentDate(profile.PROFILE_ID);
-        Utilities.Calculations calculations = new Utilities.Calculations();
-        //var value = calculations.GetBmi(mostRecentEntry.WEIGHT_ENTRY, profile.HEIGHT);
-        var value = calculations.GetBmi("275.0", "5.5");
 
-        TextView txt = view.FindViewById<TextView>(Resource.Id.txt_bmi);
-        txt.Text = "BMI: " + value.ToString();
+        TextView txtCurrentWeight = view.FindViewById<TextView>(Resource.Id.txt_current_weight);
+        TextView txtBmi = view.FindViewById<TextView>(Resource.Id.txt_bmi);
+        TextView txtBmiStatus = view.FindViewById<TextView>(Resource.Id.txt_bmi_status);
+        TextView txtBmiMessage = view.FindViewById<TextView>(Resource.Id.txt_bmi_message);
+
+        Utilities.Calculations calculations = new Utilities.Calculations();
+
+        if(profile != null) {
+          string currentWeight;
+          double bmiNumber;
+          if (mostRecentEntry != null) { //grab user's most recent weight entry
+            bmiNumber = calculations.GetBmi(mostRecentEntry.WEIGHT_ENTRY, profile.HEIGHT);
+            currentWeight = mostRecentEntry.WEIGHT_ENTRY;
+          } else { //no entries, use profile weight
+            bmiNumber = calculations.GetBmi(profile.START_WEIGHT, profile.HEIGHT);
+            currentWeight = profile.START_WEIGHT;
+          }
+
+          txtCurrentWeight.Text = currentWeight + " lbs";
+          txtBmi.Text = "Current #: " + bmiNumber.ToString();
+          txtBmiStatus.Text = calculations.GetBmiStatus(bmiNumber);
+          txtBmiMessage.Text = calculations.GetBmiMessage(bmiNumber);
+        }
+
+        
+       
+        
 
         //https://www.c-sharpcorner.com/blogs/xamarin-android-microcharts
         double checkWeight = 1000;
