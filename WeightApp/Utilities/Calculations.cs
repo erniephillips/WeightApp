@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WeightApp.Utilities {
   public class Calculations {
@@ -33,17 +34,41 @@ namespace WeightApp.Utilities {
     /// </summary>
     /// <param name="weights"></param>
     /// <returns>double</returns>
-    public double AverageWeeklyWeightLoss(List<Weight> weights) {
-      return 1.0;
+    public double GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight) {
+      //https://stackoverflow.com/questions/10284133/sum-range-of-ints-in-listint
+      //https://stackoverflow.com/questions/16732206/how-to-cast-the-listobject-to-listt
+
+      //weights.Insert(0, new Weight() { WEIGHT_ENTRY = startWeight }); //add user's beginning profile weight
+
+      ////possibly causing my end stream error
+      ////List<double> newWeights = weights.Select(s => Convert.ToDouble(s.WEIGHT_ENTRY)).ToList();
+
+      //List<double> newWeights = new List<double>();
+      //foreach(Weight w in weights) {
+      //  newWeights.Add(Convert.ToDouble(w.WEIGHT_ENTRY));
+      //}
+
+      //double sum = newWeights.Sum(); //get the sum
+      //double rounded = Math.Round(sum, 2, MidpointRounding.AwayFromZero);
+      //return rounded;
+      return 0;
     }
 
     /// <summary>
     /// Returns weight loss to date from list of weights passed
     /// </summary>
     /// <param name="weights"></param>
-    /// <returns>double</returns>
-    public double WeightLossToDate(List<Weight> weights) {
-      return 1.0;
+    /// <returns>string</returns>
+    public string GetWeightLossToDate(string recentWeight, string startWeight) {
+      double startWeightCnv = Convert.ToDouble(startWeight);
+      double recentWeightCnv = Convert.ToDouble(recentWeight);
+      if (startWeightCnv == recentWeightCnv)
+        return "You have not lost any weight so far";
+      if (startWeightCnv < recentWeightCnv)
+        return string.Format("You have gained {0} lbs", Math.Round((recentWeightCnv - startWeightCnv), 2, MidpointRounding.AwayFromZero));
+      if (startWeightCnv > recentWeightCnv)
+        return string.Format("You have lost {0} lbs", Math.Round((startWeightCnv - recentWeightCnv), 2, MidpointRounding.AwayFromZero));
+      return "";
     }
 
     /// <summary>
@@ -57,7 +82,7 @@ namespace WeightApp.Utilities {
         return "Underweight";
       } else if (bmi >= 18.5 && bmi <= 24.9) {
         return "Normal Weight";
-      } else if(bmi >= 25.0 && bmi <= 29.9) {
+      } else if (bmi >= 25.0 && bmi <= 29.9) {
         return "Overweight (Pre-obesity)";
       } else if (bmi >= 30.0 && bmi <= 34.9) {
         return "Overweight (Obesity class I)";

@@ -120,7 +120,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Average Weekly Loss"
+                    android:text="Average Entry Loss"
                     style="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black"
                     app:layout_constraintTop_toTopOf="@+id/avatar_average_weekly_weight_loss"

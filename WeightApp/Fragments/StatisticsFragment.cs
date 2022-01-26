@@ -59,10 +59,12 @@ namespace WeightApp.Fragments {
         TextView txtBmi = view.FindViewById<TextView>(Resource.Id.txt_bmi);
         TextView txtBmiStatus = view.FindViewById<TextView>(Resource.Id.txt_bmi_status);
         TextView txtBmiMessage = view.FindViewById<TextView>(Resource.Id.txt_bmi_message);
+        TextView txtAverageLoss = view.FindViewById<TextView>(Resource.Id.txt_average_weekly_weight_loss);
+        TextView txtLossToDate = view.FindViewById<TextView>(Resource.Id.txt_weight_loss_to_date);
 
         Utilities.Calculations calculations = new Utilities.Calculations();
 
-        if(profile != null) {
+        if (profile != null) {
           string currentWeight;
           double bmiNumber;
           if (mostRecentEntry != null) { //grab user's most recent weight entry
@@ -73,15 +75,28 @@ namespace WeightApp.Fragments {
             currentWeight = profile.START_WEIGHT;
           }
 
+          if (weights.Count > 1) {
+            var weightsDesc = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
+            txtLossToDate.Text = calculations.GetWeightLossToDate(mostRecentEntry.WEIGHT_ENTRY, profile.START_WEIGHT);
+            txtAverageLoss.Text = calculations.GetAverageWeeklyWeightLoss(weightsDesc, profile.START_WEIGHT).ToString();
+          } else if (weights.Count == 1) {
+            string w = (Convert.ToDouble(profile.START_WEIGHT) - Convert.ToDouble(weights[0].WEIGHT_ENTRY)).ToString() + " lbs";
+            txtAverageLoss.Text = w;
+            txtLossToDate.Text = w;
+          } else {
+            txtAverageLoss.Text = "0";
+            txtLossToDate.Text = "0";
+          }
+
           txtCurrentWeight.Text = currentWeight + " lbs";
           txtBmi.Text = "Current #: " + bmiNumber.ToString();
           txtBmiStatus.Text = calculations.GetBmiStatus(bmiNumber);
           txtBmiMessage.Text = calculations.GetBmiMessage(bmiNumber);
         }
 
-        
-       
-        
+
+
+
 
         //https://www.c-sharpcorner.com/blogs/xamarin-android-microcharts
         double checkWeight = 1000;
