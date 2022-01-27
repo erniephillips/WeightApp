@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Percent;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;

@@ -1,16 +1,12 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Preferences;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using DataAccessLayer.Dao;
-using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the main page
+* Function: Main page for app access, displays login and reg buttons
+*/
 
 namespace WeightApp.Activities {
   [Activity(Label = "UserAccessActivity", NoHistory = true)]

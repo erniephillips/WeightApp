@@ -1,9 +1,7 @@
-﻿using Android.Graphics;
-using Android.OS;
+﻿using Android.OS;
 using Android.Views;
 using DataAccessLayer.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Microcharts;
 using SkiaSharp;
 using Entry = Microcharts.ChartEntry;

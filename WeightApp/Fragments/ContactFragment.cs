@@ -1,9 +1,7 @@
-﻿using Android.App;
-using Android.OS;
+﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Dialog;
-using Google.Android.Material.Navigation;
 using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;

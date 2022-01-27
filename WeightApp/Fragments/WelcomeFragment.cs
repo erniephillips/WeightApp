@@ -1,16 +1,12 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Util;
+﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Google.Android.Material.FloatingActionButton;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the page displayed to first time user
+* Function: Page displays information about the app on visit if the profile has not been filled out.
+*/
 
 namespace WeightApp.Fragments {
   public class WelcomeFragment : AndroidX.Fragment.App.Fragment {

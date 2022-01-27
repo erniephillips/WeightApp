@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
@@ -10,12 +8,15 @@ using DataAccessLayer.Models;
 using Google.Android.Material.Dialog;
 using Google.Android.Material.TextField;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using WeightApp.Activities;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the user account info
+* Function: User can change password, security q & a, and name & email
+*/
 
 namespace WeightApp.Fragments {
   public class ManageAccountFragment : AndroidX.Fragment.App.Fragment {

@@ -1,8 +1,5 @@
 ﻿using Android.App;
-using Android.Content;
-using Android.Content.Res;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
@@ -11,11 +8,15 @@ using Google.Android.Material.Dialog;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the registration page
+* Function: User is prompted for username, password, pass confirm, name, email, security question, sec answer. After filling out form, redirected to login
+*/
 
 namespace WeightApp.Activities {
   [Activity(Theme = "@style/AppTheme", Label = "RegisterActivity", NoHistory = true)]

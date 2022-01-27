@@ -4,6 +4,11 @@ using Android.Widget;
 using DataAccessLayer.Models;
 using System.Collections.Generic;
 
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: (NOT USED IN APP FUNCTIONALITY) Was a test Dummy adapter to prove use of adapter to display a list view early on in development. Might develop into an admin piece at a later phase.
+*/
+
 namespace WeightApp.Adapters {
   public class UserListViewAdapter : BaseAdapter {
 

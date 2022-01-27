@@ -3,6 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle core app calulations and logic
+* Function: Several methods for calculations to output results to stats page
+*/
+
 namespace WeightApp.Utilities {
   public class Calculations {
 

@@ -3,6 +3,14 @@ using Android.Widget;
 using DataAccessLayer.Models;
 using System.Collections.Generic;
 
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Display profile and weight entry page listview
+* Function: Adapter is passed a list of a custom object for displaying left & right side text that user can click which loads a modal
+*/
+
+
 namespace WeightApp.Adapters {
   internal class ListViewTextLeftRightAdapter : BaseAdapter {
 

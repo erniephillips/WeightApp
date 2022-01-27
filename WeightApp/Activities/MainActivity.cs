@@ -27,6 +27,7 @@ using Xamarin.Essentials;
 /*
 * Ernie Phillips III : 12/09/2021
 * Handle the main activity and navigation drawer features
+* Function: Open/Close nav drawer and load fragments. FAB button dynamically displayed according to page. Requests permissions to Camera and Storage for image uploads
 */
 
 namespace WeightApp {

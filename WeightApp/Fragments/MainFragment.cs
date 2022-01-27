@@ -3,8 +3,6 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
-using SQLite;
-using System;
 using System.Collections.Generic;
 using WeightApp.Adapters;
 

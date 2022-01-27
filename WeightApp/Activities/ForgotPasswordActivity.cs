@@ -1,19 +1,20 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Google.Android.Material.TextField;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using WeightApp.Fragments;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the forgot password page
+* Function: User is prompted for a username they submit which is then checked against names in db. 
+*           If exists, user moves to security question page
+*/
 
 namespace WeightApp.Activities {
   [Activity(Label = "ForgotPasswordActivity")]

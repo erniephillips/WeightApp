@@ -4,7 +4,6 @@ using Android.OS;
 using Android.Util;
 using AndroidX.AppCompat.App;
 using DataAccessLayer.Dao;
-using DataAccessLayer.Models;
 using System;
 using System.Threading.Tasks;
 using WeightApp;
@@ -13,6 +12,7 @@ using WeightApp.Activities;
 /*
 * Ernie Phillips III : 12/09/2021
 * Creating a splash activity : https://docs.microsoft.com/en-us/xamarin/android/user-interface/splash-screen
+* Function: shows a splash screen for 1 second. Page also checks for ISharedPreferences varibles about user and if remember password was checked. 
 */
 
 namespace AndroidApp {

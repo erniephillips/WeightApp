@@ -1,19 +1,16 @@
-﻿using Android.App;
-using Android.Content;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Fragment.App;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Handle the view weight entry
+* Function: Page accepts an existing weight entry and displays the weight, date, and image if applicable
+*/
 
 namespace WeightApp.Fragments {
   public class ViewWeightEntryFragment : AndroidX.Fragment.App.Fragment {

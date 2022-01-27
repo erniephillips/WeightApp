@@ -1,20 +1,19 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using AndroidX.AppCompat.App;
 using AndroidX.Fragment.App;
 using DataAccessLayer.Models;
-using Google.Android.Material.Dialog;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WeightApp.Fragments;
+
+/*
+* Ernie Phillips III : 01/27/2022
+* Purpose: Display weight entry history
+* Function: Adapter is passed a list of weights which are displayed in a list view of the calling page
+*/
 
 namespace WeightApp.Adapters {
   internal class HistoryListViewAdapter : BaseAdapter {
