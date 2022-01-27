@@ -38,7 +38,17 @@ namespace WeightApp.Utilities {
       //https://stackoverflow.com/questions/10284133/sum-range-of-ints-in-listint
       //https://stackoverflow.com/questions/16732206/how-to-cast-the-listobject-to-listt
 
-      //weights.Insert(0, new Weight() { WEIGHT_ENTRY = startWeight }); //add user's beginning profile weight
+      double lastWeight = Convert.ToDouble(startWeight);
+      double sum = 0;
+      double average = 0;
+      
+      foreach(Weight w in weights) {
+        sum += lastWeight - Convert.ToDouble(w.WEIGHT_ENTRY);
+        lastWeight = Convert.ToDouble(w.WEIGHT_ENTRY);
+      }
+      average = sum / (weights.Count + 1);
+      double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
+      return rounded;
 
       ////possibly causing my end stream error
       ////List<double> newWeights = weights.Select(s => Convert.ToDouble(s.WEIGHT_ENTRY)).ToList();
@@ -49,9 +59,8 @@ namespace WeightApp.Utilities {
       //}
 
       //double sum = newWeights.Sum(); //get the sum
-      //double rounded = Math.Round(sum, 2, MidpointRounding.AwayFromZero);
-      //return rounded;
-      return 0;
+
+      //return 0;
     }
 
     /// <summary>
