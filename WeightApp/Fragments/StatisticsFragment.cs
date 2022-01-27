@@ -61,6 +61,7 @@ namespace WeightApp.Fragments {
         TextView txtBmiMessage = view.FindViewById<TextView>(Resource.Id.txt_bmi_message);
         TextView txtAverageLoss = view.FindViewById<TextView>(Resource.Id.txt_average_weekly_weight_loss);
         TextView txtLossToDate = view.FindViewById<TextView>(Resource.Id.txt_weight_loss_to_date);
+        TextView txtGoalDate = view.FindViewById<TextView>(Resource.Id.txt_goal_date);
 
         Utilities.Calculations calculations = new Utilities.Calculations();
 
@@ -91,6 +92,7 @@ namespace WeightApp.Fragments {
           txtBmi.Text = "Current #: " + bmiNumber.ToString();
           txtBmiStatus.Text = calculations.GetBmiStatus(bmiNumber);
           txtBmiMessage.Text = calculations.GetBmiMessage(bmiNumber);
+          txtGoalDate.Text = calculations.GetDaysTilGoalDate(profile.TARGET_DATE);
         }
 
 

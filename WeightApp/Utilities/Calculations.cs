@@ -137,6 +137,11 @@ namespace WeightApp.Utilities {
       return "";
     }
 
+    public string GetDaysTilGoalDate(DateTime goalDate) {
+      double days = (goalDate - DateTime.Now).TotalDays;
+      return Convert.ToInt32(days) + " days left until " + goalDate.ToShortDateString();
+    }
+
     /// <summary>
     /// 
     /// </summary>

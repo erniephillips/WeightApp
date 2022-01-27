@@ -84,10 +84,71 @@
 
         </android.support.v7.widget.CardView>
 
+        <!--Goal Date-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_goal_date"
+            android:layout_below="@+id/card_current_weight"
+            style="@style/CardView.Light"
+            app:layout_widthPercent="90%"
+            app:layout_marginLeftPercent="5%"
+            app:layout_marginTopPercent="2%"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/avatar_goal_date"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="12dp"
+                    android:padding="4dp"
+                    android:src="@drawable/weight_app_logo_transparent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/title_goal_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Goal Date"
+                    style="?attr/textAppearanceHeadline6"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintTop_toTopOf="@+id/avatar_goal_date"
+                    app:layout_constraintStart_toEndOf="@+id/avatar_goal_date"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_goal_date"
+                    android:layout_below="@+id/title_goal_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="N/A"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintStart_toEndOf="@+id/avatar_goal_date"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatar_goal_date"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
         <!--Average Weekly Weight Loss-->
         <android.support.v7.widget.CardView
             android:id="@+id/card_average_weekly_weight_loss"
-            android:layout_below="@+id/card_current_weight"
+            android:layout_below="@+id/card_goal_date"
             style="@style/CardView.Light"
             app:layout_widthPercent="90%"
             app:layout_marginTopPercent="2%"
