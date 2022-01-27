@@ -133,6 +133,8 @@ namespace WeightApp {
     private void FabOnClick(object sender, EventArgs eventArgs) {
       //send user to contact page
       SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
+      //now hide the FAB
+      FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
       //View view = (View)sender;
       //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
       //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
