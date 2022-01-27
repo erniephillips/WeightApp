@@ -76,7 +76,6 @@ namespace WeightApp.Fragments {
           }
 
           if (weights.Count > 1) {
-            //var weightsDesc = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
             txtLossToDate.Text = calculations.GetWeightLossToDate(mostRecentEntry.WEIGHT_ENTRY, profile.START_WEIGHT);
             txtAverageLoss.Text = calculations.GetAverageWeeklyWeightLoss(weights, profile.START_WEIGHT).ToString();
           } else if (weights.Count == 1) {

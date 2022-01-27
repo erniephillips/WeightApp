@@ -9,6 +9,8 @@
 - (FIXED) weight entry page is crashing under emily profile
 - add leave page event with dialog
 - create calculations for weight on stats page
+- remove + icon from weight entry page when entering page through + icon click
+- add padding to bottom of chart
 - (DONE) look into nice layout for the statistics page
 - (DONE) create defaults for History and Stats pages when no content is listed
 - (FIXED) fix weight entry date picker

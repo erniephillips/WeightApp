@@ -34,22 +34,38 @@ namespace WeightApp.Utilities {
     /// </summary>
     /// <param name="weights"></param>
     /// <returns>double</returns>
-    public double GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight) {
+    public string GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight) {
       //https://stackoverflow.com/questions/10284133/sum-range-of-ints-in-listint
       //https://stackoverflow.com/questions/16732206/how-to-cast-the-listobject-to-listt
 
-      double lastWeight = Convert.ToDouble(startWeight);
       double sum = 0;
       double average = 0;
-      
-      foreach(Weight w in weights) {
-        sum += lastWeight - Convert.ToDouble(w.WEIGHT_ENTRY);
-        lastWeight = Convert.ToDouble(w.WEIGHT_ENTRY);
-      }
-      average = sum / (weights.Count + 1);
-      double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
-      return rounded;
 
+      string[] splitStartWeight = startWeight.Split(".");
+      double lastWeight = Convert.ToDouble(splitStartWeight[0]) + ConvertOuncesToDecimal(splitStartWeight[1]);
+
+      foreach (Weight w in weights) {
+        string[] splitWeightEntry = w.WEIGHT_ENTRY.Split(".");
+        double currentWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+        sum += (lastWeight - currentWeight);
+        lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+      }
+      average = sum / (weights.Count + 1); //divide the sum of the difference of numbers by count of weights
+      string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
+      double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+
+      if(average < 0) //check if negative avg, if so subtract oz in order to add
+        average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+      else
+        average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+      
+      double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
+
+      if (rounded > 0) //show user loss or gain
+        return string.Format("Average loss of {0} per entry", rounded);
+      else
+        return string.Format("Average gain of {0} per entry", Math.Abs(rounded));
+      
       ////possibly causing my end stream error
       ////List<double> newWeights = weights.Select(s => Convert.ToDouble(s.WEIGHT_ENTRY)).ToList();
 
