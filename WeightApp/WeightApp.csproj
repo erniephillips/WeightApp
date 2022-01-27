@@ -211,9 +211,6 @@
     <AndroidResource Include="Resources\drawable-v24\ic_menu_history.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-v24\ic_menu_weight.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-v24\ic_menu_profile.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +344,15 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_date_range.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_trending_down.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v24\ic_menu_weight.xml" />
   </ItemGroup>
   <Import Project="..\DataAccessLayer\DataAccessLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -62,9 +62,9 @@ namespace WeightApp.Utilities {
       double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
 
       if (rounded > 0) //show user loss or gain
-        return string.Format("Average loss of {0} per entry", rounded);
+        return string.Format("Average loss of {0} lbs per entry", rounded);
       else
-        return string.Format("Average gain of {0} per entry", Math.Abs(rounded));
+        return string.Format("Average gain of {0} lbs per entry", Math.Abs(rounded));
       
       ////possibly causing my end stream error
       ////List<double> newWeights = weights.Select(s => Convert.ToDouble(s.WEIGHT_ENTRY)).ToList();

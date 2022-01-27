@@ -48,7 +48,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="12dp"
                     android:padding="4dp"
-                    android:src="@drawable/weight_app_logo_transparent"
+                    android:src="@drawable/ic_menu_weight"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -109,7 +109,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="12dp"
                     android:padding="4dp"
-                    android:src="@drawable/weight_app_logo_transparent"
+                    android:src="@drawable/ic_date_range"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -170,7 +170,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="12dp"
                     android:padding="4dp"
-                    android:src="@drawable/weight_app_logo_transparent"
+                    android:src="@drawable/ic_menu_statistics"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -229,7 +229,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="12dp"
                     android:padding="4dp"
-                    android:src="@drawable/weight_app_logo_transparent"
+                    android:src="@drawable/ic_trending_down"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
