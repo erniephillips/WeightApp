@@ -56,14 +56,31 @@ namespace WeightApp.Utilities {
         sum += (lastWeight - currentWeight);
         lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
       }
-      average = sum / (weights.Count + 1); //divide the sum of the difference of numbers by count of weights
-      string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
-      double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+      average = sum / (weights.Count); //divide the sum of the difference of numbers by count of weights
+      
+      bool isInt = average == (int)average;
 
-      if(average < 0) //check if negative avg, if so subtract oz in order to add
-        average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
-      else
-        average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+      if (!isInt) {
+        string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
+        double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+        if (average < 0) //check if negative avg, if so subtract oz in order to add
+          average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+        else
+          average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+      } 
+
+
+      //decimal decValue;
+      //if (decimal.TryParse(average.ToString(), out decValue)) {
+      //  string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
+      //  double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+      //  if (average < 0) //check if negative avg, if so subtract oz in order to add
+      //    average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+      //  else
+      //    average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+      //} 
+
+      
       
       double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
 
