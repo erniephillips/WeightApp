@@ -192,7 +192,7 @@ namespace WeightApp {
         edit.Commit();
 
         //Set main activity to no history to prevent user from going back after logout
-        //StartActivity(typeof(UserAccessActivity));
+        StartActivity(typeof(UserAccessActivity));
       }
 
       //get the drawer and close after navigating to fragment
