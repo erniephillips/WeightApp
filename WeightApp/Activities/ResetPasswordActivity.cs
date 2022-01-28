@@ -21,25 +21,33 @@ namespace WeightApp.Activities {
   public class ResetPasswordActivity : Activity {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
+
+      //find the xml view to set
       SetContentView(Resource.Layout.activity_reset_password);
 
+      //XML elements to be stored in variables
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_rp_back);
       Button btnResetPassword = FindViewById<Button>(Resource.Id.btn_reset_password);
 
+      //set the button click events
       btnBack.Click += delegate {
+        //navigate to login activity
         StartActivity(typeof(LoginActivity));
       };
 
       btnResetPassword.Click += delegate {
+        //XML elements to be stored in variables
         TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_rp_password);
         TextInputLayout txtIlConfirmPassword = FindViewById<TextInputLayout>(Resource.Id.et_rp_confirm_password);
         TextInputEditText txtPassword = FindViewById<TextInputEditText>(Resource.Id.rp_tiet_password);
         TextInputEditText txtConfirmPassword = FindViewById<TextInputEditText>(Resource.Id.rp_tiet_confirm_password);
 
         #region VALIDATION
+        //set errors to empty on button click
         txtIlPassword.Error = "";
         txtIlConfirmPassword.Error = "";
 
+        //check if either password or password confirm are empty or null and set error for each one that is
         if (String.IsNullOrEmpty(txtPassword.Text) || String.IsNullOrEmpty(txtConfirmPassword.Text)) {
           if (txtPassword.Text == "") {
             txtIlPassword.Error = "Password is required";
@@ -52,6 +60,7 @@ namespace WeightApp.Activities {
           return;
         }
 
+        //verify that passwords match
         if (txtPassword.Text != txtConfirmPassword.Text) {
           txtIlPassword.Error = "Passwords do not match";
           txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -61,20 +70,25 @@ namespace WeightApp.Activities {
         }
         #endregion
 
-        //update the user's password in the database
+        //update the user's password in the database after getting current user object for update
         User user = JsonConvert.DeserializeObject<User>(Intent.GetStringExtra("User"));
         user.PASSWORD = txtPassword.Text;
 
+        //instantiate the user dao
         UserDao userDao = new UserDao();
 
-        try {
+        try { //update
           userDao.UpdateUser(user);
-        } catch (Exception ex) {
+        } catch (Exception ex) { 
+          //throw the exception to the user in a modal
           new MaterialAlertDialogBuilder(this)
             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
             .SetPositiveButton("OK", (sender, e) => { })
             .Show();
+          return;
         }
+
+        //update the user that password successfully updated
         new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
           .SetIcon(Resource.Drawable.ic_info)
@@ -82,6 +96,7 @@ namespace WeightApp.Activities {
           .SetPositiveButton("OK", (sender, e) => {
             StartActivity(typeof(LoginActivity));
           }).Show();
+
         //AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         //AlertDialog alert = dialog.Create();
         //alert.SetTitle("Weight App Alert");

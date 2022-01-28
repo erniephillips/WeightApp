@@ -1,12 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
@@ -18,8 +15,6 @@ using DataAccessLayer.Models;
 using Google.Android.Material.Dialog;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
-using Google.Android.Material.Snackbar;
-using Newtonsoft.Json;
 using WeightApp.Activities;
 using WeightApp.Fragments;
 using Xamarin.Essentials;
@@ -41,28 +36,40 @@ namespace WeightApp {
 
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
-      Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
+      //Initialize Xamarin.Essentials with Android's activity and bundle.
+      Platform.Init(this, savedInstanceState);
+
+      //find the xml view to set
       SetContentView(Resource.Layout.activity_main);
+      
+      //get the toolbar
       Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+
+      //tell the activity of interest in use of features related to the toolbar
       SetSupportActionBar(toolbar);
 
+      //get the floating action button and set click event
       FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
       fab.Click += FabOnClick;
 
+      //get the navigation drawer and set toggle listener for when drawer is opened and closed
       DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
       ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
       drawer.AddDrawerListener(toggle);
-      toggle.SyncState();
+      toggle.SyncState(); //syncronize the icon's changed state
 
-      NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-      navigationView.SetNavigationItemSelectedListener(this);
-
-      //set the user's name through nav view, then find txtView
+      //get the user's info from shared prefs
       ISharedPreferences prefs = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userName = prefs.GetString("Username", String.Empty);
       string name = prefs.GetString("Name", String.Empty);
-      NavigationView nv = FindViewById<NavigationView>(Resource.Id.nav_view);
-      Android.Widget.TextView txtUsername = nv.GetHeaderView(0).FindViewById<Android.Widget.TextView>(Resource.Id.txt_username);
+
+      //get the nav view and set a listener on the main activity
+      NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+      navigationView.SetNavigationItemSelectedListener(this);
+      
+      //get the textview inside the navigation view and set the text with the username if found
+      Android.Widget.TextView txtUsername = navigationView.GetHeaderView(0).FindViewById<Android.Widget.TextView>(Resource.Id.txt_username);
       txtUsername.Text = String.IsNullOrEmpty(name) ? "Welcome" : "Welcome, " + name;
 
 
@@ -73,20 +80,22 @@ namespace WeightApp {
       ProfileDao profileDao = new ProfileDao();
       Profile profile = profileDao.GetProfileByUserId(user.USER_ID);
 
-      if (profile != null) {
+      if (profile != null) { //send to the statistics page
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
-      } else {
+      } else { //send to the welcome screen
         //hide floating action button. If user gets to this screen they wouldn't be inputting a weight yet b/c no profile info exists yet
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WelcomeFragment(), "Fragment").Commit();
       }
 
       //Requesting camera permissions: https://docs.microsoft.com/en-us/xamarin/android/app-fundamentals/permissions?tabs=windows
+      //set permissions request for storage and camera use
       var requiredPermissions = new String[] {
         Manifest.Permission.Camera,
         Manifest.Permission.WriteExternalStorage
       };
+      //check for permissions, in none, prompt
       if (
         ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.Camera) ||
         ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.WriteExternalStorage)) {
@@ -106,7 +115,7 @@ namespace WeightApp {
       Instance = this;
     }
 
-    public override void OnBackPressed() {
+    public override void OnBackPressed() { //close the drawer
       DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
       if (drawer.IsDrawerOpen(GravityCompat.Start)) {
         drawer.CloseDrawer(GravityCompat.Start);
@@ -141,25 +150,26 @@ namespace WeightApp {
       //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
     }
 
+    //HANDLE ALL FRAGMENT LOADS FROM NAV DRAWER
     public bool OnNavigationItemSelected(IMenuItem item) {
 
-      int id = item.ItemId;
+      int id = item.ItemId; //get the menu items id
       
-      if (id == Resource.Id.nav_statistics) {
+      if (id == Resource.Id.nav_statistics) { //statistics fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new StatisticsFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_weight_entry) {
-        //fab button not needed here since it links to this page
+      } else if (id == Resource.Id.nav_weight_entry) { //weight entry fragment
+        //fab button not needed here since it links to this fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new WeightEntryFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_history) {
+      } else if (id == Resource.Id.nav_history) { //history fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new HistoryFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_profile) {
+      } else if (id == Resource.Id.nav_profile) { //profile fragment
         //Hide the floating action button for weight entry since screen is not scrollview
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_share) {
+      } else if (id == Resource.Id.nav_share) { //share click
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         //https://docs.microsoft.com/en-us/xamarin/essentials/share?tabs=android
         Share.RequestAsync(new ShareTextRequest {
@@ -168,13 +178,13 @@ namespace WeightApp {
           Title = "Check out this weight app"
         });
         //Android.Widget.Toast.MakeText(this, "Share button functionality to be wired in future version", Android.Widget.ToastLength.Long).Show();
-      } else if (id == Resource.Id.nav_contact) {
+      } else if (id == Resource.Id.nav_contact) { //contact fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_manage_account) {
+      } else if (id == Resource.Id.nav_manage_account) { //manage account fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_logout) {
+      } else if (id == Resource.Id.nav_logout) { //logout click
         //clear any login stored creds
         ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
         ISharedPreferencesEditor edit = pref.Edit();
@@ -182,27 +192,35 @@ namespace WeightApp {
         edit.Commit();
 
         //Set main activity to no history to prevent user from going back after logout
-        StartActivity(typeof(UserAccessActivity));
+        //StartActivity(typeof(UserAccessActivity));
       }
 
+      //get the drawer and close after navigating to fragment
       DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
       drawer.CloseDrawer(GravityCompat.Start);
       return true;
     }
 
     //https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/dependency-service/photo-picker
+    //set codes for camera and gallery permissions
     public static readonly int WEIGHT_ENTRY_CAMERA_REQUEST = 1;
     public static readonly int WEIGHT_ENTRY_GALLERY_REQUEST = 2;
   
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent) {
-      base.OnActivityResult(requestCode, resultCode, intent);
+
+      //call inherited activity class method
+      base.OnActivityResult(requestCode, resultCode, intent); 
       
+      //check that result is good and intent exists
       if ((resultCode == Result.Ok) && (intent != null)) {
+        //if camera, find the imagebutton and set to taken picture after converting to bitmap
         if (requestCode == WEIGHT_ENTRY_CAMERA_REQUEST) {
           Android.Widget.ImageButton btnImage = FindViewById<Android.Widget.ImageButton>(Resource.Id.we_camera_icon_click);
           Bitmap bitmap = (Bitmap)intent.Extras.Get("data");
           btnImage.SetImageBitmap(bitmap);
-        } else if (requestCode == WEIGHT_ENTRY_GALLERY_REQUEST) {
+        }
+        //if gallery, find imagebutton and set as URI from intent
+        else if (requestCode == WEIGHT_ENTRY_GALLERY_REQUEST) {
           Android.Widget.ImageButton btnImage = FindViewById<Android.Widget.ImageButton>(Resource.Id.we_camera_icon_click);
           Android.Net.Uri uri = intent.Data;
           btnImage.SetImageURI(uri);

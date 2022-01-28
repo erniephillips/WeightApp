@@ -5,10 +5,7 @@ using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
-using Google.Android.Material.DatePicker;
 using Google.Android.Material.Dialog;
-using Google.Android.Material.FloatingActionButton;
-using Google.Android.Material.TextField;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,41 +18,42 @@ using WeightApp.Adapters;
 
 namespace WeightApp.Fragments {
   public class ProfileFragment : AndroidX.Fragment.App.Fragment {
-
+    //get the stored userinfo 
     ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+
+    //instantiate the profile dao
     ProfileDao profileDao = new ProfileDao();
+
+    //declare listview adapter for list of profile items
     ListViewTextLeftRightAdapter adapter;
+
+    //set vars
     Profile profile = new Profile();
     ListView listView;
 
     //creation of menu. Set to not display delete button if not incoming record
-    public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater)
-    {
+    public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
       inflater.Inflate(Resource.Menu.menu_save, menu);
       base.OnCreateOptionsMenu(menu, inflater);
     }
 
     //handle the menu click
-    public override bool OnOptionsItemSelected(IMenuItem menu)
-    {
+    public override bool OnOptionsItemSelected(IMenuItem menu) {
       menu.SetChecked(true);
-      switch (menu.ItemId)
+      switch (menu.ItemId) //check by clicked menu item
       {
         #region SAVE BUTTON CLICK
         case Resource.Id.menu_save:
           #region VALIDATION
           //provide validation check on fields and return dialog with missing
-          List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
           string error = "";
-          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights)
-          {
-            if (profileItem.TextRightSide == "N/a")
-            {
+          List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
+          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
+            if (profileItem.TextRightSide == "N/a") {
               error += profileItem.TextLeftSide + " is required.\n";
             }
           }
-          if (error != "")
-          {
+          if (error != "") {
             new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert")
                .SetIcon(Resource.Drawable.ic_info)
@@ -69,13 +67,14 @@ namespace WeightApp.Fragments {
           //everything validated, update profile
           string userId = pref.GetString("UserId", String.Empty);
 
-          Profile profile = new Profile()
-          {
+          //initialize a new profile object
+          Profile profile = new Profile() {
             USER_ID = Convert.ToInt32(userId),
             START_DATE = DateTime.Now
           };
-          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights)
-          {
+
+          //get each list item rightside textview value and set fields to profile object
+          foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
             if (profileItem.TextLeftSide == "Weight")
               profile.START_WEIGHT = profileItem.HiddenTextForConversion;
             if (profileItem.TextLeftSide == "Height")
@@ -91,31 +90,24 @@ namespace WeightApp.Fragments {
           //add to database if doesn't exist otherwise update
           Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
           if (tempProfile == null)
-            try
-            {
+            try { //add
               profileDao.AddProfile(profile);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
               new MaterialAlertDialogBuilder(Activity)
               .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
               .SetPositiveButton("OK", (sender, e) => { })
               .Show();
             }
-          else
-          {
+          else {
             tempProfile.START_WEIGHT = profile.START_WEIGHT;
             tempProfile.HEIGHT = profile.HEIGHT;
             tempProfile.GENDER = profile.GENDER;
             tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
             tempProfile.TARGET_DATE = profile.TARGET_DATE;
 
-            try
-            {
+            try { //update
               profileDao.UpdateProfile(tempProfile);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
               new MaterialAlertDialogBuilder(Activity)
               .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
               .SetPositiveButton("OK", (sender, e) => { })
@@ -132,8 +124,7 @@ namespace WeightApp.Fragments {
 
     }
 
-    public override void OnCreate(Bundle savedInstanceState)
-    {
+    public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
       //show the options menu
       HasOptionsMenu = true;
@@ -143,10 +134,11 @@ namespace WeightApp.Fragments {
       // Use this to return your custom view for this Fragment
       View view = inflater.Inflate(Resource.Layout.fragment_profile, container, false);
 
-      //Button btnUpdateProfile = view.FindViewById<Button>(Resource.Id.btn_update_profile);
-
+      //set the listview by XML
       listView = view.FindViewById<ListView>(Resource.Id.profile_listView);
-      LoadData(); //clear any position index
+      
+      //load listview data
+      LoadData(); 
 
       //set the listview item click
       listView.ItemClick += (s, eLV) => {
@@ -221,7 +213,7 @@ namespace WeightApp.Fragments {
             string[] weightInchNumbers = Enumerable.Range(0, 13).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
             pckHeightInNum.MinValue = 1;
             pckHeightInNum.MaxValue = weightInchNumbers.Length - 1;
-            pckHeightInNum.Value = profile != null ? Convert.ToInt32(profile.HEIGHT.Split(".")?[1]) + 1: 1; //set the start value
+            pckHeightInNum.Value = profile != null ? Convert.ToInt32(profile.HEIGHT.Split(".")?[1]) + 1 : 1; //set the start value
             pckHeightInNum.SetDisplayedValues(weightInchNumbers);
 
             new MaterialAlertDialogBuilder(Activity).SetView(heightView)
@@ -312,8 +304,8 @@ namespace WeightApp.Fragments {
 
             if (profile != null) {
               datePicker.DatePicker.DateTime = profile.TARGET_DATE;
-            } 
-             
+            }
+
             datePicker.SetButton((int)DialogButtonType.Positive, Context.Resources.GetString(global::Android.Resource.String.Ok), (s, e) => {
               //int selectedDay = datePicker.DatePicker.DayOfMonth;
               //int selectedMonth = datePicker.DatePicker.Month + 1; //the months seem to be indexed at zero so I need to add 1
@@ -341,7 +333,7 @@ namespace WeightApp.Fragments {
       };
 
       //btnUpdateProfile.Click += (s, e) => {
-        
+
       //};
 
       return view;

@@ -23,8 +23,11 @@ namespace WeightApp.Activities {
   public class RegisterActivity : Activity {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
+
+      //find the xml view to set
       SetContentView(Resource.Layout.activity_register);
 
+      //XML elements to be stored in variables
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_register_back);
       Button btnRegister = FindViewById<Button>(Resource.Id.btn_reg_register);
       //ImageView btnInfo = FindViewById<ImageView>(Resource.Id.btn_register_info);
@@ -37,12 +40,14 @@ namespace WeightApp.Activities {
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
       dropdownItems.Adapter = adapter;
 
+      //show message for 10s to user about data only being stored locally
       Snackbar snackbar = Snackbar.Make(txtRegister, "Data is only stored on your phone and cannot be recovered. Please remember your login information and security answer.", 10000);
       View snackbarView = snackbar.View;
       TextView snackTextView = (TextView)snackbarView.FindViewById(Resource.Id.snackbar_text);
       snackTextView.SetMaxLines(3);
       snackbar.Show();
 
+      //set button click events
       btnBack.Click += delegate {
         StartActivity(typeof(UserAccessActivity));
       };
@@ -57,7 +62,7 @@ namespace WeightApp.Activities {
       };
 
       btnRegister.Click += (s, e) => {
-        UserDao userDao = new UserDao();
+        //XML elements to be stored in variables
         TextInputLayout txtIlDropdown = FindViewById<TextInputLayout>(Resource.Id.spinner_reg_sec_question);
         TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_username);
         TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_password);
@@ -72,9 +77,10 @@ namespace WeightApp.Activities {
         TextInputEditText txtName = FindViewById<TextInputEditText>(Resource.Id.register_tiet_name);
         TextInputEditText txtEmail = FindViewById<TextInputEditText>(Resource.Id.register_tiet_email);
         TextInputEditText txtSecurityAnswer = FindViewById<TextInputEditText>(Resource.Id.register_tiet_security_answer);
-        
+
 
         #region VALIDATION
+        //set error to empty on button click
         txtIlUsername.Error = "";
         txtIlPassword.Error = "";
         txtIlConfirmPassword.Error = "";
@@ -83,9 +89,10 @@ namespace WeightApp.Activities {
         txtIlSecAns.Error = "";
         txtIlDropdown.Error = "";
 
+        //set the check for the drop down verify selected value not equal to default selection
         bool isDropdownDefaultValue = dropdownItems.Text == "Select an item...";
 
-        //check for nulls
+        //check all form fields for null or empty and dropdown for default, display errors for each violation
         if (txtUsername.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "" || txtName.Text == "" || txtEmail.Text == "" || txtSecurityAnswer.Text == "" || isDropdownDefaultValue) {
           if (txtUsername.Text == "") {
             txtIlUsername.Error = "Username is required";
@@ -118,7 +125,7 @@ namespace WeightApp.Activities {
           return;
         }
 
-        //check passwords
+        //check that password and password confirm match
         if (txtPassword.Text != txtConfirmPassword.Text) {
           txtIlPassword.Error = "Passwords do not match";
           txtIlPassword.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -128,7 +135,7 @@ namespace WeightApp.Activities {
           return;
         }
 
-        //check email
+        //check for valid email address
         string pattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(txtEmail.Text)) {
@@ -144,19 +151,25 @@ namespace WeightApp.Activities {
           return;
         }
 
+        //instatiate user dao
+        UserDao userDao = new UserDao();
+
         //check username does not exist
-        User user = userDao.GetUserByUsername(txtUsername.Text);
-        if (user != null) {
+        User user = userDao.GetUserByUsername(txtUsername.Text); 
+        if (user != null) { //if username exists, display error to user
           txtIlUsername.Error = "Username already exist, please choose another one";
           txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());
           return;
         }
         #endregion
 
+        //get the selected dropdown value
         string ddlValue = dropdownItems.Text.ToString();
 
 
         //If reached here, all validation passed, time to store the user
+
+        //create the user obj
         User userToStore = new User() {
           USERNAME = txtUsername.Text,
           PASSWORD = txtPassword.Text,
@@ -170,14 +183,16 @@ namespace WeightApp.Activities {
           SECURITY_ANSWER = txtSecurityAnswer.Text
         };
 
-        try {
+        try { //add the user to database
           userDao.AddUser(userToStore);
-        } catch (Exception ex) {
+        } catch (Exception ex) { //display error to user
           new MaterialAlertDialogBuilder(this)
              .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
              .SetPositiveButton("OK", (sender, e) => { })
              .Show();
+          return;
         }
+
         //redirect to login page
         StartActivity(typeof(LoginActivity)); //send user to main applicaiton logic
       };

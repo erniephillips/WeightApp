@@ -11,8 +11,8 @@ using System.Text;
 namespace DataAccessLayer.Models {
   public class ListviewTextLeftRight {
     public int Id { get; set; }
-    public string TextLeftSide {get;set;}
-    public string TextRightSide { get; set; }
+    public string TextLeftSide {get;set;} //list item left side text
+    public string TextRightSide { get; set; } //list item right side text
     public string HiddenTextForConversion { get; set; }
   }
 }

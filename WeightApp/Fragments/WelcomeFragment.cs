@@ -12,14 +12,13 @@ namespace WeightApp.Fragments {
   public class WelcomeFragment : AndroidX.Fragment.App.Fragment {
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
-
       // Create your fragment here
     }
 
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View view = inflater.Inflate(Resource.Layout.fragment_welcome, container, false);
 
-      
+      //get the button
       Button btnMyProfile = view.FindViewById<Button>(Resource.Id.btn_go_to_profile);
 
       //ImageView img = view.FindViewById<ImageView>(Resource.Id.veggies);
@@ -32,7 +31,9 @@ namespace WeightApp.Fragments {
       //img.LayoutParameters.Height = height - 50;
       //img.LayoutParameters.Width = width - 50;
 
-      btnMyProfile.Click += delegate {
+      //set the button click event
+      btnMyProfile.Click += delegate { 
+        //load the profile fragment
         this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ProfileFragment(), "Fragment").Commit();
       };
 

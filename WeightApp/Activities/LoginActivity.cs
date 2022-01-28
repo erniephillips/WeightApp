@@ -21,13 +21,18 @@ namespace WeightApp.Activities {
 
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
+
+      //find the xml view to set
       SetContentView(Resource.Layout.activity_login);
 
+      //XML elements to be stored in variables
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_login_back);
       Button btnLogin = FindViewById<Button>(Resource.Id.btn_log_login);
       TextView txtForgotPassword = FindViewById<TextView>(Resource.Id.txt_forgot_password);
 
+      //set button click events
       btnBack.Click += delegate {
+        //navigate to base user activity
         StartActivity(typeof(UserAccessActivity));
       };
 
@@ -37,8 +42,7 @@ namespace WeightApp.Activities {
       };
 
       btnLogin.Click += (s, e) => {
-        UserDao userDao = new UserDao();
-
+        //XML elements to be stored in variables
         TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_login_username);
         TextInputLayout txtIlPassword = FindViewById<TextInputLayout>(Resource.Id.et_login_password);
         TextInputEditText txtUsername = FindViewById<TextInputEditText>(Resource.Id.login_tiet_username);
@@ -46,9 +50,11 @@ namespace WeightApp.Activities {
         CheckBox chkRememberMe = FindViewById<CheckBox>(Resource.Id.chk_remember_me);
 
         #region VALIDATION
+        //set errors to empty on button click
         txtIlUsername.Error = "";
         txtIlPassword.Error = "";
 
+        //check if either username or password are empty or null and set error for each one that is
         if (txtUsername.Text == "" || txtPassword.Text == "") {
           if (txtUsername.Text == "") {
             txtIlUsername.Error = "Username is required";
@@ -62,31 +68,38 @@ namespace WeightApp.Activities {
         }
         #endregion
 
-        //store user input
+        //retreive key/value pairs in userinfo from shared prefs
         ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-        ISharedPreferencesEditor edit = pref.Edit();
+        ISharedPreferencesEditor edit = pref.Edit(); //establish edit mode
 
-        //verify the passed in username and password
+        //instantiate the user dao
+        UserDao userDao = new UserDao();
+
+        //verify the username and password match in database, return bool
         bool userCanLogin = userDao.VerifyLogin(txtUsername.Text, txtPassword.Text);
+
         if (userCanLogin) { //user gave correct username and password
           User user = userDao.GetUserByUsername(txtUsername.Text); //find the user
           user.LAST_LOGIN_DATE = DateTime.Now; //set last logged in date to now
 
           try {
             userDao.UpdateUser(user); //update the user with last logged in date
-          } catch (Exception ex) {
+          } catch (Exception ex) { //show error to user
             new MaterialAlertDialogBuilder(this)
             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
             .SetPositiveButton("OK", (sender, e) => { })
             .Show();
+            return;
           }
-          //set a session for the user
+
+          //set the user preferences to be stored
           if (chkRememberMe.Checked) { //set a session (sort of)
             edit.PutString("UserId", user.USER_ID.ToString());
             edit.PutString("Username", user.USERNAME.Trim());
             edit.PutString("Name", user.NAME.Trim());
             edit.PutString("Password", user.PASSWORD.Trim());
-            edit.PutString("LastLogin", user.LAST_LOGIN_DATE.ToString());
+            //add the current login date. if user goes longer than 2 weeks logging back in, they will not pass check on splash activity
+            edit.PutString("LastLogin", user.LAST_LOGIN_DATE.ToString()); 
             edit.Apply();
           } else { //save the username and PK for app reference
             edit.PutString("UserId", user.USER_ID.ToString());
@@ -94,7 +107,9 @@ namespace WeightApp.Activities {
             edit.PutString("Name", user.NAME.Trim());
             edit.Apply();
           }
-          StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
+
+          //send user to main applicaiton logic
+          StartActivity(typeof(MainActivity)); 
         } else { //user did not authenticate properly, show alert
           new MaterialAlertDialogBuilder(this)
           .SetTitle("Weight App Alert")
@@ -102,6 +117,7 @@ namespace WeightApp.Activities {
           .SetMessage("Invalid Login Attempt. Please try again.")
           .SetPositiveButton("OK", (sender, e) => { })
           .Show();
+          return;
         }
       };
     }

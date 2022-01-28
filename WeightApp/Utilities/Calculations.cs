@@ -19,7 +19,7 @@ namespace WeightApp.Utilities {
     /// </summary>
     /// <param name="weight"></param>
     /// <param name="height"></param>
-    /// <returns>double bmi weight</returns>
+    /// <returns>double</returns>
     public double GetBmi(string weight, string height) {
       string[] splitWeight = weight.Split(".");
       string[] splitHeight = height.Split(".");
@@ -39,7 +39,7 @@ namespace WeightApp.Utilities {
     /// Returns average weekly weight loss
     /// </summary>
     /// <param name="weights"></param>
-    /// <returns>double</returns>
+    /// <returns>string</returns>
     public string GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight) {
       //https://stackoverflow.com/questions/10284133/sum-range-of-ints-in-listint
       //https://stackoverflow.com/questions/16732206/how-to-cast-the-listobject-to-listt
@@ -125,6 +125,11 @@ namespace WeightApp.Utilities {
       return "";
     }
 
+    /// <summary>
+    /// Get the BMI message depending on BMI level sent
+    /// </summary>
+    /// <param name="bmi"></param>
+    /// <returns>string</returns>
     public string GetBmiMessage(double bmi) {
       //BMI numbers as outlined here: https://www.rqhealth.ca/department/bariatric-surgical-program/bariatric-surgical-program-body-mass-index-bmi
       if (bmi < 18.5) {
@@ -149,31 +154,31 @@ namespace WeightApp.Utilities {
     }
 
     /// <summary>
-    /// 
+    /// May user later. Convernt lbs to Kg
     /// </summary>
     /// <param name="pounds"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertPoundsToKg(double pounds) {
       double kilograms = pounds * 0.45359237;
       return kilograms;
     }
 
     /// <summary>
-    /// 
+    /// May user later. Convert imperial height to meters
     /// </summary>
     /// <param name="feet"></param>
     /// <param name="inches"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertHeightToMeters(double feet, double inches) {
       double meters = feet * 0.3048 + inches * 0.0254;
       return meters;
     }
 
     /// <summary>
-    /// 
+    /// May user later. Convert imperial height to cm
     /// </summary>
     /// <param name="height"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertHeightToCm(double height) {
       double cenimeters = height * 2.54;
       return cenimeters;
@@ -183,7 +188,7 @@ namespace WeightApp.Utilities {
     /// convert oz to a decimal format
     /// </summary>
     /// <param name="ounces"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertOuncesToDecimal(string ounces) {
       double ozDecimal = 0.00;
       switch (Convert.ToInt32(ounces)) {
@@ -246,7 +251,7 @@ namespace WeightApp.Utilities {
     /// convert inches to a decimal format
     /// </summary>
     /// <param name="inches"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertInchesToDecimal(string inches) {
       double inDecimal = 0.00;
       switch (Convert.ToInt32(inches)) {
@@ -294,10 +299,10 @@ namespace WeightApp.Utilities {
     }
 
     /// <summary>
-    /// 
+    /// Convert feet to inches
     /// </summary>
     /// <param name="height"></param>
-    /// <returns></returns>
+    /// <returns>double</returns>
     private double ConvertFeetToInches(string height) {
       var inches = Convert.ToDouble(height) * 12;
       return inches;

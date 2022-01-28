@@ -10,17 +10,15 @@ using WeightApp.Adapters;
 * Ernie Phillips III : 12/09/2021
 * Main fragment to display when user first opens app
 */
-
+//(DUMMY CLASS NOT CURRENTLY USED BY APPLICATION)
 namespace WeightApp.Fragments {
   public class MainFragment : AndroidX.Fragment.App.Fragment {
 
-    //ProfileDao profileDao = new ProfileDao();
-    //WeightDao weightDao = new WeightDao();
-    //List<Profile> profiles = null;
-    //List<Weight> weights = null;
-
+    //set the variables
     ListView listView;
     List<User> users = new List<User>();
+
+    //instantiate the user dao
     UserDao userDao = new UserDao();
 
     public override void OnCreate(Bundle savedInstanceState) {

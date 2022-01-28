@@ -3,7 +3,6 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Hardware;
 using Android.OS;
 using Android.Provider;
 using Android.Views;
@@ -12,15 +11,11 @@ using AndroidX.Core.App;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Google.Android.Material.Dialog;
-using Google.Android.Material.FloatingActionButton;
-using Google.Android.Material.Snackbar;
-using Java.IO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using WeightApp.Adapters;
 
 /*
@@ -31,8 +26,13 @@ using WeightApp.Adapters;
 namespace WeightApp.Fragments {
   public class WeightEntryFragment : AndroidX.Fragment.App.Fragment {
 
+    //get stored user account info
     ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+
+    //instantiate the weight dao
     WeightDao weightDao = new WeightDao();
+
+    //declare vars
     ListViewTextLeftRightAdapter adapter;
     Weight weight = new Weight();
     ListView listView;
@@ -48,11 +48,12 @@ namespace WeightApp.Fragments {
 
     //creation of menu. Set to not display delete button if not incoming record
     public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
-      if (this.Arguments != null) {
+      if (this.Arguments != null) { //check for existing key from calling class
         if (this.Arguments.GetString("HistoryFragmentKey") != null) {
+          //if exists set menu with save, delete, and back buttons
           inflater.Inflate(Resource.Menu.menu_save_delete_back, menu);
         }
-      } else {
+      } else { //set menu with save and back buttons
         inflater.Inflate(Resource.Menu.menu_save_back, menu);
       }
 
@@ -62,18 +63,21 @@ namespace WeightApp.Fragments {
     //handle the menu click
     public override bool OnOptionsItemSelected(IMenuItem menu) {
       menu.SetChecked(true);
-      switch (menu.ItemId) {
+      switch (menu.ItemId) { //check for menu button click by id
         #region SAVE BUTTON CLICK
-        case Resource.Id.menu_save:
+        case Resource.Id.menu_save: //save the record
 
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
+
           string error = "";
+
+          //check for errors
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
             if (profileItem.TextRightSide == "N/a") {
               error += profileItem.TextLeftSide + " is required.\n";
             }
           }
-          if (error != "") {
+          if (error != "") { //show error if any
             new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert")
                .SetIcon(Resource.Drawable.ic_info)
@@ -86,15 +90,16 @@ namespace WeightApp.Fragments {
           //no errrors detected, get text
           Weight newWeight = new Weight();
 
+          //get image
           ImageButton image = this.View.FindViewById<ImageButton>(Resource.Id.we_camera_icon_click);
-          foreach (ListviewTextLeftRight weightItem in ListviewTextLeftRights) {
+          foreach (ListviewTextLeftRight weightItem in ListviewTextLeftRights) { //store entries in obj fields
             if (weightItem.TextLeftSide == "Weight")
               newWeight.WEIGHT_ENTRY = weightItem.HiddenTextForConversion;
             if (weightItem.TextLeftSide == "Date")
               newWeight.DATE_ENTRY = DateTime.Parse(weightItem.HiddenTextForConversion);
           }
 
-          //check if image exists
+          //check if image exists and break down for BLOB storage
           string imageTag = (string)image.Tag;
           if (imageTag == "CAMERA_IMAGE" || imageTag == "GALLERY_IMAGE") {
             Bitmap bitmap = ((BitmapDrawable)image.Drawable).Bitmap;
@@ -160,21 +165,24 @@ namespace WeightApp.Fragments {
            .Show();
           return true;
         #endregion
-        #region DELETE BUTTON CLICK
-        case Resource.Id.menu_delete:
+        #region DELETE BUTTON CLICK 
+        case Resource.Id.menu_delete: //delete the record
+          //prompt user confirmation of delete
           new MaterialAlertDialogBuilder(Activity)
              .SetTitle("Are you sure you wish to delete?")
              .SetNegativeButton("Cancel", (sender, e) => { })
              .SetPositiveButton("OK", (sender, e) => {
 
+               //check for key
                if (this.Arguments != null) {
-                 if (this.Arguments.GetString("HistoryFragmentKey") != null) {
+                 if (this.Arguments.GetString("HistoryFragmentKey") != null) { //if exists get weight info, then delete by weight
                    int weightId = JsonConvert.DeserializeObject<int>(this.Arguments.GetString("HistoryFragmentKey"));
                    weight = weightDao.GetWeight(weightId);
                    weightDao.DeleteWeight(weight);
                  }
                }
 
+               //show success message and redirect
                new MaterialAlertDialogBuilder(Activity)
               .SetTitle("Record has been deleted")
               .SetPositiveButton("OK", (sender, e) => {
@@ -189,6 +197,7 @@ namespace WeightApp.Fragments {
         #endregion
         #region BACK BUTTON CLICK
         case Resource.Id.menu_back:
+          //redirect to history fragment
           this.FragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new HistoryFragment(), "Fragment").Commit();
           return true;
           #endregion
@@ -201,12 +210,17 @@ namespace WeightApp.Fragments {
     public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View view = inflater.Inflate(Resource.Layout.fragment_weight_entry, container, false);
 
+      //instantiate the profile dao
       ProfileDao profileDao = new ProfileDao();
+
+      //get stored user info
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userId = pref.GetString("UserId", String.Empty);
+      
+      //get user profile info and store in obj
       Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
 
-      if (profile == null) {
+      if (profile == null) {//check profile exists, if not block page access, show modal and redirect
         new MaterialAlertDialogBuilder(Activity)
           .SetTitle("Weight App Alert")
           .SetIcon(Resource.Drawable.ic_info)
@@ -295,6 +309,7 @@ namespace WeightApp.Fragments {
           }
         };
 
+        //set button click events
         btnImage.Click += (s, e) => {
           View photoView = inflater.Inflate(Resource.Layout.dialog_photo, container, false);
           Button btnTakePhoto = photoView.FindViewById<Button>(Resource.Id.dp_btn_take_photo);
@@ -320,7 +335,7 @@ namespace WeightApp.Fragments {
           }
 
 
-
+          //handle camera icon click and display 
           btnTakePhoto.Click += (s, e) => {
             imagePickerDialog.Dismiss();
             btnImage.Tag = "CAMERA_IMAGE";
@@ -354,21 +369,24 @@ namespace WeightApp.Fragments {
 
     private void LoadData() {
       if (this.Arguments != null) {
-        if (this.Arguments.GetString("HistoryFragmentKey") != null) {
+        if (this.Arguments.GetString("HistoryFragmentKey") != null) { //check for history key
           int weightId = JsonConvert.DeserializeObject<int>(this.Arguments.GetString("HistoryFragmentKey"));
-          weight = weightDao.GetWeight(weightId);
+          weight = weightDao.GetWeight(weightId); //get weight info if id exists
         }
       }
 
       List<ListviewTextLeftRight> weightEntryItems;
 
-      if (weight == null || weight.PROFILE_ID == 0) {
+      if (weight == null || weight.PROFILE_ID == 0) { //set the weight and date weight contains info
         weightEntryItems = new List<ListviewTextLeftRight>() {
           new ListviewTextLeftRight{ Id = 1, TextLeftSide = "Weight", TextRightSide = "N/a" },
           new ListviewTextLeftRight{ Id = 2, TextLeftSide = "Date", TextRightSide = "N/a" }
         };
       } else {
+        //split the weight whole and decimal numbers1
         string[] weightSplit = weight.WEIGHT_ENTRY.ToString().Split(".");
+        
+        //create new list of weight items to be passed to adapter
         weightEntryItems = new List<ListviewTextLeftRight>() {
           new ListviewTextLeftRight{
             Id = 1, TextLeftSide = "Weight",
@@ -380,6 +398,7 @@ namespace WeightApp.Fragments {
             HiddenTextForConversion = weight.DATE_ENTRY.ToShortDateString() }
         };
 
+        //decode the image to be displayed
         if (weight.IMAGE != null) {
           Bitmap imageBitmap = BitmapFactory.DecodeByteArray(weight.IMAGE, 0, weight.IMAGE.Length);
           btnImage.SetImageBitmap(imageBitmap);
@@ -387,6 +406,7 @@ namespace WeightApp.Fragments {
         }
       }
 
+      //call adapter
       adapter = new ListViewTextLeftRightAdapter(this, weightEntryItems);
 
       // set new items

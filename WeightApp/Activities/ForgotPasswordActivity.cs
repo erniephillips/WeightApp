@@ -21,23 +21,30 @@ namespace WeightApp.Activities {
   public class ForgotPasswordActivity : Activity {
     protected override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
+
+      //find the xml view to set
       SetContentView(Resource.Layout.activity_forgot_password);
 
+      //XML elements to be stored in variables
       ImageButton btnBack = FindViewById<ImageButton>(Resource.Id.btn_fp_back);
       Button btnForgotPassword = FindViewById<Button>(Resource.Id.btn_fp_check_username);
 
+      //set the button and textview click events
       btnBack.Click += delegate {
+        //navigate to login activity
         StartActivity(typeof(LoginActivity));
       };
 
-      btnForgotPassword.Click += (s, e) => { 
-        UserDao userDao = new UserDao();
-
+      btnForgotPassword.Click += (s, e) => {
+        //XML elements to be stored in variables
         TextInputLayout txtIlUsername = FindViewById<TextInputLayout>(Resource.Id.et_fp_username);
         TextInputEditText txtUsername = FindViewById<TextInputEditText>(Resource.Id.fp_tiet_username);
 
         #region VALIDATION
+        //set error to empty on button click
         txtIlUsername.Error = "";
+
+        //check username textbox for empty or null
         if (txtUsername.Text == "") {
           if (txtUsername.Text == "") {
             txtIlUsername.Error = "Username is required";
@@ -45,9 +52,14 @@ namespace WeightApp.Activities {
           }
           return;
         }
+        
+        //instantiate the user dao
+        UserDao userDao = new UserDao();
 
+        //check if passed username exists in db
         User user = userDao.GetUserByUsername(txtUsername.Text);
         
+        //display user does not exist error to user if none found in db
         if (user == null) {
           txtIlUsername.Error = "Username not found";
           txtIlUsername.SetErrorTextAppearance(Color.Red.ToArgb());

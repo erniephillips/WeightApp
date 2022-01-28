@@ -10,25 +10,29 @@ using System.Collections.Generic;
 * Function: Adapter is passed a list of a custom object for displaying left & right side text that user can click which loads a modal
 */
 
-
 namespace WeightApp.Adapters {
   internal class ListViewTextLeftRightAdapter : BaseAdapter {
 
+    //set variables 
     private AndroidX.Fragment.App.Fragment fragment;
     List<ListviewTextLeftRight> items;
     private int selectedId = -1;
 
+    //constructor for calling fragment and list set to variables
     public ListViewTextLeftRightAdapter(AndroidX.Fragment.App.Fragment fragment, List<ListviewTextLeftRight> items) {
       this.fragment = fragment;
       this.items = items;
     }
 
+    //set the list count
     public override int Count => items.Count;
 
+    //get item by position
     public override Java.Lang.Object GetItem(int position) {
       return position;
     }
 
+    //get item ID by position
     public override long GetItemId(int position) {
       return items[position].Id;
     }
@@ -47,6 +51,7 @@ namespace WeightApp.Adapters {
       return items;
     }
 
+    //get the listview and set XML elements to list object values
     public override View GetView(int position, View convertView, ViewGroup parent) {
       var view = convertView ?? fragment.LayoutInflater.Inflate(Resource.Layout.listview_left_right_text, parent, false);
 

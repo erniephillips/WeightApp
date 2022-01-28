@@ -22,7 +22,6 @@ namespace WeightApp.Fragments {
   public class ManageAccountFragment : AndroidX.Fragment.App.Fragment {
     public override void OnCreate(Bundle savedInstanceState) {
       base.OnCreate(savedInstanceState);
-
       // Create your fragment here
     }
 
@@ -30,11 +29,16 @@ namespace WeightApp.Fragments {
       View view = inflater.Inflate(Resource.Layout.fragment_manage_account, container, false);
 
       //get current user's information
-      UserDao userDao = new UserDao();
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userId = pref.GetString("UserId", String.Empty);
+
+      //instantiate the user dao
+      UserDao userDao = new UserDao();
+
+      //get user from db and store in obj
       User user = userDao.GetUser(Convert.ToInt32(userId));
 
+      //set variables from XML elements
       TextView txtUsername = view.FindViewById<TextView>(Resource.Id.tv_ma_user_username);
       TextView txtName = view.FindViewById<TextView>(Resource.Id.tv_ma_user_name);
       TextView txtEmail = view.FindViewById<TextView>(Resource.Id.tv_ma_user_email);
@@ -71,6 +75,7 @@ namespace WeightApp.Fragments {
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
       dropdownItems.Adapter = adapter;
 
+      //set dropdown text
       dropdownItems.SetText(user.SECURITY_QUESTION, false);
       //for (int i = 0; i < dropdownItems.LineCount; i++) {
       //  if (dropdownItems.item(i).ToString().Equals(user.SECURITY_QUESTION)) {
@@ -83,10 +88,11 @@ namespace WeightApp.Fragments {
       //Update Info btn click
       btnUpdateInfo.Click += (s, e) => {
         #region VALIDATION
+        //set errors to empty on button click
         txtIlName.Error = "";
         txtIlEmail.Error = "";
 
-        //check for null
+        //check name and email for null or empty and set errors
         if (String.IsNullOrEmpty(etName.Text) || String.IsNullOrEmpty(etEmail.Text)) {
           if (String.IsNullOrEmpty(etName.Text)) {
             txtIlName.Error = "Name is required";
@@ -99,7 +105,7 @@ namespace WeightApp.Fragments {
           return;
         }
 
-        //check email
+        //check validation on email
         string pattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(etEmail.Text)) {
@@ -114,15 +120,17 @@ namespace WeightApp.Fragments {
         user.NAME = etName.Text;
         user.EMAIL = etEmail.Text;
 
-        try {
+        try { //try to update the user name and email
           userDao.UpdateUser(user);
         } catch (Exception ex) {
           new MaterialAlertDialogBuilder(Activity)
             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
             .SetPositiveButton("OK", (sender, e) => { })
             .Show();
+          return;
         }
 
+        //show success message
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
         .SetIcon(Resource.Drawable.ic_info)
@@ -135,10 +143,12 @@ namespace WeightApp.Fragments {
       //Password btn click
       btnUpdatePassword.Click += (s, e) => {
         #region VALIDATION
+        //set errors to empty on button click
         txtIlCurrentPassword.Error = "";
         txtIlNewPassword.Error = "";
         txtIlConfirmPassword.Error = "";
 
+        //check current password, new pass, and conf pass for null or empty and set error
         if (String.IsNullOrEmpty(etCurrentPassword.Text) || String.IsNullOrEmpty(etNewPassword.Text) || String.IsNullOrEmpty(etConfirmPassword.Text)) {
           if (String.IsNullOrEmpty(etCurrentPassword.Text)) {
             txtIlCurrentPassword.Error = "Current password is required";
@@ -162,6 +172,7 @@ namespace WeightApp.Fragments {
           return;
         }
 
+        //check that passwords match
         if (etNewPassword.Text != etConfirmPassword.Text) {
           txtIlNewPassword.Error = "Passwords do not match";
           txtIlNewPassword.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -175,16 +186,17 @@ namespace WeightApp.Fragments {
         //update the user's password
         user.PASSWORD = etNewPassword.Text;
 
-        try {
+        try { //try to update the user password
           userDao.UpdateUser(user);
-        } catch (Exception ex) {
+        } catch (Exception ex) {//display error to user
           new MaterialAlertDialogBuilder(Activity)
             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
             .SetPositiveButton("OK", (sender, e) => { })
             .Show();
+          return;
         }
 
-        //confirmation
+        //display successful message to user
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
         .SetIcon(Resource.Drawable.ic_info)
@@ -196,14 +208,15 @@ namespace WeightApp.Fragments {
           edit.Commit();
           Activity.StartActivity(typeof(LoginActivity));
         }).Show();
-
       };
 
       //Security info btn click
       btnUpdateSecurityInfo.Click += (s, e) => {
         #region VALIDATION
+        //set error to empty on button click
         txtIlSecurityAnswer.Error = "";
 
+        //check that answer is not equal to null
         if (String.IsNullOrEmpty(etSecurityAnswer.Text)) {
           txtIlSecurityAnswer.Error = "Security answer is required";
           txtIlSecurityAnswer.SetErrorTextAppearance(Color.Red.ToArgb());
@@ -211,21 +224,24 @@ namespace WeightApp.Fragments {
         }
         #endregion
 
+        //get selected dropdown in case user chose different security question
         string selectedSpinnerValue = dropdownItems.Text;
 
+        //update user sec q & a
         user.SECURITY_QUESTION = selectedSpinnerValue;
         user.SECURITY_ANSWER = etSecurityAnswer.Text;
 
-        try {
+        try { //update the user
           userDao.UpdateUser(user);
-        } catch (Exception ex) {
+        } catch (Exception ex) { //display error to user
           new MaterialAlertDialogBuilder(Activity)
             .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
             .SetPositiveButton("OK", (sender, e) => { })
             .Show();
+          return;
         }
 
-        //confirmation
+        //show success message to user
         new MaterialAlertDialogBuilder(Activity)
         .SetTitle("Weight App Alert")
         .SetIcon(Resource.Drawable.ic_info)

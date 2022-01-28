@@ -37,9 +37,9 @@ namespace WeightApp.Fragments {
       //NavigationView navigationView = view.FindViewById<NavigationView>(Resource.Menu.menu_main);
       //navigationView.Menu.FindItem(Resource.Id.menu_save).SetEnabled(false);
 
+      //set the variables
       ScrollView scrollView = view.FindViewById<ScrollView>(Resource.Id.contact_scrollview);
       Button btnSubmit = view.FindViewById<Button>(Resource.Id.btn_contact_submit);
-
       TextInputLayout txtIlName = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_your_name);
       TextInputLayout txtIlComments = view.FindViewById<TextInputLayout>(Resource.Id.et_contact_comments);
       TextInputLayout txtIlDropdown = view.FindViewById<TextInputLayout>(Resource.Id.spinner_contact_reason);
@@ -47,20 +47,24 @@ namespace WeightApp.Fragments {
       TextInputEditText txtComments = view.FindViewById<TextInputEditText>(Resource.Id.contact_tiet_comments);
 
 
-      //populate the drowdown
+      //populate the contact me drowdown
       AutoCompleteTextView dropdownItems = view.FindViewById<AutoCompleteTextView>(Resource.Id.contact_populate_dropdown);
       ArrayAdapter adapter = ArrayAdapter.CreateFromResource(Activity, Resource.Array.contact_page_dropdown_array, Android.Resource.Layout.SimpleSpinnerItem);
       adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
       dropdownItems.Adapter = adapter;
 
+      //set button click event
       btnSubmit.Click += (s, e) => {
         #region VALIDATION
+        //set errors to empty on button click
         txtIlName.Error = "";
         txtIlComments.Error = "";
         txtIlDropdown.Error = "";
 
+        //check dropdown is not set to the default value
         bool isDropdownDefaultValue = dropdownItems.Text == "Select an item...";
 
+        //check if the user's name, comments, and dropdown are not empty, if so set the errors
         if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtComments.Text) || isDropdownDefaultValue) {
           if (string.IsNullOrEmpty(txtName.Text)) {
             txtIlName.Error = "Name is required";
@@ -83,7 +87,7 @@ namespace WeightApp.Fragments {
         List<string> emailRecipients = new List<string>() {
           new string("erniephillips.android@gmail.com")
         };
-        try {
+        try { //try opening the default App email client and passing the message object
           var message = new EmailMessage {
             Subject = dropdownItems.Text.ToString() + " - " + txtName.Text,
             Body = txtComments.Text,

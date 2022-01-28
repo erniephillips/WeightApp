@@ -22,12 +22,9 @@ namespace AndroidApp {
   [Activity(Theme = "@style/AppTheme.Splash", MainLauncher = true, NoHistory = true)]
   public class SplashActivity : AppCompatActivity {
 
-    static readonly string TAG = "X:" + typeof(SplashActivity).Name;
-
     //initialize the activity
     public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
       base.OnCreate(savedInstanceState, persistentState);
-      Log.Debug(TAG, "SplashActivity.OnCreate");
     }
 
     // Launches the startup task
@@ -39,17 +36,9 @@ namespace AndroidApp {
 
     // Simulates background work that happens behind the splash screen
     async void SimulateStartup() {
-      Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
+      
       await Task.Delay(1000); // Simulate a bit of startup work.
-      Log.Debug(TAG, "Startup work is finished - checking login.");
-
-      //UserDao ud = new UserDao();
-      //ud.DeleteAll();
-      //var a = ud.GetUsers();
-      ProfileDao profileDao = new ProfileDao();
-      //profileDao.DeleteAll();
-      var a = profileDao.GetProfiles();
-
+      
       //check users last login date, if within two weeks and logged in flag exists
       //https://www.c-sharpcorner.com/article/shared-preferences-in-xamarin-android/
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
@@ -64,11 +53,14 @@ namespace AndroidApp {
         //No saved credentials, take user to login screen  
         StartActivity(typeof(UserAccessActivity));
       } else {
+        //instantiate user dao
         UserDao userDao = new UserDao();
+
+        //get last login
         DateTime parsedDate = DateTime.Parse(lastLogin);
-        bool loginLessThanTwoWeeks = (parsedDate > DateTime.Now.AddDays(-14));
-        bool userCanLogin = userDao.VerifyLogin(userName, password);
-        bool isAccountLocked = userDao.GetUserByUsername(userName).IS_LOCKED;
+        bool loginLessThanTwoWeeks = (parsedDate > DateTime.Now.AddDays(-14)); //check last login against today's date
+        bool userCanLogin = userDao.VerifyLogin(userName, password); //verify username and password exist
+        bool isAccountLocked = userDao.GetUserByUsername(userName).IS_LOCKED; //check if the user's account is locked (NOT CURRENTY SET UP)
 
         if (userCanLogin && loginLessThanTwoWeeks && !isAccountLocked) { //verify correct password and last login not older than 2 weeks and account not locked
           StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
