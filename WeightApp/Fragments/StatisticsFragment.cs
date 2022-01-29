@@ -63,6 +63,8 @@ namespace WeightApp.Fragments {
 
         //set the vars from XML
         TextView txtCurrentWeight = view.FindViewById<TextView>(Resource.Id.txt_current_weight);
+        TextView txtStartWeight = view.FindViewById<TextView>(Resource.Id.txt_start_weight);
+        TextView txtGoalWeight = view.FindViewById<TextView>(Resource.Id.txt_goal_weight);
         TextView txtBmi = view.FindViewById<TextView>(Resource.Id.txt_bmi);
         TextView txtBmiStatus = view.FindViewById<TextView>(Resource.Id.txt_bmi_status);
         TextView txtBmiMessage = view.FindViewById<TextView>(Resource.Id.txt_bmi_message);
@@ -107,11 +109,15 @@ namespace WeightApp.Fragments {
           }
 
           //set the cards textview on the front end
-          if (profile.MEASUREMENT_SYSTEM == "Metric")
-            txtCurrentWeight.Text = currentWeight + " kg";
-          else
-            txtCurrentWeight.Text = currentWeight + " lbs";
-
+          if (profile.MEASUREMENT_SYSTEM == "Metric") {
+            txtCurrentWeight.Text = "Current: " + currentWeight + " kg";
+            txtStartWeight.Text = "Start: " + profile.START_WEIGHT + " kg";
+            txtGoalWeight.Text = "Goal: " + profile.TARGET_WEIGHT + " kg";
+          } else {
+            txtCurrentWeight.Text = "Current: " + currentWeight + " lbs";
+            txtStartWeight.Text = "Start: " + profile.START_WEIGHT + " lbs";
+            txtGoalWeight.Text = "Goal: " + profile.TARGET_WEIGHT + " lbs";
+          }
           txtBmi.Text = "Current #: " + bmiNumber.ToString();
           txtBmiStatus.Text = calculations.GetBmiStatus(bmiNumber);
           txtBmiMessage.Text = calculations.GetBmiMessage(bmiNumber);

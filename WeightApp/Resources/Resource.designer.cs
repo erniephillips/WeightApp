@@ -7857,118 +7857,124 @@ namespace WeightApp
 			public const int txt_goal_date = 2131296884;
 			
 			// aapt resource value: 0x7F090275
-			public const int txt_security_question = 2131296885;
+			public const int txt_goal_weight = 2131296885;
 			
 			// aapt resource value: 0x7F090276
-			public const int txt_username = 2131296886;
+			public const int txt_security_question = 2131296886;
 			
 			// aapt resource value: 0x7F090277
-			public const int txt_visit_me = 2131296887;
+			public const int txt_start_weight = 2131296887;
 			
 			// aapt resource value: 0x7F090278
-			public const int txt_weight_loss_to_date = 2131296888;
+			public const int txt_username = 2131296888;
 			
 			// aapt resource value: 0x7F090279
-			public const int @unchecked = 2131296889;
+			public const int txt_visit_me = 2131296889;
 			
 			// aapt resource value: 0x7F09027A
-			public const int uniform = 2131296890;
+			public const int txt_weight_loss_to_date = 2131296890;
 			
 			// aapt resource value: 0x7F09027B
-			public const int unlabeled = 2131296891;
+			public const int @unchecked = 2131296891;
 			
 			// aapt resource value: 0x7F09027C
-			public const int up = 2131296892;
+			public const int uniform = 2131296892;
 			
 			// aapt resource value: 0x7F09027D
-			public const int useLogo = 2131296893;
+			public const int unlabeled = 2131296893;
 			
 			// aapt resource value: 0x7F09027E
-			public const int user_listView = 2131296894;
+			public const int up = 2131296894;
 			
 			// aapt resource value: 0x7F09027F
-			public const int veggies = 2131296895;
+			public const int useLogo = 2131296895;
 			
 			// aapt resource value: 0x7F090280
-			public const int veiw_weight_entry_date = 2131296896;
+			public const int user_listView = 2131296896;
 			
 			// aapt resource value: 0x7F090281
-			public const int veiw_weight_entry_image = 2131296897;
+			public const int veggies = 2131296897;
 			
 			// aapt resource value: 0x7F090282
-			public const int veiw_weight_entry_ll = 2131296898;
+			public const int veiw_weight_entry_date = 2131296898;
 			
 			// aapt resource value: 0x7F090283
-			public const int veiw_weight_entry_weight = 2131296899;
+			public const int veiw_weight_entry_image = 2131296899;
 			
 			// aapt resource value: 0x7F090284
-			public const int vertical_only = 2131296900;
+			public const int veiw_weight_entry_ll = 2131296900;
 			
 			// aapt resource value: 0x7F090285
-			public const int view_offset_helper = 2131296901;
+			public const int veiw_weight_entry_weight = 2131296901;
 			
 			// aapt resource value: 0x7F090286
-			public const int view_transition = 2131296902;
+			public const int vertical_only = 2131296902;
 			
 			// aapt resource value: 0x7F090287
-			public const int view_tree_lifecycle_owner = 2131296903;
+			public const int view_offset_helper = 2131296903;
 			
 			// aapt resource value: 0x7F090288
-			public const int view_tree_saved_state_registry_owner = 2131296904;
+			public const int view_transition = 2131296904;
 			
 			// aapt resource value: 0x7F090289
-			public const int view_tree_view_model_store_owner = 2131296905;
+			public const int view_tree_lifecycle_owner = 2131296905;
 			
 			// aapt resource value: 0x7F09028A
-			public const int view_weight_entry_header = 2131296906;
+			public const int view_tree_saved_state_registry_owner = 2131296906;
 			
 			// aapt resource value: 0x7F09028B
-			public const int visible = 2131296907;
+			public const int view_tree_view_model_store_owner = 2131296907;
 			
 			// aapt resource value: 0x7F09028C
-			public const int visible_removing_fragment_view_tag = 2131296908;
-			
-			// aapt resource value: 0x7F09028F
-			public const int website_link = 2131296911;
-			
-			// aapt resource value: 0x7F090290
-			public const int weight_entry_image_text = 2131296912;
-			
-			// aapt resource value: 0x7F090291
-			public const int weight_entry_listView = 2131296913;
-			
-			// aapt resource value: 0x7F090292
-			public const int west = 2131296914;
+			public const int view_weight_entry_header = 2131296908;
 			
 			// aapt resource value: 0x7F09028D
-			public const int we_camera_icon_click = 2131296909;
+			public const int visible = 2131296909;
 			
 			// aapt resource value: 0x7F09028E
-			public const int we_divider_one = 2131296910;
+			public const int visible_removing_fragment_view_tag = 2131296910;
 			
-			// aapt resource value: 0x7F090294
-			public const int withinBounds = 2131296916;
+			// aapt resource value: 0x7F090291
+			public const int website_link = 2131296913;
+			
+			// aapt resource value: 0x7F090292
+			public const int weight_entry_image_text = 2131296914;
 			
 			// aapt resource value: 0x7F090293
-			public const int withText = 2131296915;
+			public const int weight_entry_listView = 2131296915;
 			
-			// aapt resource value: 0x7F090295
-			public const int wrap = 2131296917;
+			// aapt resource value: 0x7F090294
+			public const int west = 2131296916;
+			
+			// aapt resource value: 0x7F09028F
+			public const int we_camera_icon_click = 2131296911;
+			
+			// aapt resource value: 0x7F090290
+			public const int we_divider_one = 2131296912;
 			
 			// aapt resource value: 0x7F090296
-			public const int wrap_content = 2131296918;
+			public const int withinBounds = 2131296918;
+			
+			// aapt resource value: 0x7F090295
+			public const int withText = 2131296917;
 			
 			// aapt resource value: 0x7F090297
-			public const int wrap_content_constrained = 2131296919;
+			public const int wrap = 2131296919;
 			
 			// aapt resource value: 0x7F090298
-			public const int x_left = 2131296920;
+			public const int wrap_content = 2131296920;
 			
 			// aapt resource value: 0x7F090299
-			public const int x_right = 2131296921;
+			public const int wrap_content_constrained = 2131296921;
 			
 			// aapt resource value: 0x7F09029A
-			public const int zero_corner_chip = 2131296922;
+			public const int x_left = 2131296922;
+			
+			// aapt resource value: 0x7F09029B
+			public const int x_right = 2131296923;
+			
+			// aapt resource value: 0x7F09029C
+			public const int zero_corner_chip = 2131296924;
 			
 			static Id()
 			{
