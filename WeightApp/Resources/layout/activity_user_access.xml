@@ -21,8 +21,8 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    android:alpha="0.7"
-    app:srcCompat="@drawable/user_access_screen_image" />
+    android:alpha="0.2"
+    app:srcCompat="@drawable/user_access_screen_1" />
   <!--android:scaleType="fitXY"
         android:gravity="center"-->
   <!--Application Logo-->
