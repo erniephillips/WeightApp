@@ -29,8 +29,11 @@ namespace DataAccessLayer.Models {
     [NotNull]
     public string HEIGHT { get; set; }
 
-    [MaxLength(15), NotNull]
+    [NotNull]
     public string GENDER { get; set; }
+
+    [NotNull]
+    public string MEASUREMENT_SYSTEM { get; set; }
 
     [NotNull]
     public string TARGET_WEIGHT { get; set; }

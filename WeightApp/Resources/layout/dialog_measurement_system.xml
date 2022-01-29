@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<android.support.percent.PercentRelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="start">
+
+  <RadioGroup
+    android:id="@+id/radio_measurement_system_group"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_marginTopPercent="3%"
+    app:layout_marginLeftPercent="5%"
+    android:checkedButton="@+id/radio_button_imperial"
+    android:orientation="vertical">
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+      android:id="@+id/radio_button_imperial"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Imperial (feet/inches)" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+      android:id="@+id/radio_button_metric"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Metric" />
+
+  </RadioGroup>
+</android.support.percent.PercentRelativeLayout>

@@ -1,10 +1,13 @@
-﻿using Android.Graphics;
+﻿using Android.App;
+using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using DataAccessLayer.Dao;
 using DataAccessLayer.Models;
 using Newtonsoft.Json;
+using System;
 
 /*
 * Ernie Phillips III : 01/27/2022
@@ -20,6 +23,8 @@ namespace WeightApp.Fragments {
 
     //declare new weight obj
     Weight weight = new Weight();
+
+    Profile profile;
 
     //creation of menu. Set to not display delete button if not incoming record
     public override void OnCreateOptionsMenu(Android.Views.IMenu menu, MenuInflater inflater) {
@@ -76,10 +81,23 @@ namespace WeightApp.Fragments {
         TextView txtWeight = view.FindViewById<TextView>(Resource.Id.veiw_weight_entry_weight);
         TextView txtDate = view.FindViewById<TextView>(Resource.Id.veiw_weight_entry_date);
 
-        //split weight whole num and decimal
-        string[] weightSplit = weight.WEIGHT_ENTRY.ToString().Split(".");
-        txtWeight.Text = "Weight: " + weightSplit[0] + " lbs " + weightSplit[1] + " oz";
-        txtDate.Text = "Date: " + weight.DATE_ENTRY.ToShortDateString();
+        ProfileDao profileDao = new ProfileDao();
+        ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+        string userId = pref.GetString("UserId", String.Empty);
+        profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+
+        if (profile != null) {
+          if(profile.MEASUREMENT_SYSTEM == "Metric") {
+            txtWeight.Text = "Weight: " + weight.WEIGHT_ENTRY + " kg";
+          } else {
+            //split weight whole num and decimal
+            string[] weightSplit = weight.WEIGHT_ENTRY.ToString().Split(".");
+            txtWeight.Text = "Weight: " + weightSplit[0] + " lbs " + weightSplit[1] + " oz";
+          }
+          txtDate.Text = "Date: " + weight.DATE_ENTRY.ToShortDateString();
+        }
+
+       
 
         if (weight.IMAGE != null) { //show BLOB if one exists in db
           ImageView image = view.FindViewById<ImageView>(Resource.Id.veiw_weight_entry_image);

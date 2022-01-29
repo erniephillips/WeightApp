@@ -62,6 +62,10 @@ namespace DataAccessLayer.Dao {
       _SQLiteConnection.Update(weight);
     }
 
+    public void BulkUpdateWeights(List<Weight> weights) {
+      _SQLiteConnection.UpdateAll(weights);
+    }
+
     //DELETE
     public void DeleteWeight(Weight weight) {
       _SQLiteConnection.Delete(weight);

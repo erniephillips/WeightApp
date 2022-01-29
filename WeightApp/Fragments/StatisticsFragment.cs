@@ -40,7 +40,7 @@ namespace WeightApp.Fragments {
       //get stored user account info
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
       string userId = pref.GetString("UserId", String.Empty);
-      
+
       //get the user's profile info
       profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
 
@@ -54,10 +54,10 @@ namespace WeightApp.Fragments {
           })
           .SetCancelable(false)
           .Show();
-      } else { 
+      } else {
         //get list of weights by ascending order
         weights = weightDao.GetWeightsByProfileIdOrderByDateAsc(profile.PROFILE_ID);
-        
+
         //get the most recent entry
         Weight mostRecentEntry = weightDao.GetWeightsByProfileIdMostRecentDate(profile.PROFILE_ID);
 
@@ -77,27 +77,41 @@ namespace WeightApp.Fragments {
           string currentWeight;
           double bmiNumber;
           if (mostRecentEntry != null) { //grab user's most recent weight entry
-            bmiNumber = calculations.GetBmi(mostRecentEntry.WEIGHT_ENTRY, profile.HEIGHT); //set the BMI
+            bmiNumber = calculations.GetBmi(mostRecentEntry.WEIGHT_ENTRY, profile.HEIGHT, profile.MEASUREMENT_SYSTEM); //set the BMI
             currentWeight = mostRecentEntry.WEIGHT_ENTRY; //set the current weight
           } else { //no entries, use profile weight
-            bmiNumber = calculations.GetBmi(profile.START_WEIGHT, profile.HEIGHT); //set the BMI
+            bmiNumber = calculations.GetBmi(profile.START_WEIGHT, profile.HEIGHT, profile.MEASUREMENT_SYSTEM); //set the BMI
             currentWeight = profile.START_WEIGHT; //set the weight
           }
 
           if (weights.Count > 1) { //list of weights to work with
-            txtLossToDate.Text = calculations.GetWeightLossToDate(mostRecentEntry.WEIGHT_ENTRY, profile.START_WEIGHT);
-            txtAverageLoss.Text = calculations.GetAverageWeeklyWeightLoss(weights, profile.START_WEIGHT).ToString();
+            txtLossToDate.Text = calculations.GetWeightLossToDate(mostRecentEntry.WEIGHT_ENTRY, profile.START_WEIGHT, profile.MEASUREMENT_SYSTEM);
+            txtAverageLoss.Text = calculations.GetAverageWeeklyWeightLoss(weights, profile.START_WEIGHT, profile.MEASUREMENT_SYSTEM).ToString();
           } else if (weights.Count == 1) { //1 entry exists
-            string w = (Convert.ToDouble(profile.START_WEIGHT) - Convert.ToDouble(weights[0].WEIGHT_ENTRY)).ToString() + " lbs";
-            txtAverageLoss.Text = w;
-            txtLossToDate.Text = w;
+            string weight = (Convert.ToDouble(profile.START_WEIGHT) - Convert.ToDouble(weights[0].WEIGHT_ENTRY)).ToString();
+            if (profile.MEASUREMENT_SYSTEM == "Metric") {
+              txtAverageLoss.Text = weight + " kg";
+              txtLossToDate.Text = weight + " kg";
+            } else {
+              txtAverageLoss.Text = weight + " lbs";
+              txtLossToDate.Text = weight + " lbs";
+            }
           } else { //no entries found
-            txtAverageLoss.Text = "0";
-            txtLossToDate.Text = "0";
+            if (profile.MEASUREMENT_SYSTEM == "Metric") {
+              txtAverageLoss.Text = "0 kg";
+              txtLossToDate.Text = "0 kg";
+            } else {
+              txtAverageLoss.Text = "0 lbs";
+              txtLossToDate.Text = "0 lbs";
+            }
           }
 
           //set the cards textview on the front end
-          txtCurrentWeight.Text = currentWeight + " lbs";
+          if (profile.MEASUREMENT_SYSTEM == "Metric")
+            txtCurrentWeight.Text = currentWeight + " kg";
+          else
+            txtCurrentWeight.Text = currentWeight + " lbs";
+
           txtBmi.Text = "Current #: " + bmiNumber.ToString();
           txtBmiStatus.Text = calculations.GetBmiStatus(bmiNumber);
           txtBmiMessage.Text = calculations.GetBmiMessage(bmiNumber);
@@ -111,8 +125,8 @@ namespace WeightApp.Fragments {
         List<Entry> entries = new List<Entry>(); //declare new entry
 
         //insert the user's profile start weight
-        weights.Insert(0, new Weight() { WEIGHT_ENTRY = profile.START_WEIGHT, DATE_ENTRY = profile.START_DATE});
-        
+        weights.Insert(0, new Weight() { WEIGHT_ENTRY = profile.START_WEIGHT, DATE_ENTRY = profile.START_DATE });
+
         //loop through list of weights
         foreach (Weight weight in weights) {
           //display red for down trend and blue for up trend of weight entry

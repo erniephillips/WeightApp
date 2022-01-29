@@ -20,19 +20,27 @@ namespace WeightApp.Utilities {
     /// <param name="weight"></param>
     /// <param name="height"></param>
     /// <returns>double</returns>
-    public double GetBmi(string weight, string height) {
-      string[] splitWeight = weight.Split(".");
-      string[] splitHeight = height.Split(".");
+    public double GetBmi(string weight, string height, string system) {
+      if (system == "Metric") {
+        double convertWeight = Convert.ToDouble(weight);
+        double convertHeight = Convert.ToDouble(height);
+        double BMI = (convertWeight / convertHeight / convertHeight) * 10000;
+        double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
 
-      double convertWeight = Convert.ToDouble(splitWeight[0]) + ConvertOuncesToDecimal(splitWeight[1]);
-      double convertHeight = ConvertFeetToInches(height);
-      //double BMI = (convertWeight / (convertHeight * convertHeight)) * 703;
-      double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
-      //double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
+        return roundedBmi;
+      } else {
+        string[] splitWeight = weight.Split(".");
 
-      double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
+        double convertWeight = Convert.ToDouble(splitWeight[0]) + ConvertOuncesToDecimal(splitWeight[1]);
+        double convertHeight = ConvertFeetToInches(height);
+        //double BMI = (convertWeight / (convertHeight * convertHeight)) * 703;
+        double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
+        //double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
 
-      return roundedBmi;
+        double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
+
+        return roundedBmi;
+      }
     }
 
     /// <summary>
@@ -40,66 +48,61 @@ namespace WeightApp.Utilities {
     /// </summary>
     /// <param name="weights"></param>
     /// <returns>string</returns>
-    public string GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight) {
+    public string GetAverageWeeklyWeightLoss(List<Weight> weights, string startWeight, string system) {
       //https://stackoverflow.com/questions/10284133/sum-range-of-ints-in-listint
       //https://stackoverflow.com/questions/16732206/how-to-cast-the-listobject-to-listt
 
-      double sum = 0;
-      double average = 0;
+      if (system == "Metric") {
+        int sum = 0;
+        int average = 0;
 
-      string[] splitStartWeight = startWeight.Split(".");
-      double lastWeight = Convert.ToDouble(splitStartWeight[0]) + ConvertOuncesToDecimal(splitStartWeight[1]);
+        int lastWeight = Convert.ToInt32(startWeight);
 
-      foreach (Weight w in weights) {
-        string[] splitWeightEntry = w.WEIGHT_ENTRY.Split(".");
-        double currentWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
-        sum += (lastWeight - currentWeight);
-        lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
-      }
-      average = sum / (weights.Count); //divide the sum of the difference of numbers by count of weights
-      
-      bool isInt = average == (int)average;
+        foreach (Weight w in weights) {
+          int currentWeight = Convert.ToInt32(w.WEIGHT_ENTRY);
+          sum += (lastWeight - currentWeight);
+          lastWeight = Convert.ToInt32(w.WEIGHT_ENTRY);
+        }
+        average = sum / (weights.Count); //divide the sum of the difference of numbers by count of weights
 
-      if (!isInt) {
-        string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
-        double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
-        if (average < 0) //check if negative avg, if so subtract oz in order to add
-          average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+        if (average > 0) //show user loss or gain
+          return string.Format("Average loss of {0} kg per entry", average);
         else
-          average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
-      } 
+          return string.Format("Average gain of {0} kg per entry", Math.Abs(average));
+      } else { //imperial
+        double sum = 0;
+        double average = 0;
 
+        string[] splitStartWeight = startWeight.Split(".");
+        double lastWeight = Convert.ToDouble(splitStartWeight[0]) + ConvertOuncesToDecimal(splitStartWeight[1]);
 
-      //decimal decValue;
-      //if (decimal.TryParse(average.ToString(), out decValue)) {
-      //  string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
-      //  double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
-      //  if (average < 0) //check if negative avg, if so subtract oz in order to add
-      //    average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
-      //  else
-      //    average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
-      //} 
+        foreach (Weight w in weights) {
+          string[] splitWeightEntry = w.WEIGHT_ENTRY.Split(".");
+          double currentWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+          sum += (lastWeight - currentWeight);
+          lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+        }
+        average = sum / (weights.Count); //divide the sum of the difference of numbers by count of weights
 
-      
-      
-      double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
+        bool isInt = average == (int)average;
 
-      if (rounded > 0) //show user loss or gain
-        return string.Format("Average loss of {0} lbs per entry", rounded);
-      else
-        return string.Format("Average gain of {0} lbs per entry", Math.Abs(rounded));
-      
-      ////possibly causing my end stream error
-      ////List<double> newWeights = weights.Select(s => Convert.ToDouble(s.WEIGHT_ENTRY)).ToList();
+        if (!isInt) {
+          string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
+          double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+          if (average < 0) //check if negative avg, if so subtract oz in order to add
+            average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+          else
+            average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+        }
 
-      //List<double> newWeights = new List<double>();
-      //foreach(Weight w in weights) {
-      //  newWeights.Add(Convert.ToDouble(w.WEIGHT_ENTRY));
-      //}
+        double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
 
-      //double sum = newWeights.Sum(); //get the sum
+        if (rounded > 0) //show user loss or gain
+          return string.Format("Average loss of {0} lbs per entry", rounded);
+        else
+          return string.Format("Average gain of {0} lbs per entry", Math.Abs(rounded));
 
-      //return 0;
+      }
     }
 
     /// <summary>
@@ -107,16 +110,28 @@ namespace WeightApp.Utilities {
     /// </summary>
     /// <param name="weights"></param>
     /// <returns>string</returns>
-    public string GetWeightLossToDate(string recentWeight, string startWeight) {
-      double startWeightCnv = Convert.ToDouble(startWeight);
-      double recentWeightCnv = Convert.ToDouble(recentWeight);
-      if (startWeightCnv == recentWeightCnv)
-        return "You have not lost any weight so far";
-      if (startWeightCnv < recentWeightCnv)
-        return string.Format("You have gained {0} lbs", Math.Round((recentWeightCnv - startWeightCnv), 2, MidpointRounding.AwayFromZero));
-      if (startWeightCnv > recentWeightCnv)
-        return string.Format("You have lost {0} lbs", Math.Round((startWeightCnv - recentWeightCnv), 2, MidpointRounding.AwayFromZero));
-      return "";
+    public string GetWeightLossToDate(string recentWeight, string startWeight, string system) {
+      if (system == "Metric") {
+        double startWeightCnv = Convert.ToDouble(startWeight);
+        double recentWeightCnv = Convert.ToDouble(recentWeight);
+        if (startWeightCnv == recentWeightCnv)
+          return "You have not lost any weight so far";
+        if (startWeightCnv < recentWeightCnv)
+          return string.Format("You have gained {0} kg", (recentWeightCnv - startWeightCnv));
+        if (startWeightCnv > recentWeightCnv)
+          return string.Format("You have lost {0} kg", (startWeightCnv - recentWeightCnv));
+        return "";
+      } else {
+        double startWeightCnv = Convert.ToDouble(startWeight);
+        double recentWeightCnv = Convert.ToDouble(recentWeight);
+        if (startWeightCnv == recentWeightCnv)
+          return "You have not lost any weight so far";
+        if (startWeightCnv < recentWeightCnv)
+          return string.Format("You have gained {0} lbs", Math.Round((recentWeightCnv - startWeightCnv), 2, MidpointRounding.AwayFromZero));
+        if (startWeightCnv > recentWeightCnv)
+          return string.Format("You have lost {0} lbs", Math.Round((startWeightCnv - recentWeightCnv), 2, MidpointRounding.AwayFromZero));
+        return "";
+      }
     }
 
     /// <summary>
@@ -171,34 +186,89 @@ namespace WeightApp.Utilities {
     }
 
     /// <summary>
-    /// May user later. Convernt lbs to Kg
+    /// Convert lbs to Kg
     /// </summary>
     /// <param name="pounds"></param>
     /// <returns>double</returns>
-    private double ConvertPoundsToKg(double pounds) {
+    public ListviewTextLeftRight ConvertPoundsToKg(double pounds) {
+      ListviewTextLeftRight item = new ListviewTextLeftRight();
       double kilograms = pounds * 0.45359237;
-      return kilograms;
+      double roundedKg = Math.Ceiling(kilograms);
+      string[] splitKg = roundedKg.ToString().Split(".");
+
+      item.TextRightSide = splitKg[0] + " kg";
+      item.HiddenTextForConversion = splitKg[0].ToString();
+
+      return item;
     }
 
     /// <summary>
-    /// May user later. Convert imperial height to meters
+    /// Convert lbs to kg
     /// </summary>
-    /// <param name="feet"></param>
-    /// <param name="inches"></param>
-    /// <returns>double</returns>
-    private double ConvertHeightToMeters(double feet, double inches) {
-      double meters = feet * 0.3048 + inches * 0.0254;
-      return meters;
+    /// <param name="kilograms"></param>
+    /// <returns>ListviewTextLeftRight</returns>
+    public ListviewTextLeftRight ConvertKgToPounds(double kilograms) {
+      ListviewTextLeftRight item = new ListviewTextLeftRight();
+      double pounds = kilograms * 2.20462262185;
+      string[] splitPounds = pounds.ToString().Split(".");
+
+      if (splitPounds.Length < 2) {
+        item.TextRightSide = splitPounds[0] + " lbs 0 oz";
+        item.HiddenTextForConversion = splitPounds[0] + ".0";
+      } else {
+        double cvtPounds = Math.Round((Convert.ToDouble("." + splitPounds[1]) * .16), 2, MidpointRounding.AwayFromZero);
+        double finalWeight = Convert.ToDouble(splitPounds[0]) + cvtPounds;
+        string[] splitFinalWeight = finalWeight.ToString().Split(".");
+        if (splitFinalWeight.Length < 2) {
+          item.TextRightSide = splitFinalWeight[0] + " lbs 0 oz";
+          item.HiddenTextForConversion = splitFinalWeight[0] + ".0";
+        } else {
+          item.TextRightSide = splitFinalWeight[0] + " lbs " + splitFinalWeight[1] + " oz";
+          item.HiddenTextForConversion = splitFinalWeight[0] + "." + splitFinalWeight[1];
+        }
+      }
+      return item;
     }
 
     /// <summary>
-    /// May user later. Convert imperial height to cm
+    /// Convert cm to ft/in
+    /// </summary>
+    /// <param name="centimeters"></param>
+    /// <returns>ListviewTextLeftRight</returns>
+    public ListviewTextLeftRight ConvertCmToFtIn(double centimeters) {
+      ListviewTextLeftRight item = new ListviewTextLeftRight();
+      double totalInches = centimeters / 2.54;
+      int feet = Convert.ToInt32((totalInches - totalInches % 12) / 12);
+      var roundedUp = Math.Ceiling(totalInches % 12);
+      int inches = Convert.ToInt32(roundedUp);
+      //int inches = Convert.ToInt32(totalInches % 12);
+
+      item.TextRightSide = feet + " ft " + inches + " in";
+      item.HiddenTextForConversion = feet + "." + inches;
+
+      return item;
+    }
+
+
+    /// <summary>
+    /// Convert imperial height to cm
     /// </summary>
     /// <param name="height"></param>
     /// <returns>double</returns>
-    private double ConvertHeightToCm(double height) {
-      double cenimeters = height * 2.54;
-      return cenimeters;
+    public ListviewTextLeftRight ConvertHeightToCm(string height) {
+      //First, convert 5 feet to inches: 5 feet × 12 inches/foot = 60 inches
+      //Add up our inches: 60 + 2 = 62 inches
+      //Convert inches to cm: 62 inches × 2.54 cm / inch = 157.48 cm
+
+      ListviewTextLeftRight item = new ListviewTextLeftRight();
+      string[] splitHeight = height.Split(".");
+      double inches = (Convert.ToDouble(splitHeight[0]) * 12) + Convert.ToDouble(splitHeight[1]);
+      double cenimeters = inches * 2.54;
+
+      item.TextRightSide = Math.Floor(cenimeters) + " cm";
+      item.HiddenTextForConversion = Math.Ceiling(cenimeters).ToString();
+
+      return item;
     }
 
     /// <summary>
