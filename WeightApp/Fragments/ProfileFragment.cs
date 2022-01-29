@@ -238,6 +238,19 @@ namespace WeightApp.Fragments {
 
             RadioGroup rdgGender = goalGenderView.FindViewById<RadioGroup>(Resource.Id.radio_gender_group);
 
+            //populate the dropdown if profile gender exists
+            if (profile != null) {
+              int count = rdgGender.ChildCount;
+              for (int i = 0; i < count; i++) {
+                View o = rdgGender.GetChildAt(i);
+                if (o is RadioButton) {
+                  RadioButton rdBtn = (RadioButton)o;
+                  if (rdBtn.Text == profile.GENDER)
+                    rdBtn.Checked = true;
+                }
+              }
+            }
+
             new MaterialAlertDialogBuilder(Activity).SetView(goalGenderView)
               .SetTitle("Select your gender")
               .SetPositiveButton("OK", (sender, e) => {

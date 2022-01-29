@@ -9,7 +9,8 @@
 - (FIXED) weight entry page is crashing under emily profile
 - add leave page event with dialog
 - add option for imperial and metric
-- add "prefer not to answer" for profile gender
+- (DONE) add "prefer not to answer" for profile gender
+- (FIXED) fix modal not populating gender checkbox
 - (DONE) change look of user access page
 - (DONE) create calculations for weight on stats page
 - (DONE) remove + icon from weight entry page when entering page through + icon click

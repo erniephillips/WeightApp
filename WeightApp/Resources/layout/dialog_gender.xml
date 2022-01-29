@@ -13,7 +13,7 @@
     app:layout_marginTopPercent="3%"
     app:layout_marginLeftPercent="5%"
     android:checkedButton="@+id/radio_button_female"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <com.google.android.material.radiobutton.MaterialRadioButton
       android:id="@+id/radio_button_female"
@@ -26,6 +26,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Male" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+      android:id="@+id/radio_button_prefer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Prefer not to answer" />
 
   </RadioGroup>
 </android.support.percent.PercentRelativeLayout>
