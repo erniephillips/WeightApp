@@ -25,3 +25,9 @@
 - (DONE) look into nice layout for the statistics page
 - (DONE) create defaults for History and Stats pages when no content is listed
 - (FIXED) fix weight entry date picker
+
+After wife testing
+- trim whitespace on textboxes
+- lock textboxes to one line
+- find a way for spinner to accept input without clicking out of spinner
+- save button on profile is not prominent
