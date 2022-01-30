@@ -103,25 +103,9 @@ namespace WeightApp.Fragments {
               .Show();
             }
           else { //update mode
-            tempProfile.MEASUREMENT_SYSTEM = profile.MEASUREMENT_SYSTEM;
-            tempProfile.START_WEIGHT = profile.START_WEIGHT;
-            tempProfile.HEIGHT = profile.HEIGHT;
-            tempProfile.GENDER = profile.GENDER;
-            tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
-            tempProfile.TARGET_DATE = profile.TARGET_DATE;
-
-            try { //update
-              profileDao.UpdateProfile(tempProfile);
-            } catch (Exception ex) {
-              new MaterialAlertDialogBuilder(Activity)
-              .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
-              .SetPositiveButton("OK", (sender, e) => { })
-              .Show();
-            }
-
-
             //modify all existing weight entries if any
-            if (tempProfile.PROFILE_ID > 0) { //check this is an existing profile
+            //verify that user has changed measurement system
+            if (tempProfile.MEASUREMENT_SYSTEM != profile.MEASUREMENT_SYSTEM) {
               Calculations calculations = new Calculations();
               WeightDao weightDao = new WeightDao();
               List<Weight> entries = weightDao.GetWeightsByProfileIdOrderByDateAsc(tempProfile.PROFILE_ID);
@@ -139,6 +123,23 @@ namespace WeightApp.Fragments {
 
               if (entries.Count != 0)  //update list of weights
                 weightDao.BulkUpdateWeights(entries);
+            }
+
+
+            tempProfile.MEASUREMENT_SYSTEM = profile.MEASUREMENT_SYSTEM;
+            tempProfile.START_WEIGHT = profile.START_WEIGHT;
+            tempProfile.HEIGHT = profile.HEIGHT;
+            tempProfile.GENDER = profile.GENDER;
+            tempProfile.TARGET_WEIGHT = profile.TARGET_WEIGHT;
+            tempProfile.TARGET_DATE = profile.TARGET_DATE;
+
+            try { //update
+              profileDao.UpdateProfile(tempProfile);
+            } catch (Exception ex) {
+              new MaterialAlertDialogBuilder(Activity)
+              .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
+              .SetPositiveButton("OK", (sender, e) => { })
+              .Show();
             }
           }
 
@@ -347,7 +348,7 @@ namespace WeightApp.Fragments {
             List<ListviewTextLeftRight> ListviewTextLeftRightsHeight = adapter.GetItems();
             foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRightsHeight) {
               if (profileItem.TextLeftSide == "System") {
-                
+
                 if (profileItem.TextRightSide == "Metric") {
                   #region METRIC
                   View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
@@ -361,7 +362,7 @@ namespace WeightApp.Fragments {
                   pckSecond.Visibility = ViewStates.Gone;
 
                   TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  txtWeightTextOne.Text = "kg";
+                  txtWeightTextOne.Text = "cm";
 
                   //set the whole weight number
                   string[] weightCmNumbers = Enumerable.Range(1, 250).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs

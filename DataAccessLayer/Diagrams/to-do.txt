@@ -8,12 +8,12 @@
 - (DONE) add check on the statistics page that profile is filled out or display something
 - (FIXED) weight entry page is crashing under emily profile
 - add leave page event with dialog
-- save profile from 5'5 to 5'7 caused current weight to jump to 372 lbs
+- (FIXED) save profile from 5'5 to 5'7 caused current weight to jump to 372 lbs
 - (DONE) add option for imperial and metric
 - (FIXED) fix ft/in to cm & cm to ft/in conversion mismatch
 - (DONE) run bulk update on weight entries if user changes metric/imperial
 - (DONE) add bmi calc for metric
-- add goal & start weight to stats screen
+- (DONE) add goal & start weight to stats screen
 - (FIXED) fix goal weight saying "What's your current weight"
 - (DONE) add "prefer not to answer" for profile gender
 - (FIXED) fix modal not populating gender checkbox
