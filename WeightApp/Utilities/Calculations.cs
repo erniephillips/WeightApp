@@ -397,8 +397,11 @@ namespace WeightApp.Utilities {
     /// <param name="height"></param>
     /// <returns>double</returns>
     private double ConvertFeetToInches(string height) {
-      var inches = Convert.ToDouble(height) * 12;
-      return inches;
+     string[] splitHeight = height.Split(".");
+      double feet = Convert.ToDouble(splitHeight[0]) * 12;
+      double inches = Convert.ToDouble(splitHeight[1]);
+
+      return feet + inches;
     }
   }
 }
