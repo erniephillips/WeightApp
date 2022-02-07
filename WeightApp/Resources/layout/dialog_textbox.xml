@@ -11,7 +11,7 @@
         android:id="@+id/et_textbox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_marginTopPercent="3%"
-        app:layout_widthPercent="70%"
+        app:layout_widthPercent="50%"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -22,14 +22,4 @@
             android:layout_height="wrap_content"
             android:hint="" />
     </com.google.android.material.textfield.TextInputLayout>
-    <TextView
-        android:id="@+id/dialog_textbox_label"
-        android:layout_toRightOf="@+id/et_textbox"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        app:layout_marginTopPercent="3%"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_centerVertical="true"
-        app:layout_marginLeftPercent="2%"/>
 </android.support.percent.PercentRelativeLayout>

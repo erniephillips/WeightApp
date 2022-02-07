@@ -187,9 +187,8 @@ namespace WeightApp.Fragments {
           case 0:
             View profileNameView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
             EditText edtProfileName = profileNameView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
-            TextView txt = profileNameView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
-            txt.Visibility = ViewStates.Gone;
-
+            edtProfileName.Hint = "Name";
+            
             //populate the textbox if profile gender exists
             if (profile != null) {
               //if profile name not null output to textbox  
@@ -297,9 +296,8 @@ namespace WeightApp.Fragments {
                   View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
                   EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
                   editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
+                  editTextWeight.Hint = "kg";
 
-                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
-                  txtWeight.Text = "kg";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
                    .SetTitle("What's your current weight?")
                    .SetNegativeButton("Cancel", (s, e) => { })
@@ -313,9 +311,8 @@ namespace WeightApp.Fragments {
                   View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
                   EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
                   editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
+                  editTextWeight.Hint = "lbs";
 
-                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
-                  txtWeight.Text = "lbs";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
                    .SetTitle("What's your current weight?")
                    .SetNegativeButton("Cancel", (s, e) => { })
@@ -460,9 +457,8 @@ namespace WeightApp.Fragments {
                   View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
                   EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
                   editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
+                  editTextWeight.Hint = "kg";
 
-                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
-                  txtWeight.Text = "kg";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
                    .SetTitle("What's your goal weight?")
                    .SetNegativeButton("Cancel", (s, e) => { })
@@ -476,9 +472,8 @@ namespace WeightApp.Fragments {
                   View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
                   EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
                   editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
+                  editTextWeight.Hint = "lbs";
 
-                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
-                  txtWeight.Text = "lbs";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
                    .SetTitle("What's your goal weight?")
                    .SetNegativeButton("Cancel", (s, e) => { })
