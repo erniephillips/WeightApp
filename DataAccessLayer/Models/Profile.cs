@@ -21,6 +21,9 @@ namespace DataAccessLayer.Models {
     public int USER_ID { get; set; }
 
     [NotNull]
+    public string NAME { get; set; }
+
+    [NotNull]
     public string START_WEIGHT { get; set; }
 
     [NotNull]

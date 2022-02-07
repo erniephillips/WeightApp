@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitXY"
+    android:adjustViewBounds="true"
+    app:layout_marginTopPercent="0%"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:alpha="0.1"
+    app:srcCompat="@drawable/user_access_screen_1" />
+  <!--android:scaleType="fitXY"
+        android:gravity="center"-->
+  <!--Application Logo-->
+  <ImageView
+    android:id="@+id/aua_app_logo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="App Logo"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/new_weight_app_logo_black_transparent"
+    android:layout_gravity="top"
+    app:layout_widthPercent="40%"
+    app:layout_heightPercent="40%"/>
+
+  <!--Header-->
+  <TextView
+    android:id="@+id/tv_select_a_profile"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_below="@+id/aua_app_logo"
+    android:layout_centerHorizontal="true"
+    android:textStyle="bold"
+    android:textSize="32sp"
+    android:text="Select a Profile"/>
+
+  <!--Profile List-->
+  <ListView
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_marginTopPercent="2%"
+    android:layout_below="@+id/tv_select_a_profile"
+    android:id="@+id/select_profile_list_view" />
+
+</android.support.percent.PercentRelativeLayout>

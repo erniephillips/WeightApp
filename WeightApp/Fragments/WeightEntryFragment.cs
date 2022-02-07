@@ -143,10 +143,12 @@ namespace WeightApp.Fragments {
           //create record
           else {
             //everything validated, save weight
-            string userId = pref.GetString("UserId", String.Empty);
+            //string userId = pref.GetString("UserId", String.Empty);
+            string profileId = pref.GetString("ProfileId", String.Empty);
 
             ProfileDao profileDao = new ProfileDao();
-            Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+            //Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+            Profile profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
             newWeight.PROFILE_ID = profile.PROFILE_ID;
 
@@ -216,10 +218,12 @@ namespace WeightApp.Fragments {
 
       //get stored user info
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-      string userId = pref.GetString("UserId", String.Empty);
-      
+      //string userId = pref.GetString("UserId", String.Empty);
+      string profileId = pref.GetString("ProfileId", String.Empty);
+
       //get user profile info and store in obj
-      profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      //profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
       if (profile == null) {//check profile exists, if not block page access, show modal and redirect
         new MaterialAlertDialogBuilder(Activity)

@@ -29,7 +29,8 @@ namespace DataAccessLayer.Dao {
 
     //GET BY ID
     public Profile GetProfile(int id) {
-      return _SQLiteConnection.Get<Profile>(id);
+      //return _SQLiteConnection.Get<Profile>(id);
+      return _SQLiteConnection.Table<Profile>().Where(x => x.PROFILE_ID == id).FirstOrDefault();
     }
 
     //GET BY USER ID

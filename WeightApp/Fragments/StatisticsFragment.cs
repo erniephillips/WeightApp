@@ -39,10 +39,12 @@ namespace WeightApp.Fragments {
 
       //get stored user account info
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-      string userId = pref.GetString("UserId", String.Empty);
+      //string userId = pref.GetString("UserId", String.Empty);
+      string profileId = pref.GetString("ProfileId", String.Empty);
 
       //get the user's profile info
-      profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      //profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
       if (profile == null) { //if null, user needs to fill out profile, show modal that redirects
         new MaterialAlertDialogBuilder(Activity)

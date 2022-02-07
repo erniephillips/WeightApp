@@ -61,8 +61,10 @@ namespace WeightApp {
 
       //get the user's info from shared prefs
       ISharedPreferences prefs = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-      string userName = prefs.GetString("Username", String.Empty);
-      string name = prefs.GetString("Name", String.Empty);
+      //string userName = prefs.GetString("Username", String.Empty);
+      //string name = prefs.GetString("Name", String.Empty);
+      string profileId = prefs.GetString("ProfileId", String.Empty);
+      string profileName = prefs.GetString("ProfileName", String.Empty);
 
       //get the nav view and set a listener on the main activity
       NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
@@ -70,15 +72,15 @@ namespace WeightApp {
       
       //get the textview inside the navigation view and set the text with the username if found
       Android.Widget.TextView txtUsername = navigationView.GetHeaderView(0).FindViewById<Android.Widget.TextView>(Resource.Id.txt_username);
-      txtUsername.Text = String.IsNullOrEmpty(name) ? "Welcome" : "Welcome, " + name;
+      txtUsername.Text = String.IsNullOrEmpty(profileName) ? "Welcome" : "Welcome, " + profileName;
 
 
       //Check if the user account has an associated profile. 
       //If not send them to the welcome screen which will have a welcome message and link to the profile page ELSE send to the My Stats page
-      UserDao userDao = new UserDao();
-      User user = userDao.GetUserByUsername(userName);
+      //UserDao userDao = new UserDao();
+      //User user = userDao.GetUserByUsername(userName);
       ProfileDao profileDao = new ProfileDao();
-      Profile profile = profileDao.GetProfileByUserId(user.USER_ID);
+      Profile profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
       if (profile != null) { //send to the statistics page
         FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
@@ -181,9 +183,9 @@ namespace WeightApp {
       } else if (id == Resource.Id.nav_contact) { //contact fragment
         FindViewById<FloatingActionButton>(Resource.Id.fab).Hide();
         SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ContactFragment(), "Fragment").Commit();
-      } else if (id == Resource.Id.nav_manage_account) { //manage account fragment
-        FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
-        SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
+      //} else if (id == Resource.Id.nav_manage_account) { //manage account fragment
+      //  FindViewById<FloatingActionButton>(Resource.Id.fab).Show();
+      //  SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_layout, new ManageAccountFragment(), "Fragment").Commit();
       } else if (id == Resource.Id.nav_logout) { //logout click
         //clear any login stored creds
         ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
@@ -192,7 +194,7 @@ namespace WeightApp {
         edit.Commit();
 
         //Set main activity to no history to prevent user from going back after logout
-        StartActivity(typeof(UserAccessActivity));
+        StartActivity(typeof(SelectProfileActivity));
       }
 
       //get the drawer and close after navigating to fragment

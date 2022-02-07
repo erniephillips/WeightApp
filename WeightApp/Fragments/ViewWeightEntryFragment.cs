@@ -83,8 +83,10 @@ namespace WeightApp.Fragments {
 
         ProfileDao profileDao = new ProfileDao();
         ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-        string userId = pref.GetString("UserId", String.Empty);
-        profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+        //string userId = pref.GetString("UserId", String.Empty);
+        //profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+        string profileId = pref.GetString("ProfileId", String.Empty);
+        profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
         if (profile != null) {
           if(profile.MEASUREMENT_SYSTEM == "Metric") {

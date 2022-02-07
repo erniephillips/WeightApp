@@ -51,7 +51,7 @@ namespace WeightApp.Fragments {
           string error = "";
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-            if (profileItem.TextRightSide == "N/a") {
+            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "") {
               error += profileItem.TextLeftSide + " is required.\n";
             }
           }
@@ -67,16 +67,19 @@ namespace WeightApp.Fragments {
           #endregion
 
           //everything validated, update profile
-          string userId = pref.GetString("UserId", String.Empty);
+          //string userId = pref.GetString("UserId", String.Empty);
+          string profileId = pref.GetString("ProfileId", String.Empty);
 
           //initialize a new profile object
           Profile profile = new Profile() {
-            USER_ID = Convert.ToInt32(userId),
+            //USER_ID = Convert.ToInt32(userId),
             START_DATE = DateTime.Now
           };
 
           //get each list item rightside textview value and set fields to profile object
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
+            if (profileItem.TextLeftSide == "Name")
+              profile.NAME = profileItem.HiddenTextForConversion;
             if (profileItem.TextLeftSide == "System")
               profile.MEASUREMENT_SYSTEM = profileItem.HiddenTextForConversion;
             if (profileItem.TextLeftSide == "Weight")
@@ -92,10 +95,18 @@ namespace WeightApp.Fragments {
           }
 
           //add to database if doesn't exist otherwise update
-          Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+          //Profile tempProfile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+          Profile tempProfile = profileDao.GetProfile(Convert.ToInt32(profileId));
           if (tempProfile == null)
             try { //add
               profileDao.AddProfile(profile);
+
+              //retreive key/value pairs in userinfo from shared prefs
+              ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+              ISharedPreferencesEditor edit = pref.Edit(); //establish edit mode
+              edit.PutString("ProfileId", profile.PROFILE_ID.ToString());
+              edit.PutString("ProfileName", profile.NAME.ToString());
+              edit.Apply();
             } catch (Exception ex) {
               new MaterialAlertDialogBuilder(Activity)
               .SetTitle("An error has occurred. Please contact the app administrator. Exception: " + ex.Message)
@@ -125,7 +136,7 @@ namespace WeightApp.Fragments {
                 weightDao.BulkUpdateWeights(entries);
             }
 
-
+            tempProfile.NAME = profile.NAME;
             tempProfile.MEASUREMENT_SYSTEM = profile.MEASUREMENT_SYSTEM;
             tempProfile.START_WEIGHT = profile.START_WEIGHT;
             tempProfile.HEIGHT = profile.HEIGHT;
@@ -172,8 +183,30 @@ namespace WeightApp.Fragments {
       listView.ItemClick += (s, eLV) => {
         //setting up a swith for the position selected to pull up a dialog box for user to make a selection depending
         switch (eLV.Position) {
-          #region MEASUREMENT SYSTEM OPTION
+          #region NAME
           case 0:
+            View profileNameView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+            EditText edtProfileName = profileNameView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+
+            //populate the textbox if profile gender exists
+            if (profile != null) {
+              //if profile name not null output to textbox  
+              edtProfileName.Text = profile.NAME;
+            }
+
+            new MaterialAlertDialogBuilder(Activity).SetView(profileNameView)
+               .SetTitle("What's your name?")
+               .SetCancelable(false)
+               .SetNegativeButton("Cancel", (s, e) => { })
+               .SetPositiveButton("OK", (sender, e) => {
+                 adapter.SetSelectedTextValue(eLV.Position, edtProfileName.Text, edtProfileName.Text);
+               })
+               .Show();
+
+            break;
+          #endregion
+          #region MEASUREMENT SYSTEM OPTION
+          case 1:
             View measurementSystemView = inflater.Inflate(Resource.Layout.dialog_measurement_system, container, false);
 
             RadioGroup rdgMeasurementSystem = measurementSystemView.FindViewById<RadioGroup>(Resource.Id.radio_measurement_system_group);
@@ -252,7 +285,7 @@ namespace WeightApp.Fragments {
             break;
           #endregion
           #region WEIGHT OPTION
-          case 1:
+          case 2:
             //verify user has selected a measurement system type first
             List<ListviewTextLeftRight> ListviewTextLeftRightsWeight = adapter.GetItems();
             foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRightsWeight) {
@@ -343,7 +376,7 @@ namespace WeightApp.Fragments {
             break;
           #endregion
           #region HEIGHT OPTION
-          case 2://HEIGHT OPTION
+          case 3://HEIGHT OPTION
             //verify user has selected a measurement system type first
             List<ListviewTextLeftRight> ListviewTextLeftRightsHeight = adapter.GetItems();
             foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRightsHeight) {
@@ -435,7 +468,7 @@ namespace WeightApp.Fragments {
             break;
           #endregion
           #region GENDER OPTION
-          case 3:
+          case 4:
             View goalGenderView = inflater.Inflate(Resource.Layout.dialog_gender, container, false);
 
             RadioGroup rdgGender = goalGenderView.FindViewById<RadioGroup>(Resource.Id.radio_gender_group);
@@ -462,7 +495,7 @@ namespace WeightApp.Fragments {
             break;
           #endregion
           #region GOAL WEIGHT OPTION
-          case 4:
+          case 5:
             //verify user has selected a measurement system type first
             List<ListviewTextLeftRight> ListviewTextLeftRightsGoalWeight = adapter.GetItems();
             foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRightsGoalWeight) {
@@ -553,7 +586,7 @@ namespace WeightApp.Fragments {
             break;
           #endregion
           #region GOAL DATE OPTION
-          case 5:
+          case 6:
             //I can't seem to expose the onpositivebutton click which I need. Will need android calendar
             //MaterialDatePicker datePicker = MaterialDatePicker.Builder.DatePicker()
             //      .SetTitleText("What is your goal date for your goal weight?")
@@ -602,46 +635,53 @@ namespace WeightApp.Fragments {
     }
 
     private void LoadData() {
-      string userId = pref.GetString("UserId", String.Empty);
-      profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      //string userId = pref.GetString("UserId", String.Empty);
+      //profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      string profileId = pref.GetString("ProfileId", String.Empty);
+      profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
       List<ListviewTextLeftRight> profileItems;
 
       if (profile == null) {
         profileItems = new List<ListviewTextLeftRight>() {
-          new ListviewTextLeftRight{ Id = 1, TextLeftSide = "System", TextRightSide = "N/a" },
-          new ListviewTextLeftRight{ Id = 2, TextLeftSide = "Weight", TextRightSide = "N/a" },
-          new ListviewTextLeftRight{ Id = 3, TextLeftSide = "Height", TextRightSide = "N/a" },
-          new ListviewTextLeftRight{ Id = 4, TextLeftSide = "Gender", TextRightSide = "N/a" },
-          new ListviewTextLeftRight{ Id = 5, TextLeftSide = "Goal Weight", TextRightSide = "N/a" },
-          new ListviewTextLeftRight{ Id = 6, TextLeftSide = "Goal Date", TextRightSide = "N/a" }
+          new ListviewTextLeftRight{ Id = 1, TextLeftSide = "Name", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 2, TextLeftSide = "System", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 3, TextLeftSide = "Weight", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 4, TextLeftSide = "Height", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 5, TextLeftSide = "Gender", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 6, TextLeftSide = "Goal Weight", TextRightSide = "N/a" },
+          new ListviewTextLeftRight{ Id = 7, TextLeftSide = "Goal Date", TextRightSide = "N/a" }
         };
       } else {
         if (profile.MEASUREMENT_SYSTEM == "Metric") {
           profileItems = new List<ListviewTextLeftRight>() {
             new ListviewTextLeftRight{
-              Id = 1, TextLeftSide = "System",
+              Id = 1, TextLeftSide = "Name",
+              TextRightSide = profile.NAME,
+              HiddenTextForConversion = profile.NAME.ToString() },
+            new ListviewTextLeftRight{
+              Id = 2, TextLeftSide = "System",
               TextRightSide = profile.MEASUREMENT_SYSTEM,
               HiddenTextForConversion = profile.MEASUREMENT_SYSTEM.ToString() },
             new ListviewTextLeftRight{ 
               //I set strings to always save with a "." so there shouldn't be an error here (unless record doesn't save properly)
-              Id = 2, TextLeftSide = "Weight",
+              Id = 3, TextLeftSide = "Weight",
               TextRightSide = profile.START_WEIGHT + " kg",
               HiddenTextForConversion = profile.START_WEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 3, TextLeftSide = "Height",
+              Id = 4, TextLeftSide = "Height",
               TextRightSide = profile.HEIGHT + " cm",
               HiddenTextForConversion = profile.HEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 4, TextLeftSide = "Gender",
+              Id = 5, TextLeftSide = "Gender",
               TextRightSide = profile.GENDER,
               HiddenTextForConversion = profile.GENDER.ToString() },
             new ListviewTextLeftRight{
-              Id = 5, TextLeftSide = "Goal Weight",
+              Id = 6, TextLeftSide = "Goal Weight",
               TextRightSide = profile.TARGET_WEIGHT + " kg",
               HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 6, TextLeftSide = "Goal Date",
+              Id = 7, TextLeftSide = "Goal Date",
               TextRightSide = profile.TARGET_DATE.ToShortDateString(),
               HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
           };
@@ -651,28 +691,32 @@ namespace WeightApp.Fragments {
           string[] goalWeightSplit = profile.TARGET_WEIGHT.ToString().Split(".");
           profileItems = new List<ListviewTextLeftRight>() {
             new ListviewTextLeftRight{
-              Id = 1, TextLeftSide = "System",
+              Id = 1, TextLeftSide = "Name",
+              TextRightSide = profile.NAME,
+              HiddenTextForConversion = profile.NAME.ToString() },
+            new ListviewTextLeftRight{
+              Id = 2, TextLeftSide = "System",
               TextRightSide = profile.MEASUREMENT_SYSTEM,
               HiddenTextForConversion = profile.MEASUREMENT_SYSTEM.ToString() },
             new ListviewTextLeftRight{ 
               //I set strings to always save with a "." so there shouldn't be an error here (unless record doesn't save properly)
-              Id = 2, TextLeftSide = "Weight",
+              Id = 3, TextLeftSide = "Weight",
               TextRightSide = weightSplit[0] + " lbs " + weightSplit[1] + " oz",
               HiddenTextForConversion = profile.START_WEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 3, TextLeftSide = "Height",
+              Id = 4, TextLeftSide = "Height",
               TextRightSide = heightSplit[0] + " ft " + heightSplit[1] + " in",
               HiddenTextForConversion = profile.HEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 4, TextLeftSide = "Gender",
+              Id = 5, TextLeftSide = "Gender",
               TextRightSide = profile.GENDER,
               HiddenTextForConversion = profile.GENDER.ToString() },
             new ListviewTextLeftRight{
-              Id = 5, TextLeftSide = "Goal Weight",
+              Id = 6, TextLeftSide = "Goal Weight",
               TextRightSide = goalWeightSplit[0] + " lbs " + goalWeightSplit[1] + " oz",
               HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
             new ListviewTextLeftRight{
-              Id = 6, TextLeftSide = "Goal Date",
+              Id = 7, TextLeftSide = "Goal Date",
               TextRightSide = profile.TARGET_DATE.ToShortDateString(),
               HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
           };

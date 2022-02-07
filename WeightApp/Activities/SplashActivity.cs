@@ -38,36 +38,43 @@ namespace AndroidApp {
     async void SimulateStartup() {
       
       await Task.Delay(1000); // Simulate a bit of startup work.
-      
+
+      #region OLD LOGIN LOGIC
       //check users last login date, if within two weeks and logged in flag exists
       //https://www.c-sharpcorner.com/article/shared-preferences-in-xamarin-android/
-      ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+      //ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
 
-      string userId = pref.GetString("UserId", String.Empty);
-      string userName = pref.GetString("Username", String.Empty);
-      string name = pref.GetString("Name", String.Empty);
-      string password = pref.GetString("Password", String.Empty);
-      string lastLogin = pref.GetString("LastLogin", String.Empty);
+      //string userId = pref.GetString("UserId", String.Empty);
+      //string userName = pref.GetString("Username", String.Empty);
+      //string name = pref.GetString("Name", String.Empty);
+      //string password = pref.GetString("Password", String.Empty);
+      //string lastLogin = pref.GetString("LastLogin", String.Empty);
 
-      if (userId == null || userName == String.Empty || name == String.Empty || password == String.Empty || lastLogin == null) {
-        //No saved credentials, take user to login screen  
-        StartActivity(typeof(UserAccessActivity));
-      } else {
-        //instantiate user dao
-        UserDao userDao = new UserDao();
+      
+      //if (userId == null || userName == String.Empty || name == String.Empty || password == String.Empty || lastLogin == null) {
+      //  //No saved credentials, take user to login screen  
+      //  StartActivity(typeof(UserAccessActivity));
+      //} else {
+      //  //instantiate user dao
+      //  UserDao userDao = new UserDao();
 
-        //get last login
-        DateTime parsedDate = DateTime.Parse(lastLogin);
-        bool loginLessThanTwoWeeks = (parsedDate > DateTime.Now.AddDays(-14)); //check last login against today's date
-        bool userCanLogin = userDao.VerifyLogin(userName, password); //verify username and password exist
-        bool isAccountLocked = userDao.GetUserByUsername(userName).IS_LOCKED; //check if the user's account is locked (NOT CURRENTY SET UP)
+      //  //get last login
+      //  DateTime parsedDate = DateTime.Parse(lastLogin);
+      //  bool loginLessThanTwoWeeks = (parsedDate > DateTime.Now.AddDays(-14)); //check last login against today's date
+      //  bool userCanLogin = userDao.VerifyLogin(userName, password); //verify username and password exist
+      //  bool isAccountLocked = userDao.GetUserByUsername(userName).IS_LOCKED; //check if the user's account is locked (NOT CURRENTY SET UP)
 
-        if (userCanLogin && loginLessThanTwoWeeks && !isAccountLocked) { //verify correct password and last login not older than 2 weeks and account not locked
-          StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
-        } else { //user did not authenticate properly, send to UserAccess login page
-          StartActivity(typeof(UserAccessActivity));
-        }
-      }
+
+      //  if (userCanLogin && loginLessThanTwoWeeks && !isAccountLocked) { //verify correct password and last login not older than 2 weeks and account not locked
+      //    StartActivity(typeof(MainActivity)); //send user to main applicaiton logic
+      //  } else { //user did not authenticate properly, send to UserAccess login page
+      //    StartActivity(typeof(UserAccessActivity));
+      //  }
+      //}
+      #endregion
+
+      //SEND USER TO PROFILE PAGE
+      StartActivity(typeof(SelectProfileActivity));
     }
   }
 }

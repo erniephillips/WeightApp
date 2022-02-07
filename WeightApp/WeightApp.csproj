@@ -77,9 +77,11 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\RegisterActivity.cs" />
     <Compile Include="Activities\ResetPasswordActivity.cs" />
+    <Compile Include="Activities\SelectProfileActivity.cs" />
     <Compile Include="Activities\UserAccessActivity.cs" />
     <Compile Include="Adapters\HistoryListViewAdapter.cs" />
     <Compile Include="Adapters\ListViewTextLeftRightAdapter.cs" />
+    <Compile Include="Adapters\ProfileListViewAdapter.cs" />
     <Compile Include="Fragments\ContactFragment.cs" />
     <Compile Include="Fragments\HistoryFragment.cs" />
     <Compile Include="Fragments\MainFragment.cs" />
@@ -343,6 +345,23 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\dialog_measurement_system.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_select_profile.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\listview_select_profile.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\dialog_textbox.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

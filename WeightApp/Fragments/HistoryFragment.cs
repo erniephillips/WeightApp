@@ -62,10 +62,12 @@ namespace WeightApp.Fragments {
 
       //get stored user info
       ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-      string userId = pref.GetString("UserId", String.Empty);
+      //string userId = pref.GetString("UserId", String.Empty);
+      string profileId = pref.GetString("ProfileId", String.Empty);
 
       //get user's profile info by account user id
-      Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      //Profile profile = profileDao.GetProfileByUserId(Convert.ToInt32(userId));
+      Profile profile = profileDao.GetProfile(Convert.ToInt32(profileId));
 
       //check if profile is null and prevent user from interacting with page by showing modal that redirects
       if (profile == null) {
