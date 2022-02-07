@@ -25,7 +25,7 @@ namespace WeightApp.Utilities {
         double convertWeight = Convert.ToDouble(weight);
         double convertHeight = Convert.ToDouble(height);
         double BMI = (convertWeight / convertHeight / convertHeight) * 10000;
-        double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
+        double roundedBmi = Math.Round(BMI, 1, MidpointRounding.AwayFromZero);
 
         return roundedBmi;
       } else {
@@ -38,7 +38,7 @@ namespace WeightApp.Utilities {
         double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
         //double bmi = (200.0 / Math.Pow(68.4, 2)) * 703.0;
 
-        double roundedBmi = Math.Round(BMI, 2, MidpointRounding.AwayFromZero);
+        double roundedBmi = Math.Round(BMI, 1, MidpointRounding.AwayFromZero);
 
         return roundedBmi;
       }
