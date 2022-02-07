@@ -51,7 +51,7 @@ namespace WeightApp.Fragments {
           string error = "";
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "" || profileItem.TextRightSide == "lbs" || profileItem.TextRightSide == "kg") {
+            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "" || profileItem.TextRightSide == " lbs" || profileItem.TextRightSide == " kg") {
               error += profileItem.TextLeftSide + " is required.\n";
             }
           }
@@ -239,9 +239,13 @@ namespace WeightApp.Fragments {
                   if (radioMeasurementSystemButton.Text == "Metric") {
                     if (profileItem.TextLeftSide == "Weight") {
                       if (profileItem.TextRightSide.Contains("lbs")) {
-                        ListviewTextLeftRight newProfileItem = calculations.ConvertPoundsToKg(Convert.ToDouble(profileItem.HiddenTextForConversion));
-                        profileItem.TextRightSide = newProfileItem.TextRightSide;
-                        profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        if (profileItem.TextRightSide != " lbs") {
+                          ListviewTextLeftRight newProfileItem = calculations.ConvertPoundsToKg(Convert.ToDouble(profileItem.HiddenTextForConversion));
+                          profileItem.TextRightSide = newProfileItem.TextRightSide;
+                          profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        } else {
+                          profileItem.TextRightSide = " kg";
+                        }
                       }
                     }
                     if (profileItem.TextLeftSide == "Height") {
@@ -253,17 +257,25 @@ namespace WeightApp.Fragments {
                     }
                     if (profileItem.TextLeftSide == "Goal Weight") {
                       if (profileItem.TextRightSide.Contains("lbs")) {
-                        ListviewTextLeftRight newProfileItem = calculations.ConvertPoundsToKg(Convert.ToDouble(profileItem.HiddenTextForConversion));
-                        profileItem.TextRightSide = newProfileItem.TextRightSide;
-                        profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
-                      }
+                        if (profileItem.TextRightSide != " lbs") {
+                          ListviewTextLeftRight newProfileItem = calculations.ConvertPoundsToKg(Convert.ToDouble(profileItem.HiddenTextForConversion));
+                          profileItem.TextRightSide = newProfileItem.TextRightSide;
+                          profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        } else {
+                          profileItem.TextRightSide = " kg";
+                        }
+                      } 
                     }
                   } else { //user selected imperial
                     if (profileItem.TextLeftSide == "Weight") {
                       if (profileItem.TextRightSide.Contains("kg")) {
-                        ListviewTextLeftRight newProfileItem = calculations.ConvertKgToPounds(Convert.ToDouble(profileItem.HiddenTextForConversion));
-                        profileItem.TextRightSide = newProfileItem.TextRightSide;
-                        profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        if (profileItem.TextRightSide != " kg") {
+                          ListviewTextLeftRight newProfileItem = calculations.ConvertKgToPounds(Convert.ToDouble(profileItem.HiddenTextForConversion));
+                          profileItem.TextRightSide = newProfileItem.TextRightSide;
+                          profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        } else {
+                          profileItem.TextRightSide = " lbs";
+                        }
                       }
                     }
                     if (profileItem.TextLeftSide == "Height") {
@@ -275,9 +287,13 @@ namespace WeightApp.Fragments {
                     }
                     if (profileItem.TextLeftSide == "Goal Weight") {
                       if (profileItem.TextRightSide.Contains("kg")) {
-                        ListviewTextLeftRight newProfileItem = calculations.ConvertKgToPounds(Convert.ToDouble(profileItem.HiddenTextForConversion));
-                        profileItem.TextRightSide = newProfileItem.TextRightSide;
-                        profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        if (profileItem.TextRightSide != " kg") {
+                          ListviewTextLeftRight newProfileItem = calculations.ConvertKgToPounds(Convert.ToDouble(profileItem.HiddenTextForConversion));
+                          profileItem.TextRightSide = newProfileItem.TextRightSide;
+                          profileItem.HiddenTextForConversion = newProfileItem.HiddenTextForConversion;
+                        } else {
+                          profileItem.TextRightSide = " lbs";
+                        }
                       }
                     }
                   }
