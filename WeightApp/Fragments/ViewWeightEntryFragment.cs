@@ -93,8 +93,9 @@ namespace WeightApp.Fragments {
             txtWeight.Text = "Weight: " + weight.WEIGHT_ENTRY + " kg";
           } else {
             //split weight whole num and decimal
-            string[] weightSplit = weight.WEIGHT_ENTRY.ToString().Split(".");
-            txtWeight.Text = "Weight: " + weightSplit[0] + " lbs " + weightSplit[1] + " oz";
+            //string[] weightSplit = weight.WEIGHT_ENTRY.ToString().Split(".");
+            //txtWeight.Text = "Weight: " + weightSplit[0] + " lbs " + weightSplit[1] + " oz";
+            txtWeight.Text = "Weight: " + weight.WEIGHT_ENTRY + " lbs";
           }
           txtDate.Text = "Date: " + weight.DATE_ENTRY.ToShortDateString();
         }

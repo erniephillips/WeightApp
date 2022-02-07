@@ -51,7 +51,7 @@ namespace WeightApp.Fragments {
           string error = "";
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "") {
+            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "" || profileItem.TextRightSide == "lbs" || profileItem.TextRightSide == "kg") {
               error += profileItem.TextLeftSide + " is required.\n";
             }
           }
@@ -187,6 +187,8 @@ namespace WeightApp.Fragments {
           case 0:
             View profileNameView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
             EditText edtProfileName = profileNameView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+            TextView txt = profileNameView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
+            txt.Visibility = ViewStates.Gone;
 
             //populate the textbox if profile gender exists
             if (profile != null) {
@@ -292,82 +294,35 @@ namespace WeightApp.Fragments {
               if (profileItem.TextLeftSide == "System") {
                 if (profileItem.TextRightSide == "Metric") {
                   #region METRIC
-                  View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+                  View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+                  EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+                  editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
 
-                  //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-
-                  NumberPicker pckWeightKg = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-
-                  //hide the second picker
-                  NumberPicker pckSecond = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
-                  pckSecond.Visibility = ViewStates.Gone;
-
-                  TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  txtWeightTextOne.Text = "kg";
-
-                  //set the whole weight number
-                  string[] weightKgNumbers = Enumerable.Range(1, 182).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckWeightKg.MinValue = 1;
-                  pckWeightKg.MaxValue = weightKgNumbers.Length;
-                  //pckWeightKg.Value = profile != null ? pckWeightKg.Value = Convert.ToInt32(profile.START_WEIGHT.Split(".")?[0]) : 68;
-                  pckWeightKg.Value = 68;
-                  pckWeightKg.SetDisplayedValues(weightKgNumbers);
-
+                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
+                  txtWeight.Text = "kg";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-                    .SetTitle("What's your current weight?")
-                    .SetNegativeButton("Cancel", (s, e) => { })
-                    .SetPositiveButton("OK", (sender, e) => {
-
-                      var selectedKg = pckWeightKg.Value;
-
-                      adapter.SetSelectedTextValue(eLV.Position, selectedKg + " kg", selectedKg.ToString());
-                    })
-                    .Show();
+                   .SetTitle("What's your current weight?")
+                   .SetNegativeButton("Cancel", (s, e) => { })
+                   .SetPositiveButton("OK", (sender, e) => {
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " kg", editTextWeight.Text);
+                   })
+                   .Show();
                   #endregion
                 } else {
                   #region IMPERIAL
-                  View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+                  View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+                  EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+                  editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
 
-                  //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-
-                  NumberPicker pckWeightPoundsNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-                  NumberPicker pckWeightOzNum = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
-
-                  TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  TextView txtWeightTextTwo = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
-                  txtWeightTextOne.Text = "lbs";
-                  txtWeightTextTwo.Text = "oz";
-
-                  //set the whole weight number
-                  string[] weightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckWeightPoundsNum.MinValue = 1;
-                  pckWeightPoundsNum.MaxValue = weightPoundNumbers.Length;
-                  //pckWeightPoundsNum.Value = profile != null ? pckWeightPoundsNum.Value = Convert.ToInt32(profile.START_WEIGHT.Split(".")?[0]) : 150;
-                  pckWeightPoundsNum.Value = 150;
-                  pckWeightPoundsNum.SetDisplayedValues(weightPoundNumbers);
-
-                  //set the whole weight number
-                  string[] weightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckWeightOzNum.MinValue = 1;
-                  pckWeightOzNum.MaxValue = weightOzNumbers.Length - 1;
-                  //pckWeightOzNum.Value = profile != null ? Convert.ToInt32(profile.START_WEIGHT.Split(".")?[1]) + 1 : 1; //set the start value
-                  pckWeightOzNum.Value = 1; //set the start value
-                  pckWeightOzNum.SetDisplayedValues(weightOzNumbers);
-
+                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
+                  txtWeight.Text = "lbs";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-                    .SetTitle("What's your current weight?")
-                    .SetNegativeButton("Cancel", (s, e) => { })
-                    .SetPositiveButton("OK", (sender, e) => {
-
-                      var selectedLbs = pckWeightPoundsNum.Value;
-                      var selectedOz = pckWeightOzNum.Value - 1;
-
-                      adapter.SetSelectedTextValue(
-                        eLV.Position,
-                        selectedLbs + " lbs " + selectedOz + " oz",
-                        selectedLbs + "." + selectedOz);
-                    })
-                    .Show();
+                   .SetTitle("What's your current weight?")
+                   .SetNegativeButton("Cancel", (s, e) => { })
+                   .SetPositiveButton("OK", (sender, e) => {
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " lbs", editTextWeight.Text);
+                   })
+                   .Show();
                   #endregion
                 }
               }
@@ -497,87 +452,40 @@ namespace WeightApp.Fragments {
           #region GOAL WEIGHT OPTION
           case 5:
             //verify user has selected a measurement system type first
-            List<ListviewTextLeftRight> ListviewTextLeftRightsGoalWeight = adapter.GetItems();
-            foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRightsGoalWeight) {
+            List<ListviewTextLeftRight> GoalListviewTextLeftRightsWeight = adapter.GetItems();
+            foreach (ListviewTextLeftRight profileItem in GoalListviewTextLeftRightsWeight) {
               if (profileItem.TextLeftSide == "System") {
                 if (profileItem.TextRightSide == "Metric") {
                   #region METRIC
-                  View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+                  View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+                  EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+                  editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
 
-                  //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-
-                  NumberPicker pckWeightKg = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-
-                  //hide the second picker
-                  NumberPicker pckSecond = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
-                  pckSecond.Visibility = ViewStates.Gone;
-
-                  TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  txtWeightTextOne.Text = "kg";
-
-                  //set the whole weight number
-                  string[] weightKgNumbers = Enumerable.Range(1, 182).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckWeightKg.MinValue = 1;
-                  pckWeightKg.MaxValue = weightKgNumbers.Length;
-                  //pckWeightKg.Value = profile != null ? pckWeightKg.Value = Convert.ToInt32(profile.START_WEIGHT.Split(".")?[0]) : 68;
-                  pckWeightKg.Value = 68;
-                  pckWeightKg.SetDisplayedValues(weightKgNumbers);
-
+                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
+                  txtWeight.Text = "kg";
                   new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-                    .SetTitle("What's your goal weight?")
-                    .SetNegativeButton("Cancel", (s, e) => { })
-                    .SetPositiveButton("OK", (sender, e) => {
-
-                      var selectedKg = pckWeightKg.Value;
-
-                      adapter.SetSelectedTextValue(eLV.Position, selectedKg + " kg", selectedKg.ToString());
-                    })
-                    .Show();
+                   .SetTitle("What's your goal weight?")
+                   .SetNegativeButton("Cancel", (s, e) => { })
+                   .SetPositiveButton("OK", (sender, e) => {
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " kg", editTextWeight.Text);
+                   })
+                   .Show();
                   #endregion
                 } else {
-                  #region
-                  View goalWeightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+                  #region IMPERIAL
+                  View weightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+                  EditText editTextWeight = weightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+                  editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
 
-                  //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-
-                  NumberPicker pckGoalWeightPoundsNum = goalWeightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-                  NumberPicker pckGoalWeightOzNum = goalWeightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
-
-                  TextView txtGoalWeightTextOne = goalWeightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  TextView txtGoalWeightTextTwo = goalWeightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_two);
-                  txtGoalWeightTextOne.Text = "lbs";
-                  txtGoalWeightTextTwo.Text = "oz";
-
-                  //set the whole weight number
-                  string[] goalWeightPoundNumbers = Enumerable.Range(1, 400).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckGoalWeightPoundsNum.MinValue = 1;
-                  pckGoalWeightPoundsNum.MaxValue = goalWeightPoundNumbers.Length;
-                  //pckGoalWeightPoundsNum.Value = profile != null ? Convert.ToInt32(profile.TARGET_WEIGHT.Split(".")?[0]) : 150; //set the start value
-                  pckGoalWeightPoundsNum.Value = 150; //set the start value
-                  pckGoalWeightPoundsNum.SetDisplayedValues(goalWeightPoundNumbers);
-
-                  //set the whole weight number
-                  string[] goalWeightOzNumbers = Enumerable.Range(0, 17).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckGoalWeightOzNum.MinValue = 1;
-                  pckGoalWeightOzNum.MaxValue = goalWeightOzNumbers.Length - 1;
-                  //pckGoalWeightOzNum.Value = profile != null ? Convert.ToInt32(profile.TARGET_WEIGHT.Split(".")?[1]) + 1 : 1; //set the start value
-                  pckGoalWeightOzNum.Value = 1; //set the start value
-                  pckGoalWeightOzNum.SetDisplayedValues(goalWeightOzNumbers);
-
-                  new MaterialAlertDialogBuilder(Activity).SetView(goalWeightView)
-                    .SetTitle("What's your goal weight?")
-                    .SetNegativeButton("Cancel", (s, e) => { })
-                    .SetPositiveButton("OK", (sender, e) => {
-
-                      var selectedLbs = pckGoalWeightPoundsNum.Value;
-                      var selectedOz = pckGoalWeightOzNum.Value - 1;
-
-                      adapter.SetSelectedTextValue(
-                        eLV.Position,
-                        selectedLbs + " lbs " + selectedOz + " oz",
-                        selectedLbs + "." + selectedOz);
-                    })
-                    .Show();
+                  TextView txtWeight = weightView.FindViewById<TextView>(Resource.Id.dialog_textbox_label);
+                  txtWeight.Text = "lbs";
+                  new MaterialAlertDialogBuilder(Activity).SetView(weightView)
+                   .SetTitle("What's your goal weight?")
+                   .SetNegativeButton("Cancel", (s, e) => { })
+                   .SetPositiveButton("OK", (sender, e) => {
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " lbs", editTextWeight.Text);
+                   })
+                   .Show();
                   #endregion
                 }
               }
@@ -686,9 +594,9 @@ namespace WeightApp.Fragments {
               HiddenTextForConversion = profile.TARGET_DATE.ToShortDateString() }
           };
         } else {
-          string[] weightSplit = profile.START_WEIGHT.ToString().Split(".");
+          //string[] weightSplit = profile.START_WEIGHT.ToString().Split(".");
           string[] heightSplit = profile.HEIGHT.ToString().Split(".");
-          string[] goalWeightSplit = profile.TARGET_WEIGHT.ToString().Split(".");
+          //string[] goalWeightSplit = profile.TARGET_WEIGHT.ToString().Split(".");
           profileItems = new List<ListviewTextLeftRight>() {
             new ListviewTextLeftRight{
               Id = 1, TextLeftSide = "Name",
@@ -701,7 +609,8 @@ namespace WeightApp.Fragments {
             new ListviewTextLeftRight{ 
               //I set strings to always save with a "." so there shouldn't be an error here (unless record doesn't save properly)
               Id = 3, TextLeftSide = "Weight",
-              TextRightSide = weightSplit[0] + " lbs " + weightSplit[1] + " oz",
+              //TextRightSide = weightSplit[0] + " lbs " + weightSplit[1] + " oz",
+              TextRightSide = profile.START_WEIGHT + " lbs",
               HiddenTextForConversion = profile.START_WEIGHT.ToString() },
             new ListviewTextLeftRight{
               Id = 4, TextLeftSide = "Height",
@@ -713,7 +622,8 @@ namespace WeightApp.Fragments {
               HiddenTextForConversion = profile.GENDER.ToString() },
             new ListviewTextLeftRight{
               Id = 6, TextLeftSide = "Goal Weight",
-              TextRightSide = goalWeightSplit[0] + " lbs " + goalWeightSplit[1] + " oz",
+              //TextRightSide = goalWeightSplit[0] + " lbs " + goalWeightSplit[1] + " oz",
+              TextRightSide = profile.TARGET_WEIGHT + " lbs",
               HiddenTextForConversion = profile.TARGET_WEIGHT.ToString() },
             new ListviewTextLeftRight{
               Id = 7, TextLeftSide = "Goal Date",

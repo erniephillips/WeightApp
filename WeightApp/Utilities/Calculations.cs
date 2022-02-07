@@ -29,9 +29,10 @@ namespace WeightApp.Utilities {
 
         return roundedBmi;
       } else {
-        string[] splitWeight = weight.Split(".");
+        //string[] splitWeight = weight.Split(".");
 
-        double convertWeight = Convert.ToDouble(splitWeight[0]) + ConvertOuncesToDecimal(splitWeight[1]);
+        //double convertWeight = Convert.ToDouble(splitWeight[0]) + ConvertOuncesToDecimal(splitWeight[1]);
+        double convertWeight = Convert.ToDouble(weight);
         double convertHeight = ConvertFeetToInches(height);
         //double BMI = (convertWeight / (convertHeight * convertHeight)) * 703;
         double BMI = 703.0 * convertWeight / Math.Pow(convertHeight, 2);
@@ -73,27 +74,30 @@ namespace WeightApp.Utilities {
         double sum = 0;
         double average = 0;
 
-        string[] splitStartWeight = startWeight.Split(".");
-        double lastWeight = Convert.ToDouble(splitStartWeight[0]) + ConvertOuncesToDecimal(splitStartWeight[1]);
+        //string[] splitStartWeight = startWeight.Split(".");
+        //double lastWeight = Convert.ToDouble(splitStartWeight[0]) + ConvertOuncesToDecimal(splitStartWeight[1]);
+        double lastWeight = Convert.ToDouble(startWeight);
 
         foreach (Weight w in weights) {
-          string[] splitWeightEntry = w.WEIGHT_ENTRY.Split(".");
-          double currentWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+          //string[] splitWeightEntry = w.WEIGHT_ENTRY.Split(".");
+          //double currentWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+          double currentWeight = Convert.ToDouble(w.WEIGHT_ENTRY);
           sum += (lastWeight - currentWeight);
-          lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+          //lastWeight = Convert.ToDouble(splitWeightEntry[0]) + ConvertOuncesToDecimal(splitWeightEntry[1]);
+          lastWeight = Convert.ToDouble(w.WEIGHT_ENTRY);
         }
         average = sum / (weights.Count); //divide the sum of the difference of numbers by count of weights
 
         bool isInt = average == (int)average;
 
-        if (!isInt) {
-          string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
-          double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
-          if (average < 0) //check if negative avg, if so subtract oz in order to add
-            average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
-          else
-            average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
-        }
+        //if (!isInt) {
+        //  //string[] splitAverage = average.ToString().Split("."); //convert to string to extract decimal
+        //  double cnvDecimalToOz = (Convert.ToDouble("." + splitAverage[1]) * .16);
+        //  if (average < 0) //check if negative avg, if so subtract oz in order to add
+        //    average = Convert.ToDouble(splitAverage[0]) - cnvDecimalToOz;
+        //  else
+        //    average = Convert.ToDouble(splitAverage[0]) + cnvDecimalToOz;
+        //}
 
         double rounded = Math.Round(average, 2, MidpointRounding.AwayFromZero);
 
@@ -210,22 +214,24 @@ namespace WeightApp.Utilities {
     public ListviewTextLeftRight ConvertKgToPounds(double kilograms) {
       ListviewTextLeftRight item = new ListviewTextLeftRight();
       double pounds = kilograms * 2.20462262185;
-      string[] splitPounds = pounds.ToString().Split(".");
+      //string[] splitPounds = pounds.ToString().Split(".");
+      string[] splitPounds = Math.Floor(pounds).ToString().Split(".");
 
       if (splitPounds.Length < 2) {
-        item.TextRightSide = splitPounds[0] + " lbs 0 oz";
-        item.HiddenTextForConversion = splitPounds[0] + ".0";
+        item.TextRightSide = splitPounds[0] + " lbs";
+        item.HiddenTextForConversion = splitPounds[0];
       } else {
-        double cvtPounds = Math.Round((Convert.ToDouble("." + splitPounds[1]) * .16), 2, MidpointRounding.AwayFromZero);
-        double finalWeight = Convert.ToDouble(splitPounds[0]) + cvtPounds;
-        string[] splitFinalWeight = finalWeight.ToString().Split(".");
-        if (splitFinalWeight.Length < 2) {
-          item.TextRightSide = splitFinalWeight[0] + " lbs 0 oz";
-          item.HiddenTextForConversion = splitFinalWeight[0] + ".0";
-        } else {
-          item.TextRightSide = splitFinalWeight[0] + " lbs " + splitFinalWeight[1] + " oz";
-          item.HiddenTextForConversion = splitFinalWeight[0] + "." + splitFinalWeight[1];
-        }
+        //double cvtPounds = Math.Round((Convert.ToDouble("." + splitPounds[1]) * .16), 2, MidpointRounding.AwayFromZero);
+        //double finalWeight = Convert.ToDouble(splitPounds[0]) + cvtPounds;
+        double finalWeight = Convert.ToDouble(splitPounds[0]);
+        //string[] splitFinalWeight = finalWeight.ToString().Split(".");
+        //if (splitFinalWeight.Length < 2) {
+        item.TextRightSide = finalWeight + " lbs";
+        item.HiddenTextForConversion = finalWeight.ToString();
+        //} else {
+        //  item.TextRightSide = splitFinalWeight[0] + " lbs " + splitFinalWeight[1] + " oz";
+        //  item.HiddenTextForConversion = splitFinalWeight[0] + "." + splitFinalWeight[1];
+        //}
       }
       return item;
     }
