@@ -44,7 +44,7 @@ namespace WeightApp.Activities {
         Profile selectedProfile = adapter.GetProfileInfo(e.Position);
         if (selectedProfile.NAME == "+ Add New Profile") { //add new profile
           edit.PutString("ProfileId", "-1");
-          edit.PutString("ProfileName", "N/A");
+          edit.PutString("ProfileName", "");
         } else { //user profile selected
           edit.PutString("ProfileId", selectedProfile.PROFILE_ID.ToString());
           edit.PutString("ProfileName", selectedProfile.NAME.ToString());
