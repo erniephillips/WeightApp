@@ -55,9 +55,15 @@ namespace WeightApp.Adapters {
     //get the listview and set XML elements to list object values
     public override View GetView(int position, View convertView, ViewGroup parent) {
       var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.listview_select_profile, parent, false);
-      TextView txtUserID = view.FindViewById<TextView>(Resource.Id.txtView_profile_name);
- 
-      txtUserID.Text = profiles[position].NAME.ToString();
+
+      //get the list index
+      TextView profileName = view.FindViewById<TextView>(Resource.Id.txtView_profile_name);
+
+      var lastIndex = profiles.Count - 1;
+      if(position == lastIndex)
+        profileName.TextSize = 30;
+
+      profileName.Text = profiles[position].NAME.ToString();
       
       if (selectedId == position) {
         view.SetBackgroundColor(Color.LightGray);
