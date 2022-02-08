@@ -59,12 +59,20 @@ namespace WeightApp.Adapters {
       //get the list index
       TextView profileName = view.FindViewById<TextView>(Resource.Id.txtView_profile_name);
 
-      var lastIndex = profiles.Count - 1;
-      if(position == lastIndex)
-        profileName.TextSize = 30;
-
-      profileName.Text = profiles[position].NAME.ToString();
       
+      profileName.Text = profiles[position].NAME.ToString();
+
+      profileName.TextSize = 22;
+      profileName.Typeface = Typeface.Default;
+
+      var lastIndex = profiles.Count - 1;
+      if (position == lastIndex) {
+        profileName.TextSize = 26;
+        profileName.Typeface = Typeface.DefaultBold;
+      }
+      
+
+
       if (selectedId == position) {
         view.SetBackgroundColor(Color.LightGray);
       } else {
