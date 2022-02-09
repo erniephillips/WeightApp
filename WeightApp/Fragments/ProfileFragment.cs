@@ -352,37 +352,18 @@ namespace WeightApp.Fragments {
 
                 if (profileItem.TextRightSide == "Metric") {
                   #region METRIC
-                  View weightView = inflater.Inflate(Resource.Layout.dialog_spinner, container, false);
+                  View heightView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
+                  EditText editTextWeight = heightView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
+                  editTextWeight.InputType = Android.Text.InputTypes.ClassNumber;
+                  editTextWeight.Hint = "cm";
 
-                  //Number picker: https://medium.com/@sc71/android-numberpickers-3ef535c45487
-
-                  NumberPicker pckHeightCm = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_one);
-
-                  //hide the second picker
-                  NumberPicker pckSecond = weightView.FindViewById<NumberPicker>(Resource.Id.dialog_spinner_number_picker_two);
-                  pckSecond.Visibility = ViewStates.Gone;
-
-                  TextView txtWeightTextOne = weightView.FindViewById<TextView>(Resource.Id.dialog_spinner_text_one);
-                  txtWeightTextOne.Text = "cm";
-
-                  //set the whole weight number
-                  string[] weightCmNumbers = Enumerable.Range(1, 250).Select(x => x.ToString()).ToArray(); //create an array to 400 lbs
-                  pckHeightCm.MinValue = 1;
-                  pckHeightCm.MaxValue = weightCmNumbers.Length;
-                  //pckHeightCm.Value = profile != null ? pckHeightCm.Value = Convert.ToInt32(profile.START_WEIGHT.Split(".")?[0]) : 152;
-                  pckHeightCm.Value = 152;
-                  pckHeightCm.SetDisplayedValues(weightCmNumbers);
-
-                  new MaterialAlertDialogBuilder(Activity).SetView(weightView)
-                    .SetTitle("What's your height?")
-                    .SetNegativeButton("Cancel", (s, e) => { })
-                    .SetPositiveButton("OK", (sender, e) => {
-
-                      var selectedKm = pckHeightCm.Value;
-
-                      adapter.SetSelectedTextValue(eLV.Position, selectedKm + " cm", selectedKm.ToString());
-                    })
-                    .Show();
+                  new MaterialAlertDialogBuilder(Activity).SetView(heightView)
+                   .SetTitle("What's your height?")
+                   .SetNegativeButton("Cancel", (s, e) => { })
+                   .SetPositiveButton("OK", (sender, e) => {
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " kg", editTextWeight.Text);
+                   })
+                   .Show();
                   #endregion
                 } else {
                   #region IMPERIAL
