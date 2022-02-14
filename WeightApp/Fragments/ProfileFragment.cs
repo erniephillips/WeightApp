@@ -361,7 +361,7 @@ namespace WeightApp.Fragments {
                    .SetTitle("What's your height?")
                    .SetNegativeButton("Cancel", (s, e) => { })
                    .SetPositiveButton("OK", (sender, e) => {
-                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " kg", editTextWeight.Text);
+                     adapter.SetSelectedTextValue(eLV.Position, editTextWeight.Text + " cm", editTextWeight.Text);
                    })
                    .Show();
                   #endregion
