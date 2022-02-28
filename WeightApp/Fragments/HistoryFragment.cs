@@ -85,7 +85,7 @@ namespace WeightApp.Fragments {
         weightList = weightDao.GetWeightsByProfileIdOrderByDateDesc(profile.PROFILE_ID);
 
         //pass to list view adapter
-        HistoryListViewAdapter adapter = new HistoryListViewAdapter(this, weightList);
+        HistoryListViewAdapter adapter = new HistoryListViewAdapter(this, weightList, profile.MEASUREMENT_SYSTEM);
         adapter.SetSelectedId(position); //set the index
 
         // Save the ListView state (= includes scroll position) as a Parceble

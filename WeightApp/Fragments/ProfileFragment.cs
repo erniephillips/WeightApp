@@ -188,7 +188,7 @@ namespace WeightApp.Fragments {
             View profileNameView = inflater.Inflate(Resource.Layout.dialog_textbox, container, false);
             EditText edtProfileName = profileNameView.FindViewById<EditText>(Resource.Id.dialog_tiet_textbox);
             edtProfileName.Hint = "Name";
-            
+
             //populate the textbox if profile gender exists
             if (profile != null) {
               //if profile name not null output to textbox  
@@ -264,7 +264,7 @@ namespace WeightApp.Fragments {
                         } else {
                           profileItem.TextRightSide = " kg";
                         }
-                      } 
+                      }
                     }
                   } else { //user selected imperial
                     if (profileItem.TextLeftSide == "Weight") {

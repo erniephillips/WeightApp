@@ -22,11 +22,13 @@ namespace WeightApp.Adapters {
     private Fragment fragment;
     private List<Weight> weightList;
     private int selectedId = -1;
+    private string measurementType;
 
     //constructor for calling fragment and list set to variables
-    public HistoryListViewAdapter(Fragment fragment, List<Weight> weightList) {
+    public HistoryListViewAdapter(Fragment fragment, List<Weight> weightList, string measurementType) {
       this.fragment = fragment;
       this.weightList = weightList;
+      this.measurementType = measurementType;
     }
 
     //set the list count
@@ -57,7 +59,10 @@ namespace WeightApp.Adapters {
       ImageButton btnEdit = view.FindViewById<ImageButton>(Resource.Id.listview_history_edit);
       ImageButton btnView = view.FindViewById<ImageButton>(Resource.Id.listview_history_view);
       
-      txtWeight.Text = weightList[position].WEIGHT_ENTRY.ToString();
+      if(measurementType.ToLower() == "metric")
+        txtWeight.Text = weightList[position].WEIGHT_ENTRY.ToString() + " kg";
+      else
+        txtWeight.Text = weightList[position].WEIGHT_ENTRY.ToString() + " lbs";
       txtDate.Text = weightList[position].DATE_ENTRY.ToShortDateString();
 
       //set the button click events for each listview item
