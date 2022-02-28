@@ -48,13 +48,54 @@ namespace WeightApp.Fragments {
         case Resource.Id.menu_save:
           #region VALIDATION
           //provide validation check on fields and return dialog with missing
-          string error = "";
+          string error = "", measurementType = "";
+          bool hasError = false;
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
-            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "" || profileItem.TextRightSide == " lbs" || profileItem.TextRightSide == " kg") {
+            if (profileItem.TextRightSide == "N/a" || profileItem.TextRightSide == "" || profileItem.TextRightSide == " lbs" || profileItem.TextRightSide == " kg" || profileItem.TextRightSide == " cm") {
               error += profileItem.TextLeftSide + " is required.\n";
+              hasError = true;
             }
           }
+          if (!hasError) {
+            foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
+              if (profileItem.TextLeftSide.ToLower() == "system")
+                measurementType = profileItem.TextRightSide;
+            }
+            if (measurementType != "") {
+              foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
+                if (measurementType.ToLower() == "metric") {
+                  if (profileItem.TextLeftSide.ToLower() == "weight") {
+                    if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 22 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 227) {
+                      error += "Weight must be between 22 and 227 kg.\n";
+                    }
+                  }
+                  if (profileItem.TextLeftSide.ToLower() == "goal weight") {
+                    if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 22 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 227) {
+                      error += "Goal Weight must be between 22 and 227 kg.\n";
+                    }
+                  }
+                  if (profileItem.TextLeftSide.ToLower() == "height") {
+                    if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 30 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 243) {
+                      error += "Height must be between 30 and 243 cm.\n";
+                    }
+                  }
+                } else {
+                  if (profileItem.TextLeftSide.ToLower() == "weight") {
+                    if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 50 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 500) {
+                      error += "Weight must be between 50 and 500 lbs.\n";
+                    }
+                  }
+                  if (profileItem.TextLeftSide.ToLower() == "goal weight") {
+                    if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 50 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 500) {
+                      error += "Goal Weight must be between 50 and 500 lbs.\n";
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
           if (error != "") {
             new MaterialAlertDialogBuilder(Activity)
                .SetTitle("Weight App Alert")

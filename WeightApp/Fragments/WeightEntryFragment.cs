@@ -71,11 +71,30 @@ namespace WeightApp.Fragments {
           List<ListviewTextLeftRight> ListviewTextLeftRights = adapter.GetItems();
 
           string error = "";
+          bool hasError = false;
 
           //check for errors
           foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
             if (profileItem.TextRightSide == "N/a") {
               error += profileItem.TextLeftSide + " is required.\n";
+              hasError = true;
+            }
+          }
+          if (!hasError) {
+            foreach (ListviewTextLeftRight profileItem in ListviewTextLeftRights) {
+              if (profile.MEASUREMENT_SYSTEM.ToLower() == "metric") {
+                if (profileItem.TextLeftSide.ToLower() == "weight") {
+                  if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 22 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 227) {
+                    error += "Weight must be between 22 and 227 kg.\n";
+                  }
+                }
+              } else {
+                if (profileItem.TextLeftSide.ToLower() == "weight") {
+                  if (Convert.ToInt32(profileItem.HiddenTextForConversion) < 50 || Convert.ToInt32(profileItem.HiddenTextForConversion) > 500) {
+                    error += "Weight must be between 50 and 500 lbs.\n";
+                  }
+                }
+              }
             }
           }
           if (error != "") { //show error if any
